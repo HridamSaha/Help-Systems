@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Anonymous Help Request</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Submit Help Request</h2>
+    </div>
+
+    <div class="help">
+        <form id="helpForm">
+            <!-- 
+            <label>Issue Type</label>
+            <input type="text" id="issueType" required><br><br> -->
+            <label for="issueType">Select Issue Type:</label>
+            <select id="issueType" name="issueType" required>
+                <option value="">-- Select Issue Type --</option>
+                <option value="MEDICAL">Medical Emergency</option>
+                <option value="FIRE">Fire</option>
+                <option value="POLICE">Police</option>
+                <option value="WOMEN_SAFETY">Women Safety</option>
+                <option value="ACCIDENT">Accident</option>
+            </select>
+            <br><br>
+
+            <label>Message</label>
+            <textarea id="message" required></textarea><br>
+
+            <button type="button" onclick="startVoice()"> Enter Complaint using voice 🎤</button><br><br>
+            <label>Language</label>
+            <label>Select Language</label>
+            <select id="language">
+                <option value="en-IN">English</option>
+                <option value="hi-IN">Hindi</option>
+                <option value="ta-IN">Tamil</option>
+                <option value="te-IN">Telugu</option>
+                <option value="bn-IN">Bengali</option>
+            </select><br><br>
+
+            <!-- <label>Voice Text</label>
+            <input type="text" id="voiceText"><br><br> -->
+
+
+            <label>Location Area</label>
+            <input type="text" id="locationArea"><br><br>
+            <div class="sub">
+                <button type="submit">Submit</button>
+
+            </div>
+
+
+        </form>
+    </div>
+
+    <h3 id="response"></h3>
+
+    <script>
+
+        document.getElementById("helpForm").addEventListener("submit", async function (e) {
+
+            e.preventDefault();
+
+            const data = {
+                issueType: document.getElementById("issueType").value,
+               
+                message: document.getElementById("message").value,
+                language: document.getElementById("language").value,
+                // voiceText: document.getElementById("voiceText").value,
+                locationArea: document.getElementById("locationArea").value
+            };
+            console.log(document.getElementById("message").value);
+
+            const res = await fetch("http://localhost:8080/api/help/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await res.json();
+
+            document.getElementById("response").innerText =
+                "Request Submitted. Request ID: " + result.requestId;
+
+        });
+
+    </script>
+
+    <script src="script.js"></script>
+
+    <a href="http://127.0.0.1:5500/track.html" class="track-btn">
+        Track Request
+    </a>
+
+</body>
+
+</html>

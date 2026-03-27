@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="container">
+<h2>All Help Requests</h2>
+</div>
+
+<button onclick="loadRequests()">Load Requests</button>
+
+<table border="1" id="table">
+<tr>
+<th>Request ID</th>
+<th>Department</th>
+<th>Status</th>
+<th>Urgency</th>
+<th>Response Time (min)</th>
+<th>Actions</th>
+</tr>
+</table>
+
+<script>
+
+async function loadRequests(){
+
+const res = await fetch("http://localhost:8080/api/help/all");
+const data = await res.json();
+
+const table = document.getElementById("table");
+
+// 🔥 clear old rows (important)
+table.innerHTML = `
+<tr>
+<th>Request ID</th>
+<th>Department</th>
+<th>Status</th>
+<th>Urgency</th>
+<th>Response Time (min)</th>
+<th>Actions</th>
+</tr>
+`;
+
+data.forEach(r=>{
+
+const row = table.insertRow();
+
+row.insertCell(0).innerText = r.requestId;
+row.insertCell(1).innerText = r.department;
+row.insertCell(2).innerText = r.status;
+row.insertCell(3).innerText = r.urgencyLevel;
+
+// ⏱ response time
+row.insertCell(4).innerText = r.responseTimeMinutes || "-";
+
+// 🔥 ACTION BUTTONS
+const actions = row.insertCell(5);
+
+actions.innerHTML = `
+<button onclick="resolveRequest('${r.requestId}')">Resolve</button>
+<button onclick="reassignRequest('${r.requestId}')">Reassign</button>
+`;
+
+});
+
+}
+
+function resolveRequest(id){
+
+fetch("http://localhost:8080/api/help/status", {
+method: "PUT",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+requestId: id,
+status: "RESOLVED"
+})
+})
+.then(() => {
+alert("Resolved ✅");
+loadRequests();
+});
+
+}
+
+function reassignRequest(id){
+
+let authority = prompt("Enter new authority:");
+
+if(!authority) return;
+
+fetch("http://localhost:8080/api/help/reassign", {
+method: "PUT",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+requestId: id,
+authority: authority
+})
+})
+.then(() => {
+alert("Reassigned 🔁");
+loadRequests();
+});
+
+}
+
+</script>
+
+</body>
+</html>

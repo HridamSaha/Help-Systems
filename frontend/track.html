@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Track Request</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="container">
+<h2>Track Help Request</h2>
+</div>
+<input type="text" id="requestId" placeholder="Enter Request ID">
+
+<button onclick="track()">Track</button>
+
+<table border="1" id="resultTable">
+<thead>
+<tr>
+<th>Request ID</th>
+<th>Message</th>
+<th>Department</th>
+<th>Urgency</th>
+<th>Status</th>
+<th>Authority</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<script>
+
+async function track(){
+
+const id = document.getElementById("requestId").value;
+
+if(!id){
+alert("Please enter Request ID");
+return;
+}
+
+const res = await fetch("http://localhost:8080/api/help/track/" + id);
+
+const data = await res.json();
+
+const tbody = document.querySelector("#resultTable tbody");
+
+tbody.innerHTML = "";
+
+const row = `
+<tr>
+<td>${data.requestId}</td>
+<td>${data.message}</td>
+<td>${data.department}</td>
+<td>${data.urgencyLevel}</td>
+<td>${data.status}</td>
+<td>${data.assignedAuthority}</td>
+</tr>
+`;
+
+tbody.innerHTML = row;
+
+}
+
+</script>
+
+</body>
+</html>

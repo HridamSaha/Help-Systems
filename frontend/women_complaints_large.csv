@@ -1,0 +1,772 @@
+message,language,urgency,category
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+"I was raped last night by a stranger",English,Critical,Sexual Assault
+"My in-laws are torturing me for more dowry",English,Critical,Dowry Harassment
+"I am being blackmailed by my ex-partner with my photos",English,Critical,Blackmail
+"My husband tried to kill me last night",English,Critical,Domestic Violence
+"I was molested at a party",English,Critical,Sexual Assault
+"My husband poured hot water on me",English,Critical,Domestic Violence
+"I am locked in the house and beaten daily",English,Critical,Domestic Violence
+"Someone forced me into a car and assaulted me",English,Critical,Sexual Assault
+"My father is forcing me into prostitution",English,Critical,Forced Labor
+"My husband burns me with cigarettes",English,Critical,Domestic Violence
+"I was gang raped while returning home",English,Critical,Sexual Assault
+"My in-laws are trying to kill me for dowry",English,Critical,Dowry Harassment
+"I am being held against my will at home",English,Critical,Domestic Violence
+"My husband stabbed me with a knife",English,Critical,Domestic Violence
+"Someone is threatening to kill me and my children",English,Critical,Threat
+"I was drugged and assaulted at a party",English,Critical,Sexual Assault
+"My husband is forcing me to have sex against my will",English,Critical,Domestic Violence
+"My private videos are being shared online without consent",English,Critical,Cybercrime
+"I am being forced into marriage with an old man",English,Critical,Forced Marriage
+"My brother-in-law assaulted me when husband was away",English,Critical,Sexual Assault
+"My husband breaks my bones when he beats me",English,Critical,Domestic Violence
+"I was attacked with acid by a rejected man",English,Critical,Acid Attack
+"My child is being threatened to force me to comply",English,Critical,Threat
+"I escaped from a trafficking situation",English,Critical,Human Trafficking
+"I was harassed on the bus today by a group of men",English,High,Sexual Harassment
+"My neighbor is making threats to harm me",English,High,Threat
+"My boss is asking for sexual favors to keep my job",English,High,Workplace Harassment
+"My photos were shared without my consent on social media",English,High,Cybercrime
+"I was stalked while coming home from work",English,High,Stalking
+"My husband does not allow me to go out or meet anyone",English,High,Domestic Abuse
+"I was fired after reporting harassment to HR",English,High,Workplace Retaliation
+"Someone is following me everywhere I go",English,High,Stalking
+"My account was hacked and private photos were leaked",English,High,Cybercrime
+"My husband threatens to take away my children",English,High,Domestic Abuse
+"My family is forcing me into marriage",English,High,Forced Marriage
+"A man grabbed me inappropriately on the street",English,High,Sexual Harassment
+"My husband destroys my belongings when angry",English,High,Domestic Abuse
+"My manager touched me inappropriately at the office",English,High,Workplace Harassment
+"Someone is sending me threatening emails daily",English,High,Cybercrime
+"My husband controls all my money and documents",English,High,Domestic Abuse
+"A colleague is spreading sexual rumors about me",English,High,Workplace Harassment
+"My ex-boyfriend keeps showing up at my workplace",English,High,Stalking
+"I feel unsafe in my own home",English,High,Domestic Fear
+"My husband threatens to divorce and take the kids",English,High,Domestic Abuse
+"A man is following me on my daily commute",English,High,Stalking
+"My photos were morphed and shared online",English,High,Cybercrime
+"My father-in-law is making inappropriate advances",English,High,Sexual Harassment
+"My husband locked me in a room for two days",English,High,Domestic Abuse
+"I received threatening messages on my phone",English,Medium,Cybercrime
+"My salary has not been paid for 3 months",English,Medium,Workplace Issue
+"Someone is spreading false rumors about me online",English,Medium,Cyberbullying
+"I was denied maternity leave at my workplace",English,Medium,Workplace Rights
+"No action is being taken on my previous complaint",English,Medium,Police Inaction
+"I was discriminated against for being pregnant",English,Medium,Workplace Discrimination
+"My husband takes away my earnings every month",English,Medium,Financial Abuse
+"My in-laws insult me daily in front of everyone",English,Medium,Emotional Abuse
+"My husband does not let me speak to my parents",English,Medium,Domestic Abuse
+"I am being verbally abused at workplace",English,Medium,Workplace Harassment
+"My husband spends all money on alcohol and gambling",English,Medium,Financial Abuse
+"My colleague keeps making sexist jokes at me",English,Medium,Workplace Harassment
+"My husband blames me for everything that goes wrong",English,Medium,Emotional Abuse
+"I was asked to resign after maternity leave",English,Medium,Workplace Discrimination
+"My landlord is harassing me for extra money",English,Medium,Harassment
+"My husband reads all my messages and emails",English,Medium,Privacy Violation
+"I am not allowed to have my own bank account",English,Medium,Financial Abuse
+"My in-laws mock my family background daily",English,Medium,Emotional Abuse
+"I was passed over for promotion due to gender",English,Medium,Workplace Discrimination
+"My neighbor peeps into my house through the window",English,Medium,Privacy Violation
+"Men in my area pass comments when I walk alone",English,Low,Street Harassment
+"I feel unsafe traveling at night in this locality",English,Low,Safety Concern
+"Men whistle at me when I walk to the market",English,Low,Street Harassment
+"Boys in my college make rude comments about my appearance",English,Low,Street Harassment
+"I feel uncomfortable on public transport",English,Low,Safety Concern
+"Men stare at me inappropriately in public",English,Low,Street Harassment
+"I feel unsafe walking alone after 8pm",English,Low,Safety Concern
+"Male students make comments on my clothes in college",English,Low,Street Harassment
+"I feel nervous going to the market alone",English,Low,Safety Concern
+"People make comments about my clothes in my neighborhood",English,Low,Street Harassment
+"என் கணவன் என்னை தினமும் கொடுமையாக அடிக்கிறான்",Tamil,Critical,Domestic Violence
+"நேற்று இரவு ஒருவன் என்னை பாலியல் வன்கொடுமை செய்தான்",Tamil,Critical,Sexual Assault
+"மணவீட்டினர் மேலும் வரதட்சணைக்காக என்னை துன்புறுத்துகிறார்கள்",Tamil,Critical,Dowry Harassment
+"என் முன்னாள் காதலன் என் படங்களை வைத்து மிரட்டுகிறான்",Tamil,Critical,Blackmail
+"என் கணவன் நேற்று என்னை கொல்ல முயற்சித்தான்",Tamil,Critical,Domestic Violence
+"ஒரு நிகழ்ச்சியில் என்னை தகாத முறையில் தொட்டார்கள்",Tamil,Critical,Sexual Assault
+"என் கணவன் என் மீது சூடான நீர் ஊற்றினான்",Tamil,Critical,Domestic Violence
+"வீட்டில் பூட்டி வைக்கப்படுகிறேன் தினமும் அடிக்கிறார்கள்",Tamil,Critical,Domestic Violence
+"யாரோ என்னை கட்டாயமாக காரில் ஏற்றி தாக்கினார்கள்",Tamil,Critical,Sexual Assault
+"என் தந்தை என்னை வேசைத்தொழிலுக்கு கட்டாயப்படுத்துகிறார்",Tamil,Critical,Forced Labor
+"என் கணவன் சிகரெட்டால் என்னை சுட்டு வலிக்கிறான்",Tamil,Critical,Domestic Violence
+"வீட்டிற்கு திரும்பும் வழியில் கூட்டமாக பாலியல் வன்கொடுமை செய்தார்கள்",Tamil,Critical,Sexual Assault
+"வரதட்சணைக்காக மணவீட்டினர் என்னை கொல்ல முயல்கிறார்கள்",Tamil,Critical,Dowry Harassment
+"என்னை விருப்பமில்லாமல் வீட்டில் வைத்திருக்கிறார்கள்",Tamil,Critical,Domestic Violence
+"என் கணவன் கத்தியால் என்னை கிழித்தான்",Tamil,Critical,Domestic Violence
+"என்னையும் என் குழந்தைகளையும் கொல்வதாக மிரட்டுகிறார்கள்",Tamil,Critical,Threat
+"ஒரு நிகழ்ச்சியில் மயக்க மருந்து கொடுத்து தாக்கினார்கள்",Tamil,Critical,Sexual Assault
+"என் கணவன் என் விருப்பமின்றி உறவு கொள்கிறான்",Tamil,Critical,Domestic Violence
+"என் தனிப்பட்ட வீடியோக்கள் அனுமதியின்றி பகிரப்படுகின்றன",Tamil,Critical,Cybercrime
+"வயதான ஆளுக்கு கட்டாயமாக திருமணம் செய்விக்கிறார்கள்",Tamil,Critical,Forced Marriage
+"கணவன் வெளியே சென்றபோது மைத்துனன் என்னை தாக்கினான்",Tamil,Critical,Sexual Assault
+"என் கணவன் அடிக்கும்போது என் எலும்புகள் முறிகின்றன",Tamil,Critical,Domestic Violence
+"நிராகரிக்கப்பட்ட ஆண் என் மீது அமிலம் வீசினான்",Tamil,Critical,Acid Attack
+"என்னை கட்டுப்படுத்த என் குழந்தையை மிரட்டுகிறார்கள்",Tamil,Critical,Threat
+"கடத்தல் சூழ்நிலையிலிருந்து தப்பி வந்தேன்",Tamil,Critical,Human Trafficking
+"பேருந்தில் ஒரு கூட்டம் என்னை இன்று தொந்தரவு செய்தது",Tamil,High,Sexual Harassment
+"என் அண்டை வீட்டுக்காரர் என்னை காயப்படுத்துவதாக மிரட்டுகிறார்",Tamil,High,Threat
+"என் மேலதிகாரி வேலை தக்கவைக்க பாலியல் உதவி கேட்கிறார்",Tamil,High,Workplace Harassment
+"என் புகைப்படங்கள் அனுமதி இல்லாமல் சமூக வலைதளத்தில் பகிரப்பட்டன",Tamil,High,Cybercrime
+"வேலையிலிருந்து வரும்போது யாரோ என்னை தொடர்ந்து வருகிறார்",Tamil,High,Stalking
+"என் கணவன் என்னை வெளியே போக அனுமதிக்கவில்லை",Tamil,High,Domestic Abuse
+"நான் HR இடம் புகார் கொடுத்தபின் வேலையை இழந்தேன்",Tamil,High,Workplace Retaliation
+"யாரோ என்னை எங்கும் பின்தொடர்கிறார்கள்",Tamil,High,Stalking
+"என் கணக்கு ஹேக் செய்யப்பட்டு தனிப்பட்ட புகைப்படங்கள் கசிந்தன",Tamil,High,Cybercrime
+"என் கணவன் குழந்தைகளை அழைத்துச் செல்வதாக மிரட்டுகிறான்",Tamil,High,Domestic Abuse
+"என் குடும்பம் என்னை திருமணத்திற்கு கட்டாயப்படுத்துகிறது",Tamil,High,Forced Marriage
+"தெருவில் ஒரு ஆண் என்னை தகாத முறையில் பிடித்தான்",Tamil,High,Sexual Harassment
+"என் கணவன் கோபமடையும்போது என் பொருட்களை உடைக்கிறான்",Tamil,High,Domestic Abuse
+"என் மேலாளர் அலுவலகத்தில் என்னை தகாத முறையில் தொட்டார்",Tamil,High,Workplace Harassment
+"தினமும் மிரட்டும் மின்னஞ்சல்கள் வருகின்றன",Tamil,High,Cybercrime
+"என் கணவன் என் அனைத்து பணத்தையும் ஆவணங்களையும் கட்டுப்படுத்துகிறான்",Tamil,High,Domestic Abuse
+"ஒரு சக பணியாளர் என்னைப் பற்றி பாலியல் வதந்திகளை பரப்புகிறார்",Tamil,High,Workplace Harassment
+"என் முன்னாள் காதலன் என் வேலை இடத்தில் தொடர்ந்து வருகிறான்",Tamil,High,Stalking
+"என் சொந்த வீட்டிலேயே பாதுகாப்பற்றதாக உணர்கிறேன்",Tamil,High,Domestic Fear
+"என் கணவன் குழந்தைகளை எடுத்துக்கொண்டு விவாகரத்து செய்வதாக மிரட்டுகிறான்",Tamil,High,Domestic Abuse
+"தெரியாத எண்ணிலிருந்து மிரட்டல் செய்திகள் வருகின்றன",Tamil,Medium,Cybercrime
+"மூன்று மாதமாக சம்பளம் வரவில்லை",Tamil,Medium,Workplace Issue
+"யாரோ இணையத்தில் என்னைப் பற்றி பொய் பரப்புகிறார்கள்",Tamil,Medium,Cyberbullying
+"பிரசவ விடுப்பு கொடுக்க மறுக்கிறார்கள்",Tamil,Medium,Workplace Rights
+"என் முந்தைய புகாரில் நடவடிக்கை எடுக்கவில்லை",Tamil,Medium,Police Inaction
+"கர்ப்பமாக இருப்பதால் என்னை பாகுபாடு காட்டுகிறார்கள்",Tamil,Medium,Workplace Discrimination
+"என் கணவன் என் சம்பாத்தியத்தை எடுத்துக்கொள்கிறான்",Tamil,Medium,Financial Abuse
+"மணவீட்டினர் தினமும் அனைவர் முன்னிலையில் என்னை அவமானப்படுத்துகிறார்கள்",Tamil,Medium,Emotional Abuse
+"என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை",Tamil,Medium,Domestic Abuse
+"வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்",Tamil,Medium,Workplace Harassment
+"என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்",Tamil,Medium,Financial Abuse
+"என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்",Tamil,Medium,Workplace Harassment
+"தனியாக நடக்கும்போது ஆண்கள் கமென்ட் பண்றார்கள்",Tamil,Low,Street Harassment
+"இரவில் தனியாக பயணிக்க பயமாக இருக்கிறது",Tamil,Low,Safety Concern
+"சந்தைக்கு செல்லும்போது ஆண்கள் விசில் அடிக்கிறார்கள்",Tamil,Low,Street Harassment
+"கல்லூரியில் ஆண் மாணவர்கள் என் தோற்றத்தை பற்றி கமென்ட் பண்றார்கள்",Tamil,Low,Street Harassment
+"பொதுப் போக்குவரத்தில் சௌகரியமற்றதாக உணர்கிறேன்",Tamil,Low,Safety Concern
+"பொதுவிடங்களில் ஆண்கள் தகாத முறையில் என்னை பார்க்கிறார்கள்",Tamil,Low,Street Harassment
+"இரவு 8 மணிக்கு பிறகு தனியாக நடக்க பயமாக இருக்கிறது",Tamil,Low,Safety Concern
+"मेरे पति मुझे रोज़ बहुत बुरी तरह मारते हैं",Hindi,Critical,Domestic Violence
+"कल रात किसी ने मेरे साथ बलात्कार किया",Hindi,Critical,Sexual Assault
+"ससुराल वाले अधिक दहेज के लिए प्रताड़ित कर रहे हैं",Hindi,Critical,Dowry Harassment
+"मेरा पूर्व प्रेमी मेरी तस्वीरों से मुझे ब्लैकमेल कर रहा है",Hindi,Critical,Blackmail
+"मेरे पति ने कल रात मुझे मारने की कोशिश की",Hindi,Critical,Domestic Violence
+"एक पार्टी में मेरे साथ छेड़छाड़ की गई",Hindi,Critical,Sexual Assault
+"मेरे पति ने मुझ पर गर्म पानी डाला",Hindi,Critical,Domestic Violence
+"घर में बंद कर दिया गया है और रोज़ पीटा जाता है",Hindi,Critical,Domestic Violence
+"किसी ने मुझे जबरदस्ती कार में बिठाकर हमला किया",Hindi,Critical,Sexual Assault
+"मेरे पिता मुझे वेश्यावृत्ति के लिए मजबूर कर रहे हैं",Hindi,Critical,Forced Labor
+"मेरे पति सिगरेट से मुझे जलाते हैं",Hindi,Critical,Domestic Violence
+"घर लौटते समय सामूहिक बलात्कार हुआ",Hindi,Critical,Sexual Assault
+"दहेज के लिए ससुराल वाले मुझे मारने की कोशिश कर रहे हैं",Hindi,Critical,Dowry Harassment
+"मुझे मेरी मर्जी के बिना घर में रोका जा रहा है",Hindi,Critical,Domestic Violence
+"मेरे पति ने चाकू से मुझे घायल किया",Hindi,Critical,Domestic Violence
+"मुझे और मेरे बच्चों को जान से मारने की धमकी दी जा रही है",Hindi,Critical,Threat
+"एक पार्टी में बेहोशी की दवा देकर हमला किया गया",Hindi,Critical,Sexual Assault
+"मेरे पति मेरी मर्जी के बिना शारीरिक संबंध बनाते हैं",Hindi,Critical,Domestic Violence
+"मेरे निजी वीडियो बिना अनुमति के ऑनलाइन शेयर किए जा रहे हैं",Hindi,Critical,Cybercrime
+"बूढ़े आदमी से जबरदस्ती शादी करवाई जा रही है",Hindi,Critical,Forced Marriage
+"पति के बाहर जाने पर देवर ने मुझ पर हमला किया",Hindi,Critical,Sexual Assault
+"पति मारता है तो हड्डियाँ टूट जाती हैं",Hindi,Critical,Domestic Violence
+"अस्वीकृत लड़के ने मुझ पर तेज़ाब फेंका",Hindi,Critical,Acid Attack
+"मुझे नियंत्रित करने के लिए मेरे बच्चे को धमकी दी जा रही है",Hindi,Critical,Threat
+"तस्करी की स्थिति से भाग कर आई हूँ",Hindi,Critical,Human Trafficking
+"आज बस में एक भीड़ ने मुझे परेशान किया",Hindi,High,Sexual Harassment
+"मेरा पड़ोसी मुझे नुकसान पहुंचाने की धमकी दे रहा है",Hindi,High,Threat
+"बॉस नौकरी बचाने के लिए यौन संबंध मांग रहा है",Hindi,High,Workplace Harassment
+"मेरी तस्वीरें बिना अनुमति के सोशल मीडिया पर शेयर की गईं",Hindi,High,Cybercrime
+"काम से घर आते समय कोई मेरा पीछा कर रहा था",Hindi,High,Stalking
+"मेरे पति मुझे बाहर नहीं जाने देते",Hindi,High,Domestic Abuse
+"HR में शिकायत करने के बाद नौकरी से निकाल दिया",Hindi,High,Workplace Retaliation
+"कोई मुझे हर जगह फॉलो कर रहा है",Hindi,High,Stalking
+"अकाउंट हैक हुआ और निजी तस्वीरें लीक हो गईं",Hindi,High,Cybercrime
+"पति बच्चों को ले जाने की धमकी देता है",Hindi,High,Domestic Abuse
+"परिवार जबरदस्ती शादी करवाना चाहता है",Hindi,High,Forced Marriage
+"सड़क पर एक आदमी ने मुझे अनुचित तरीके से पकड़ा",Hindi,High,Sexual Harassment
+"पति गुस्से में आकर मेरा सामान तोड़ता है",Hindi,High,Domestic Abuse
+"मैनेजर ने ऑफिस में अनुचित तरीके से छुआ",Hindi,High,Workplace Harassment
+"रोज़ धमकी भरे ईमेल आ रहे हैं",Hindi,High,Cybercrime
+"पति सारा पैसा और दस्तावेज़ अपने पास रखता है",Hindi,High,Domestic Abuse
+"एक सहकर्मी मेरे बारे में यौन अफ़वाहें फैला रहा है",Hindi,High,Workplace Harassment
+"मेरा पूर्व प्रेमी मेरे कार्यस्थल पर बार-बार आता है",Hindi,High,Stalking
+"अपने घर में भी असुरक्षित महसूस करती हूँ",Hindi,High,Domestic Fear
+"पति बच्चे लेकर तलाक देने की धमकी देता है",Hindi,High,Domestic Abuse
+"अज्ञात नंबर से धमकी भरे संदेश आ रहे हैं",Hindi,Medium,Cybercrime
+"तीन महीने से वेतन नहीं मिला",Hindi,Medium,Workplace Issue
+"कोई इंटरनेट पर मेरे बारे में झूठ फैला रहा है",Hindi,Medium,Cyberbullying
+"मातृत्व अवकाश देने से मना किया जा रहा है",Hindi,Medium,Workplace Rights
+"मेरी पिछली शिकायत पर कोई कार्रवाई नहीं हुई",Hindi,Medium,Police Inaction
+"गर्भवती होने के कारण भेदभाव किया जा रहा है",Hindi,Medium,Workplace Discrimination
+"पति हर महीने मेरी कमाई ले लेता है",Hindi,Medium,Financial Abuse
+"ससुराल वाले रोज़ सबके सामने अपमानित करते हैं",Hindi,Medium,Emotional Abuse
+"पति मुझे माँ-बाप से बात नहीं करने देता",Hindi,Medium,Domestic Abuse
+"कार्यस्थल पर मौखिक रूप से प्रताड़ित किया जा रहा है",Hindi,Medium,Workplace Harassment
+"पति शराब और जुए पर सारा पैसा उड़ा देता है",Hindi,Medium,Financial Abuse
+"सहकर्मी यौन मज़ाक करता रहता है",Hindi,Medium,Workplace Harassment
+"अकेले चलने पर पुरुष टिप्पणी करते हैं",Hindi,Low,Street Harassment
+"रात में अकेले सफर करने से डर लगता है",Hindi,Low,Safety Concern
+"बाज़ार जाते समय पुरुष सीटी बजाते हैं",Hindi,Low,Street Harassment
+"कॉलेज में लड़के मेरे हुलिए पर टिप्पणी करते हैं",Hindi,Low,Street Harassment
+"सार्वजनिक परिवहन में असहज महसूस होता है",Hindi,Low,Safety Concern
+"सार्वजनिक जगहों पर पुरुष अनुचित तरीके से घूरते हैं",Hindi,Low,Street Harassment
+"रात 8 बजे के बाद अकेले चलने में डर लगता है",Hindi,Low,Safety Concern
+"నా భర్త నన్ను రోజూ చాలా క్రూరంగా కొడుతున్నాడు",Telugu,Critical,Domestic Violence
+"నిన్న రాత్రి ఒకడు నన్ను అత్యాచారం చేశాడు",Telugu,Critical,Sexual Assault
+"అత్తింటి వారు మరింత కట్నం కోసం హింసిస్తున్నారు",Telugu,Critical,Dowry Harassment
+"నా మాజీ ప్రేమికుడు నా ఫోటోలతో బ్లాక్‌మెయిల్ చేస్తున్నాడు",Telugu,Critical,Blackmail
+"నా భర్త నిన్న రాత్రి నన్ను చంపడానికి ప్రయత్నించాడు",Telugu,Critical,Domestic Violence
+"ఒక పార్టీలో నన్ను అసభ్యంగా తాకారు",Telugu,Critical,Sexual Assault
+"నా భర్త నాపై వేడి నీళ్ళు పోశాడు",Telugu,Critical,Domestic Violence
+"ఇంట్లో బంధించి రోజూ కొడుతున్నారు",Telugu,Critical,Domestic Violence
+"ఒకరు నన్ను బలవంతంగా కారులో ఎక్కించి దాడి చేశారు",Telugu,Critical,Sexual Assault
+"నా తండ్రి నన్ను వేశ్యావృత్తికి బలవంతపెడుతున్నాడు",Telugu,Critical,Forced Labor
+"నా భర్త సిగరెట్‌తో నన్ను కాలుస్తున్నాడు",Telugu,Critical,Domestic Violence
+"ఇంటికి వస్తుండగా గుంపు అత్యాచారం చేసింది",Telugu,Critical,Sexual Assault
+"కట్నం కోసం అత్తింటి వారు నన్ను చంపడానికి చూస్తున్నారు",Telugu,Critical,Dowry Harassment
+"నన్ను నా ఇష్టానికి వ్యతిరేకంగా ఇంట్లో అడ్డుపెట్టారు",Telugu,Critical,Domestic Violence
+"నా భర్త కత్తితో నన్ను గాయపరిచాడు",Telugu,Critical,Domestic Violence
+"నన్ను మరియు నా పిల్లలను చంపుతామని బెదిరిస్తున్నారు",Telugu,Critical,Threat
+"పార్టీలో మత్తు మందు ఇచ్చి దాడి చేశారు",Telugu,Critical,Sexual Assault
+"నా భర్త నా ఇష్టానికి వ్యతిరేకంగా సంభోగం చేస్తున్నాడు",Telugu,Critical,Domestic Violence
+"నా ప్రైవేట్ వీడియోలు అనుమతి లేకుండా ఆన్‌లైన్‌లో షేర్ చేయబడుతున్నాయి",Telugu,Critical,Cybercrime
+"వృద్ధుడికి బలవంతంగా పెళ్ళి చేయిస్తున్నారు",Telugu,Critical,Forced Marriage
+"భర్త వెళ్ళినప్పుడు బావమరిది దాడి చేశాడు",Telugu,Critical,Sexual Assault
+"భర్త కొట్టినప్పుడు ఎముకలు విరుగుతున్నాయి",Telugu,Critical,Domestic Violence
+"తిరస్కరించబడిన అబ్బాయి నాపై యాసిడ్ విసిరాడు",Telugu,Critical,Acid Attack
+"నన్ను నియంత్రించడానికి నా పిల్లలను బెదిరిస్తున్నారు",Telugu,Critical,Threat
+"అక్రమ రవాణా పరిస్థితి నుండి తప్పించుకున్నాను",Telugu,Critical,Human Trafficking
+"బస్సులో ఒక గుంపు నన్ను వేధించింది",Telugu,High,Sexual Harassment
+"నా పొరుగువాడు నాకు హాని చేస్తానని బెదిరిస్తున్నాడు",Telugu,High,Threat
+"బాస్ ఉద్యోగం కాపాడడానికి శారీరక సంబంధం అడుగుతున్నాడు",Telugu,High,Workplace Harassment
+"నా ఫోటోలు అనుమతి లేకుండా సోషల్ మీడియాలో షేర్ చేయబడ్డాయి",Telugu,High,Cybercrime
+"పనిలో నుండి వస్తుండగా ఒకరు వెంబడించారు",Telugu,High,Stalking
+"నా భర్త నన్ను బయటకు వెళ్ళనివ్వడు",Telugu,High,Domestic Abuse
+"HR కి ఫిర్యాదు చేసిన తర్వాత ఉద్యోగం పోయింది",Telugu,High,Workplace Retaliation
+"ఒకరు నన్ను ప్రతిచోటా అనుసరిస్తున్నారు",Telugu,High,Stalking
+"అకౌంట్ హ్యాక్ అయి ప్రైవేట్ ఫోటోలు లీక్ అయ్యాయి",Telugu,High,Cybercrime
+"భర్త పిల్లలను తీసుకుపోతానని బెదిరిస్తున్నాడు",Telugu,High,Domestic Abuse
+"కుటుంబం బలవంతంగా పెళ్ళి చేయించాలనుకుంటుంది",Telugu,High,Forced Marriage
+"వీధిలో ఒక మగవాడు నన్ను అసభ్యంగా పట్టుకున్నాడు",Telugu,High,Sexual Harassment
+"భర్త కోపంలో నా వస్తువులు పగులగొడతాడు",Telugu,High,Domestic Abuse
+"మేనేజర్ ఆఫీస్‌లో నన్ను అసభ్యంగా తాకాడు",Telugu,High,Workplace Harassment
+"రోజూ బెదిరింపు ఇమెయిల్స్ వస్తున్నాయి",Telugu,High,Cybercrime
+"భర్త నా డబ్బు మరియు పత్రాలన్నీ తన దగ్గర ఉంచుకుంటాడు",Telugu,High,Domestic Abuse
+"ఒక సహోద్యోగి నా గురించి లైంగిక పుకార్లు వ్యాపింపజేస్తున్నాడు",Telugu,High,Workplace Harassment
+"మాజీ ప్రేమికుడు నా కార్యాలయానికి తరచూ వస్తున్నాడు",Telugu,High,Stalking
+"నా సొంత ఇంట్లోనే అసురక్షితంగా అనిపిస్తోంది",Telugu,High,Domestic Fear
+"భర్త పిల్లలను తీసుకుని విడాకులు ఇస్తానని బెదిరిస్తున్నాడు",Telugu,High,Domestic Abuse
+"తెలియని నంబర్ నుండి బెదిరింపు సందేశాలు వస్తున్నాయి",Telugu,Medium,Cybercrime
+"మూడు నెలల నుండి జీతం రాలేదు",Telugu,Medium,Workplace Issue
+"ఒకరు ఇంటర్నెట్‌లో నా గురించి అబద్ధాలు వ్యాపింపజేస్తున్నారు",Telugu,Medium,Cyberbullying
+"మాతృత్వ సెలవు ఇవ్వడానికి నిరాకరిస్తున్నారు",Telugu,Medium,Workplace Rights
+"నా మునుపటి ఫిర్యాదుపై ఎటువంటి చర్య తీసుకోలేదు",Telugu,Medium,Police Inaction
+"గర్భవతి అయినందుకు వివక్ష చూపిస్తున్నారు",Telugu,Medium,Workplace Discrimination
+"భర్త నా సంపాదన అన్నీ తీసుకుంటాడు",Telugu,Medium,Financial Abuse
+"అత్తింటి వారు రోజూ అందరి ముందు అవమానిస్తున్నారు",Telugu,Medium,Emotional Abuse
+"భర్త నన్ను తల్లిదండ్రులతో మాట్లాడనివ్వడు",Telugu,Medium,Domestic Abuse
+"కార్యాలయంలో మౌఖికంగా వేధింపులకు గురవుతున్నాను",Telugu,Medium,Workplace Harassment
+"భర్త మద్యపానానికి అన్ని డబ్బులు ఖర్చు చేస్తాడు",Telugu,Medium,Financial Abuse
+"సహోద్యోగి లైంగిక జోకులు చెబుతూ ఉంటాడు",Telugu,Medium,Workplace Harassment
+"ఒంటరిగా నడిచేటప్పుడు పురుషులు వ్యాఖ్యలు చేస్తున్నారు",Telugu,Low,Street Harassment
+"రాత్రి ఒంటరిగా ప్రయాణించడం భయంగా ఉంది",Telugu,Low,Safety Concern
+"మార్కెట్‌కు వెళ్ళేటప్పుడు మగవారు విజిల్ వేస్తారు",Telugu,Low,Street Harassment
+"కళాశాలలో అబ్బాయిలు నా రూపం గురించి వ్యాఖ్యానిస్తారు",Telugu,Low,Street Harassment
+"పబ్లిక్ ట్రాన్స్‌పోర్ట్‌లో అసౌకర్యంగా అనిపిస్తుంది",Telugu,Low,Safety Concern
+"పబ్లిక్ ప్లేసెస్‌లో మగవారు అసభ్యంగా చూస్తారు",Telugu,Low,Street Harassment
+"రాత్రి 8 గంటల తర్వాత ఒంటరిగా నడవడం భయంగా ఉంది",Telugu,Low,Safety Concern
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+I was raped last night by a stranger,English,Critical,Sexual Assault
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+Someone is following me home from work every day,English,High,Stalking
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+Someone is following me home from work every day,English,High,Stalking
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+Someone is following me home from work every day,English,High,Stalking
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+I was raped last night by a stranger,English,Critical,Sexual Assault
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+I need legal advice for divorce,English,Low,Legal Support
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+Someone is following me home from work every day,English,High,Stalking
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+I was raped last night by a stranger,English,Critical,Sexual Assault
+I was raped last night by a stranger,English,Critical,Sexual Assault
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+I was raped last night by a stranger,English,Critical,Sexual Assault
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+My ex is threatening to share my private messages,English,High,Cyber Crime
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+Someone is following me home from work every day,English,High,Stalking
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+I need legal advice for divorce,English,Low,Legal Support
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+Someone is following me home from work every day,English,High,Stalking
+I was raped last night by a stranger,English,Critical,Sexual Assault
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+I need legal advice for divorce,English,Low,Legal Support
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+I was raped last night by a stranger,English,Critical,Sexual Assault
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+I need legal advice for divorce,English,Low,Legal Support
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+My ex is threatening to share my private messages,English,High,Cyber Crime
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+Someone is following me home from work every day,English,High,Stalking
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+I need legal advice for divorce,English,Low,Legal Support
+Someone is following me home from work every day,English,High,Stalking
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+I need legal advice for divorce,English,Low,Legal Support
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+Someone is following me home from work every day,English,High,Stalking
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+My ex is threatening to share my private messages,English,High,Cyber Crime
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+My ex is threatening to share my private messages,English,High,Cyber Crime
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+Someone is following me home from work every day,English,High,Stalking
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+My ex is threatening to share my private messages,English,High,Cyber Crime
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+I was raped last night by a stranger,English,Critical,Sexual Assault
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+Someone is following me home from work every day,English,High,Stalking
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+I need legal advice for divorce,English,Low,Legal Support
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+I was raped last night by a stranger,English,Critical,Sexual Assault
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+I need legal advice for divorce,English,Low,Legal Support
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+Someone is following me home from work every day,English,High,Stalking
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+Someone is following me home from work every day,English,High,Stalking
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+I need legal advice for divorce,English,Low,Legal Support
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+My ex is threatening to share my private messages,English,High,Cyber Crime
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+I was raped last night by a stranger,English,Critical,Sexual Assault
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+Someone is following me home from work every day,English,High,Stalking
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+யாரோ ஒருவர் என்னை தொடர்ந்து பின் தொடர்கிறார்,Tamil,High,Stalking
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+I was raped last night by a stranger,English,Critical,Sexual Assault
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+I need legal advice for divorce,English,Low,Legal Support
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+I was raped last night by a stranger,English,Critical,Sexual Assault
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+என் சக பணியாளர் பாலியல் நகைச்சுவைகளை சொல்கிறார்,Tamil,Medium,Workplace Harassment
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+Someone is following me home from work every day,English,High,Stalking
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+Someone is following me home from work every day,English,High,Stalking
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking
+I was raped last night by a stranger,English,Critical,Sexual Assault
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+Someone is following me home from work every day,English,High,Stalking
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+Colleagues make suggestive gestures at me,English,Medium,Workplace Harassment
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+என் கணவன் குடிப்பழக்கத்திற்காக அனைத்து பணத்தையும் செலவிடுகிறான்,Tamil,Medium,Financial Abuse
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+Someone is following me home from work every day,English,High,Stalking
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+I was raped last night by a stranger,English,Critical,Sexual Assault
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+My ex is threatening to share my private messages,English,High,Cyber Crime
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+Someone is following me home from work every day,English,High,Stalking
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+मेरा एक्स बॉयफ्रेंड मेरी तस्वीरें वायरल करने की धमकी दे रहा है,Hindi,Critical,Cyber Crime
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+Strangers send me explicit images online,English,Medium,Cyber Harassment
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+I need legal advice for divorce,English,Low,Legal Support
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+My in-laws are torturing me for more dowry,English,Critical,Dowry Harassment
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+मेरे घरवाले मेरी ज़बरदस्ती शादी करा रहे हैं,Hindi,Critical,Forced Marriage
+என் விருப்பம் இல்லாமல் எனக்கு திருமணம் செய்து வைக்க பார்க்கிறார்கள்,Tamil,Critical,Forced Marriage
+Someone is following me home from work every day,English,High,Stalking
+வேலையிடத்தில் வாய் வார்த்தையால் துன்புறுத்தப்படுகிறேன்,Tamil,Medium,Workplace Harassment
+I am being blackmailed by my ex-partner with my photos,English,Critical,Cyber Crime
+"My husband is beating me every day, I need help immediately",English,Critical,Domestic Violence
+என் மாமனார் மற்றும் மாமியார் வரதட்சணை கேட்டு கொடுமைப்படுத்துகிறார்கள்,Tamil,Critical,Dowry Harassment
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+मुझे एक कमरे में बंद कर दिया गया है,Hindi,Critical,Illegal Confinement
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+என் கணவன் என் பெற்றோரிடம் பேச அனுமதிக்கவில்லை,Tamil,Medium,Domestic Abuse
+मुझे ऑफिस में बॉस द्वारा परेशान किया जा रहा है,Hindi,Medium,Workplace Harassment
+मेरे ससुराल वाले दहेज के लिए मुझे जला मारने की धमकी दे रहे हैं,Hindi,Critical,Dowry Harassment
+எனக்கு விவாகரத்து பெற சட்டம் உதவி தேவை,Tamil,Low,Legal Support
+"मैं तलाक लेना चाहती हूं, कानूनी सलाह चाहिए",Hindi,Low,Legal Support
+I was raped last night by a stranger,English,Critical,Sexual Assault
+He took all my bank cards and won't let me buy food,English,High,Financial Abuse
+I am locked inside my room and cannot escape,English,Critical,Illegal Confinement
+என்னை ஒரு அறையில் அடைத்து வைத்துள்ளார்கள்,Tamil,Critical,Illegal Confinement
+நான் தினமும் என் கணவனால் அடிக்கப்படுகிறேன்,Tamil,Critical,Domestic Violence
+"पति ने मुझे घर से निकाल दिया है, मेरे पास पैसे नहीं हैं",Hindi,High,Financial Abuse
+"मेरे पति मुझे रोज़ मारते हैं, मुझे तुरंत मदद चाहिए",Hindi,Critical,Domestic Violence
+My boss keeps making inappropriate comments,English,Medium,Workplace Harassment
+நேற்று இரவு ஒருவரால் நான் பாலியல் பலாத்காரம் செய்யப்பட்டேன்,Tamil,Critical,Sexual Assault
+मुझे मानसिक रूप से प्रताड़ित किया जा रहा है,Hindi,Medium,Domestic Abuse
+My family is forcing me to marry someone twice my age,English,Critical,Forced Marriage
+रास्ते में कुछ लड़के रोज़ मेरा पीछा करते हैं,Hindi,High,Stalking

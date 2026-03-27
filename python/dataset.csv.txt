@@ -1,0 +1,13 @@
+message,urgency
+"I am being attacked right now",HIGH
+"There is blood and I need help",HIGH
+"Someone is trying to kill me",HIGH
+"I feel unsafe and scared",MEDIUM
+"I am being harassed repeatedly",MEDIUM
+"My husband is threatening me",MEDIUM
+"I need some guidance",LOW
+"I want to report an issue",LOW
+"This is not urgent but important",LOW
+"I need immediate medical help",HIGH
+"Cyber harassment happening",MEDIUM
+"Just want to file a complaint",LOW
