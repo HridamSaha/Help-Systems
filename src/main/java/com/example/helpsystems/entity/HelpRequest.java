@@ -35,6 +35,9 @@ public class HelpRequest {
 
     private String assignedAuthority;
 
+    private String assignedOfficer;
+    private String policeGroup;
+
     private String status;
 
     private LocalDateTime updatedAt;
@@ -51,9 +54,15 @@ public class HelpRequest {
 
     // Add this field
     // Add this field
-    private String urgency;
+   // private String urgency;
+    private double latitude;
+    private double longitude;
 
-    // Add getter and setter
+    private double policeLat;
+    private double policeLng;
+
+
+    // getter and setter
 
     //@Enumerated(EnumType.STRING)
    // private Department assignedDepartment;

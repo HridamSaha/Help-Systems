@@ -1,0 +1,90 @@
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(253, 246, 240, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex; align-items: center; gap: 2.5rem;
+}
+.logo {
+  display: flex; align-items: center; gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logoMark {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--rose), #c0395a);
+  border-radius: 10px;
+  display: grid; place-items: center;
+  color: white;
+}
+.logoMark svg { width: 18px; height: 18px; }
+.logoText {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--charcoal);
+}
+.links {
+  display: flex; list-style: none; gap: 0.25rem;
+  flex: 1;
+}
+.link {
+  text-decoration: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem; font-weight: 500;
+  color: var(--slate);
+  transition: color 0.2s, background 0.2s;
+}
+.link:hover { color: var(--rose); background: var(--rose-dim); }
+.link.active { color: var(--rose); font-weight: 600; }
+
+.cta {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--rose), #c0395a);
+  color: white;
+  padding: 0.55rem 1.4rem;
+  border-radius: 100px;
+  text-decoration: none;
+  font-size: 0.88rem; font-weight: 700;
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 4px 14px rgba(232, 83, 106, 0.35);
+}
+.cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none;
+  padding: 0.5rem; margin-left: auto;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--charcoal); border-radius: 2px;
+}
+
+.mobile {
+  display: flex; flex-direction: column;
+  padding: 1rem 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  gap: 0.25rem;
+}
+.mobileLink {
+  text-decoration: none;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem; font-weight: 500;
+  color: var(--slate);
+  transition: color 0.2s, background 0.2s;
+}
+.mobileLink:hover, .mobileLink.active {
+  color: var(--rose); background: var(--rose-dim);
+}
+
+@media (max-width: 768px) {
+  .links, .cta { display: none; }
+  .hamburger { display: flex; }
+}

@@ -1,0 +1,160 @@
+.page {}
+
+/* ── Hero ── */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: 90vh;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+  align-items: center;
+  max-width: 1200px; margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+}
+.heroDecor1 {
+  position: absolute; top: -100px; right: -100px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,83,106,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.heroDecor2 {
+  position: absolute; bottom: -80px; left: -80px;
+  width: 350px; height: 350px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(155,107,126,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.heroContent { animation: fadeUp 0.6s ease both; }
+
+.badge {
+  display: inline-block;
+  background: var(--rose-soft); color: var(--rose);
+  padding: 0.35rem 1rem; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 1.25rem;
+  border: 1px solid rgba(232,83,106,0.25);
+}
+.heroTitle {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  color: var(--charcoal); line-height: 1.15;
+}
+.heroTitle em { color: var(--rose); font-style: italic; }
+.heroSub {
+  margin-top: 1.25rem; font-size: 1.05rem;
+  color: var(--slate); line-height: 1.75; max-width: 480px;
+}
+.heroActions {
+  margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.btnPrimary {
+  background: linear-gradient(135deg, var(--rose), #c0395a);
+  color: white; padding: 0.85rem 2rem;
+  border-radius: 100px; text-decoration: none;
+  font-weight: 700; font-size: 0.95rem;
+  box-shadow: 0 6px 20px rgba(232,83,106,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btnPrimary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(232,83,106,0.4); }
+.btnSecondary {
+  background: white; color: var(--charcoal);
+  padding: 0.85rem 2rem; border-radius: 100px;
+  text-decoration: none; font-weight: 600; font-size: 0.95rem;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.2s, color 0.2s;
+}
+.btnSecondary:hover { border-color: var(--rose); color: var(--rose); }
+.heroNote { margin-top: 1.25rem; font-size: 0.83rem; color: var(--muted); }
+
+/* floating card */
+.heroCard {
+  background: white; border-radius: var(--radius-lg);
+  border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: fadeUp 0.7s 0.15s ease both;
+}
+.heroCardHeader {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--cream); border-bottom: 1px solid var(--border);
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.heroCardBody { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
+.cardRow { display: flex; justify-content: space-between; align-items: center; }
+.cardLabel { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
+.cardId { font-family: monospace; font-size: 0.9rem; color: var(--rose); background: var(--rose-soft); padding: 0.2rem 0.6rem; border-radius: 4px; }
+.cardValue { font-size: 0.88rem; font-weight: 600; color: var(--charcoal); }
+.progressBar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 0.25rem; }
+.progressFill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--success)); border-radius: 3px; transition: width 1s ease; }
+
+/* ── Sections ── */
+.section { padding: 5rem 2rem; }
+.sectionAlt { padding: 5rem 2rem; background: var(--warm-white); }
+.sectionInner { max-width: 1200px; margin: 0 auto; }
+.label {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--rose); margin-bottom: 0.6rem;
+}
+.sectionTitle {
+  font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--charcoal);
+  margin-bottom: 2.5rem;
+}
+
+/* Issue grid */
+.issueGrid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+}
+.issueCard {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--iss-bg);
+  border: 1.5px solid var(--iss-color);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.issueCard:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.issueLabel { font-weight: 700; font-size: 0.95rem; color: var(--iss-color); }
+.issueArrow { font-size: 1.1rem; color: var(--iss-color); }
+
+/* Steps */
+.stepsGrid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+}
+.step { text-align: center; animation: fadeUp 0.5s ease both; }
+.stepNum {
+  display: inline-block; font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 700; color: var(--rose-soft);
+  -webkit-text-stroke: 2px var(--rose);
+  margin-bottom: 0.75rem;
+}
+.stepTitle { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; color: var(--charcoal); margin-bottom: 0.5rem; }
+.stepDesc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+/* Features */
+.featureGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.featureCard { animation: fadeUp 0.5s ease both; }
+.featureIcon { font-size: 1.75rem; margin-bottom: 0.75rem; display: block; }
+.featureTitle { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; color: var(--charcoal); margin-bottom: 0.4rem; }
+.featureDesc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+/* CTA */
+.ctaBanner {
+  background: linear-gradient(135deg, var(--rose) 0%, #9b2a47 100%);
+  padding: 5rem 2rem;
+}
+.ctaBtn {
+  display: inline-block; margin-top: 2rem;
+  background: white; color: var(--rose);
+  padding: 0.9rem 2.5rem; border-radius: 100px;
+  text-decoration: none; font-weight: 800; font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.ctaBtn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .heroCard { display: none; }
+  .featureGrid, .stepsGrid { grid-template-columns: repeat(2, 1fr); }
+  .issueGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .featureGrid, .stepsGrid, .issueGrid { grid-template-columns: 1fr; }
+}

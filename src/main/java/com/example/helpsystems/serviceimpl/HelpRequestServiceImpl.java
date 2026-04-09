@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -82,7 +82,7 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
         // ── CRITICAL ──────────────────────────────────────────────────────────────
         // English
-        if (msg.contains("rape") || msg.contains("murder") || msg.contains("kill") ||
+        if (msg.contains("rapes") || msg.contains("murder") || msg.contains("kill") ||
                 msg.contains("acid") || msg.contains("stab") || msg.contains("trafficking") ||
                 msg.contains("gang rape") || msg.contains("kidnap") || msg.contains("death threat") ||
                 msg.contains("forced sex") || msg.contains("molest")) {
@@ -215,7 +215,21 @@ public class HelpRequestServiceImpl implements HelpRequestService {
         request.setMessage((finalMessage));
         request.setLanguage(dto.getLanguage());
         request.setLocationArea(dto.getLocationArea());
+        request.setLatitude(dto.getLatitude());
+        request.setLongitude(dto.getLongitude());
+     //new
+        request.setDepartment(detectDepartment(finalMessage));
+        request.setAssignedAuthority(assignAuthority(dto.getIssueType(), dto.getLocationArea()));
 
+// 🔥 ADD THIS BLOCK HERE
+     //   String group = assignPoliceGroup(request.getUrgencyLevel());
+      //  request.setPoliceGroup(group);
+
+        request.setStatus("SUBMITTED");
+        request.setCreatedAt(LocalDateTime.now());
+       // request.setStatus("SUBMITTED");
+
+        //return helpRequestRepository.save(request);
         // ── ML urgency with keyword fallback ─────────────────────────────────
         MlResult mlResult = callMlService(finalMessage);
         if (mlResult != null) {
@@ -223,7 +237,8 @@ public class HelpRequestServiceImpl implements HelpRequestService {
         } else {
             request.setUrgencyLevel(detectUrgencyFallback(finalMessage));
         }
-
+        //  String group = assignPoliceGroup(request.getUrgencyLevel());
+       String group = assignPoliceGroup(request.getUrgencyLevel()); request.setPoliceGroup(group);
         request.setDepartment(detectDepartment(finalMessage));
         request.setAssignedAuthority(assignAuthority(dto.getIssueType(), dto.getLocationArea()));
         request.setStatus("SUBMITTED");
@@ -231,14 +246,77 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
         return helpRequestRepository.save(request);
     }
+    private double policeLat = 12.9692;
+    private double policeLng = 79.1559;
 
+   /* @Override
+    public HelpRequest trackRequest(String requestId) {
+        // return helpRequestRepository.findByRequestId(requestId)
+        //     .orElseThrow(() -> new RuntimeException("Request ID not found"));
+        HelpRequest req = helpRequestRepository.findByRequestId(requestId)
+                .orElseThrow(() -> new RuntimeException("Request ID not found"));
+
+        double userLat = req.getLatitude();
+        double userLng = req.getLongitude();
+
+        double offset = 0.0009;
+
+        double policeLat = userLat +  offset;
+        double policeLng = userLng + offset;
+
+        // 🚓 Move police towards user
+        policeLat += (userLat - policeLat) * 0.05;
+        policeLng += (userLng - policeLng) * 0.05;
+
+        req.setPoliceLat(policeLat);
+        req.setPoliceLng(policeLng);
+
+        // 📏 Distance check
+        double distance = Math.sqrt(
+                Math.pow(userLat - policeLat, 2) +
+                        Math.pow(userLng - policeLng, 2)
+        );
+
+        // ✅ Auto resolve when reached
+        if (distance < 0.0005) {
+            req.setStatus("RESOLVED");
+        } else {
+            req.setStatus("IN_PROGRESS");
+        }
+
+        return helpRequestRepository.save(req);
+    }*/
     @Override
     public HelpRequest trackRequest(String requestId) {
-        return helpRequestRepository.findByRequestId(requestId)
-                .orElseThrow(() -> new RuntimeException("Request ID not found"));
-    }
 
-    @Override
+        HelpRequest req = helpRequestRepository.findByRequestId(requestId)
+                .orElseThrow(() -> new RuntimeException("Request ID not found"));
+
+        double userLat = req.getLatitude();
+        double userLng = req.getLongitude();
+
+        Double policeLat = req.getPoliceLat();
+        Double policeLng = req.getPoliceLng();
+
+        // 🚓 FIRST TIME → initialize 5 km away
+        if (policeLat == null || policeLng == null) {
+            policeLat = userLat + 0.045;
+            policeLng = userLng + 0.045;
+        }
+        else {
+            // 🚓 MOVE toward user (important part)
+            double step = 0.001;
+
+            policeLat = policeLat + (userLat - policeLat) * 0.1;
+            policeLng = policeLng + (userLng - policeLng) * 0.1;
+        }
+
+        req.setPoliceLat(policeLat);
+        req.setPoliceLng(policeLng);
+
+        return helpRequestRepository.save(req);
+    }
+   @Override
     public HelpRequest updateStatus(String requestId, String status) {
         HelpRequest request = trackRequest(requestId);
         request.setStatus(status);
@@ -273,10 +351,63 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
         return helpRequestRepository.save(request);
     }
+    @Override
+    public HelpRequest assignRequest(String requestId) {
 
+        Optional<HelpRequest> optional = helpRequestRepository.findByRequestId(requestId);
+
+        if (optional.isPresent()) {
+
+            HelpRequest req = optional.get();
+            String group = assignPoliceGroup(req.getUrgencyLevel());
+            req.setPoliceGroup(group);
+            // 🚓 SET POLICE LOCATION (VERY IMPORTANT)
+            req.setPoliceLat(req.getLatitude() - 0.01);
+            req.setPoliceLng(req.getLongitude() - 0.01);
+
+
+            req.setStatus("IN_PROGRESS");
+
+            return helpRequestRepository.save(req);
+        }
+
+        throw new RuntimeException("Request not found");
+    }
         @Override
         public List<HelpRequest> getAllRequests () {
             return helpRequestRepository.findAll();
         }
 
+    @Override
+    public HelpRequest resolveRequest(String requestId) {
+
+        HelpRequest req = trackRequest(requestId);
+
+        req.setStatus("RESOLVED");
+        req.setResolvedAt(java.time.LocalDateTime.now());
+
+        return helpRequestRepository.save(req);
+    }
+    private String assignPoliceGroup(String urgency) {
+
+        if (urgency == null) return "POLICE_GENERAL";
+
+        switch (urgency.toUpperCase()) {
+
+            case "CRITICAL":
+                return "POLICE_SPECIAL_UNIT";
+
+            case "HIGH":
+                return "POLICE_FAST_RESPONSE";
+
+            case "MEDIUM":
+                return "POLICE_LOCAL_PATROL";
+
+            case "LOW":
+                return "POLICE_GENERAL";
+
+            default:
+                return "POLICE_GENERAL";
+        }
+    }
     }

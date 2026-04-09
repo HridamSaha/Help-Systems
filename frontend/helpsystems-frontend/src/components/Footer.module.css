@@ -1,0 +1,32 @@
+.footer {
+  background: var(--charcoal);
+  color: var(--muted);
+  margin-top: auto;
+}
+.inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 3rem 2rem;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+}
+.brand p { font-size: 0.88rem; margin-top: 0.75rem; line-height: 1.7; max-width: 260px; }
+.logoText {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700;
+  color: white;
+}
+.col { display: flex; flex-direction: column; gap: 0.6rem; }
+.col h4 { font-family: 'Nunito', sans-serif; font-weight: 700; color: white; font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.25rem; }
+.col a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+.col a:hover { color: var(--rose-light); }
+.bottom {
+  border-top: 1px solid #3d2e38;
+  padding: 1.25rem 2rem;
+  text-align: center;
+  font-size: 0.82rem;
+}
+@media (max-width: 768px) {
+  .inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 480px) {
+  .inner { grid-template-columns: 1fr; }
+}

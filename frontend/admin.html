@@ -1,112 +1,779 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Admin Dashboard</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – Help Systems</title>
+  <meta name="description" content="Admin dashboard for Help Systems. View, resolve and reassign emergency requests.">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Admin-specific tweaks */
+    .admin-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-refresh {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-refresh:hover {
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-refresh:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .last-updated {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* ── Police Groups Section ──────────────────────────────── */
+    .police-groups-section {
+      margin-bottom: 28px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .police-groups-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media(max-width:700px) {
+      .police-groups-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .pg-card {
+      border-radius: 16px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+
+    .pg-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .pg-card.pg-alpha {
+      background: rgba(248, 113, 113, 0.07);
+      border: 1px solid rgba(248, 113, 113, 0.25);
+    }
+
+    .pg-card.pg-bravo {
+      background: rgba(251, 146, 60, 0.07);
+      border: 1px solid rgba(251, 146, 60, 0.25);
+    }
+
+    .pg-card.pg-charlie {
+      background: rgba(250, 204, 21, 0.07);
+      border: 1px solid rgba(250, 204, 21, 0.25);
+    }
+
+    .pg-card.pg-delta {
+      background: rgba(74, 222, 128, 0.07);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+    }
+
+    .pg-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .pg-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .pg-alpha .pg-badge {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+    }
+
+    .pg-bravo .pg-badge {
+      background: rgba(251, 146, 60, 0.15);
+      color: #fb923c;
+    }
+
+    .pg-charlie .pg-badge {
+      background: rgba(250, 204, 21, 0.15);
+      color: #facc15;
+    }
+
+    .pg-delta .pg-badge {
+      background: rgba(74, 222, 128, 0.15);
+      color: #4ade80;
+    }
+
+    .pg-icon {
+      font-size: 22px;
+      opacity: 0.6;
+    }
+
+    .pg-name {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .pg-alpha .pg-name {
+      color: #f87171;
+    }
+
+    .pg-bravo .pg-name {
+      color: #fb923c;
+    }
+
+    .pg-charlie .pg-name {
+      color: #facc15;
+    }
+
+    .pg-delta .pg-name {
+      color: #4ade80;
+    }
+
+    .pg-handles {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 14px;
+    }
+
+    .pg-stats {
+      display: flex;
+      gap: 16px;
+    }
+
+    .pg-stat-item {
+      flex: 1;
+      text-align: center;
+    }
+
+    .pg-stat-num {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .pg-alpha .pg-stat-num {
+      color: #f87171;
+    }
+
+    .pg-bravo .pg-stat-num {
+      color: #fb923c;
+    }
+
+    .pg-charlie .pg-stat-num {
+      color: #facc15;
+    }
+
+    .pg-delta .pg-stat-num {
+      color: #4ade80;
+    }
+
+    .pg-stat-label {
+      font-size: 10px;
+      color: var(--text-3);
+      margin-top: 3px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pg-divider {
+      width: 1px;
+      background: rgba(255, 255, 255, 0.07);
+      flex-shrink: 0;
+    }
+
+    /* Group badge in table */
+    .grp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .grp-alpha {
+      background: rgba(248, 113, 113, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.25);
+    }
+
+    .grp-bravo {
+      background: rgba(251, 146, 60, 0.12);
+      color: #fb923c;
+      border: 1px solid rgba(251, 146, 60, 0.25);
+    }
+
+    .grp-charlie {
+      background: rgba(250, 204, 21, 0.12);
+      color: #facc15;
+      border: 1px solid rgba(250, 204, 21, 0.25);
+    }
+
+    .grp-delta {
+      background: rgba(74, 222, 128, 0.12);
+      color: #4ade80;
+      border: 1px solid rgba(74, 222, 128, 0.25);
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
-<h2>All Help Requests</h2>
-</div>
 
-<button onclick="loadRequests()">Load Requests</button>
+  <!-- TOP BAR -->
+  <nav class="topbar">
+    <a class="topbar-brand" href="index.html">
+      <div class="brand-icon">🛡️</div>
+      <h1>Help <span>Systems</span></h1>
+    </a>
+    <div class="topbar-nav">
+      <a href="index.html">Submit</a>
+      <a href="track.html">Track</a>
+      <a href="admin.html" class="active">Admin</a>
+      <a href="police.html">Police</a>
+    </div>
+  </nav>
 
-<table border="1" id="table">
-<tr>
-<th>Request ID</th>
-<th>Department</th>
-<th>Status</th>
-<th>Urgency</th>
-<th>Response Time (min)</th>
-<th>Actions</th>
-</tr>
-</table>
+  <!-- MAIN -->
+  <div class="page-wrap-wide">
 
-<script>
+    <!-- Header -->
+    <div
+      style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+      <div>
+        <h2 class="section-title">Admin Dashboard</h2>
+        <p class="section-subtitle" style="margin-bottom:0">Monitor and manage all incoming emergency requests</p>
+      </div>
+      <div class="admin-actions">
+        <span class="last-updated" id="lastUpdated"></span>
+        <button class="btn-refresh" id="refreshBtn" onclick="loadRequests()">
+          🔄 Load / Refresh
+        </button>
+      </div>
+    </div>
 
-async function loadRequests(){
+    <!-- STAT CARDS -->
+    <div class="stats-grid">
+      <div class="stat-card sc-critical">
+        <div class="sc-label">🔴 Critical</div>
+        <div class="sc-value" id="cnt-critical">—</div>
+        <div class="sc-sub">Immediate action</div>
+      </div>
+      <div class="stat-card sc-high">
+        <div class="sc-label">🟠 High</div>
+        <div class="sc-value" id="cnt-high">—</div>
+        <div class="sc-sub">Within 1 hour</div>
+      </div>
+      <div class="stat-card sc-medium">
+        <div class="sc-label">🟡 Medium</div>
+        <div class="sc-value" id="cnt-medium">—</div>
+        <div class="sc-sub">Within 4 hours</div>
+      </div>
+      <div class="stat-card sc-low">
+        <div class="sc-label">🟢 Low</div>
+        <div class="sc-value" id="cnt-low">—</div>
+        <div class="sc-sub">Standard processing</div>
+      </div>
+    </div>
 
-const res = await fetch("http://localhost:8080/api/help/all");
-const data = await res.json();
+    <!-- POLICE GROUPS -->
+    <div class="police-groups-section">
+      <div class="section-label">🚔 Police Group Assignment — Case Distribution by Urgency</div>
+      <div class="police-groups-grid">
 
-const table = document.getElementById("table");
+        <div class="pg-card pg-alpha">
+          <div class="pg-top">
+            <div>
+              <div class="pg-name">🔴 Alpha Squad</div>
+              <div class="pg-handles">Critical priority cases</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+              <span class="pg-badge">CRITICAL</span>
+              <span class="pg-icon">🚨</span>
+            </div>
+          </div>
+          <div class="pg-stats">
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-alpha-total">—</div>
+              <div class="pg-stat-label">Total</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-alpha-active">—</div>
+              <div class="pg-stat-label">Active</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-alpha-resolved">—</div>
+              <div class="pg-stat-label">Resolved</div>
+            </div>
+          </div>
+        </div>
 
-// 🔥 clear old rows (important)
-table.innerHTML = `
-<tr>
-<th>Request ID</th>
-<th>Department</th>
-<th>Status</th>
-<th>Urgency</th>
-<th>Response Time (min)</th>
-<th>Actions</th>
-</tr>
-`;
+        <div class="pg-card pg-bravo">
+          <div class="pg-top">
+            <div>
+              <div class="pg-name">🟠 Bravo Squad</div>
+              <div class="pg-handles">High priority cases</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+              <span class="pg-badge">HIGH</span>
+              <span class="pg-icon">🚔</span>
+            </div>
+          </div>
+          <div class="pg-stats">
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-bravo-total">—</div>
+              <div class="pg-stat-label">Total</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-bravo-active">—</div>
+              <div class="pg-stat-label">Active</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-bravo-resolved">—</div>
+              <div class="pg-stat-label">Resolved</div>
+            </div>
+          </div>
+        </div>
 
-data.forEach(r=>{
+        <div class="pg-card pg-charlie">
+          <div class="pg-top">
+            <div>
+              <div class="pg-name">🟡 Charlie Squad</div>
+              <div class="pg-handles">Medium priority cases</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+              <span class="pg-badge">MEDIUM</span>
+              <span class="pg-icon">🚗</span>
+            </div>
+          </div>
+          <div class="pg-stats">
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-charlie-total">—</div>
+              <div class="pg-stat-label">Total</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-charlie-active">—</div>
+              <div class="pg-stat-label">Active</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-charlie-resolved">—</div>
+              <div class="pg-stat-label">Resolved</div>
+            </div>
+          </div>
+        </div>
 
-const row = table.insertRow();
+        <div class="pg-card pg-delta">
+          <div class="pg-top">
+            <div>
+              <div class="pg-name">🟢 Delta Squad</div>
+              <div class="pg-handles">Low priority cases</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+              <span class="pg-badge">LOW</span>
+              <span class="pg-icon">🚶</span>
+            </div>
+          </div>
+          <div class="pg-stats">
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-delta-total">—</div>
+              <div class="pg-stat-label">Total</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-delta-active">—</div>
+              <div class="pg-stat-label">Active</div>
+            </div>
+            <div class="pg-divider"></div>
+            <div class="pg-stat-item">
+              <div class="pg-stat-num" id="adm-delta-resolved">—</div>
+              <div class="pg-stat-label">Resolved</div>
+            </div>
+          </div>
+        </div>
 
-row.insertCell(0).innerText = r.requestId;
-row.insertCell(1).innerText = r.department;
-row.insertCell(2).innerText = r.status;
-row.insertCell(3).innerText = r.urgencyLevel;
+      </div>
+    </div>
 
-// ⏱ response time
-row.insertCell(4).innerText = r.responseTimeMinutes || "-";
+    <!-- CHARTS -->
+    <div class="charts-row">
 
-// 🔥 ACTION BUTTONS
-const actions = row.insertCell(5);
+      <!-- PIE -->
+      <div class="chart-card">
+        <h3>
+          <span class="dot" style="background:var(--critical)"></span>
+          Case Urgency Distribution
+        </h3>
+        <div class="chart-wrapper">
+          <canvas id="urgencyPieChart"></canvas>
+        </div>
+        <div class="pie-legend">
+          <div class="legend-item"><span class="legend-dot" style="background:var(--critical)"></span>Critical</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--high)"></span>High</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--medium)"></span>Medium</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--low)"></span>Low</div>
+        </div>
+      </div>
 
-actions.innerHTML = `
-<button onclick="resolveRequest('${r.requestId}')">Resolve</button>
-<button onclick="reassignRequest('${r.requestId}')">Reassign</button>
-`;
+      <!-- BAR -->
+      <div class="chart-card">
+        <h3>
+          <span class="dot" style="background:#60a5fa"></span>
+          Resolved vs Active Cases
+        </h3>
+        <div class="chart-wrapper">
+          <canvas id="resolvedBarChart"></canvas>
+        </div>
+      </div>
 
-});
+    </div>
 
-}
+    <!-- TABLE -->
+    <div class="table-card">
+      <div class="table-header">
+        <h3>📋 All Help Requests</h3>
+        <span class="count-badge" id="totalBadge">0 requests</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Urgency</th>
+              <th>Police Group</th>
+              <th>Response Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr>
+              <td colspan="7">
+                <div class="empty-state">
+                  <div class="empty-icon">📂</div>
+                  <p>Click <strong>Load / Refresh</strong> to view all help requests</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-function resolveRequest(id){
+  </div>
 
-fetch("http://localhost:8080/api/help/status", {
-method: "PUT",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-requestId: id,
-status: "RESOLVED"
-})
-})
-.then(() => {
-alert("Resolved ✅");
-loadRequests();
-});
+  <script>
+    // ── Chart.js global defaults ─────────────────────────────────────────────────
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'Inter, sans-serif';
 
-}
+    const URGENCY_COLORS = {
+      CRITICAL: { fill: '#f87171', alpha: 'rgba(248,113,113,0.75)' },
+      HIGH: { fill: '#fb923c', alpha: 'rgba(251,146,60,0.75)' },
+      MEDIUM: { fill: '#facc15', alpha: 'rgba(250,204,21,0.75)' },
+      LOW: { fill: '#4ade80', alpha: 'rgba(74,222,128,0.75)' },
+    };
+    const URGENCY_ORDER = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'];
 
-function reassignRequest(id){
+    // Police group mapping (same as police.html)
+    const URGENCY_GROUP = {
+      CRITICAL: { squad: 'Alpha Squad', cls: 'grp-alpha', icon: '🚨' },
+      HIGH: { squad: 'Bravo Squad', cls: 'grp-bravo', icon: '🚔' },
+      MEDIUM: { squad: 'Charlie Squad', cls: 'grp-charlie', icon: '🚗' },
+      LOW: { squad: 'Delta Squad', cls: 'grp-delta', icon: '🚶' },
+    };
 
-let authority = prompt("Enter new authority:");
+    let pieChart = null, barChart = null;
 
-if(!authority) return;
+    // ── LOAD ──────────────────────────────────────────────────────────────────────
+    async function loadRequests() {
+      const btn = document.getElementById('refreshBtn');
+      btn.disabled = true;
+      btn.innerText = '⏳ Loading…';
 
-fetch("http://localhost:8080/api/help/reassign", {
-method: "PUT",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-requestId: id,
-authority: authority
-})
-})
-.then(() => {
-alert("Reassigned 🔁");
-loadRequests();
-});
+      try {
+        const res = await fetch('http://localhost:8080/api/help/all');
+        const data = await res.json();
 
-}
+        renderStatCards(data);
+        renderPoliceGroups(data);
+        renderPieChart(data);
+        renderBarChart(data);
+        renderTable(data);
 
-</script>
+        document.getElementById('totalBadge').innerText = `${data.length} request${data.length !== 1 ? 's' : ''}`;
+        document.getElementById('lastUpdated').innerText = 'Updated: ' + new Date().toLocaleTimeString();
+      } catch (err) {
+        alert('⚠️ Could not connect to backend on port 8080.');
+        console.error(err);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '🔄 Load / Refresh';
+      }
+    }
+
+    // ── STAT CARDS ────────────────────────────────────────────────────────────────
+    function renderStatCards(data) {
+      const c = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+      data.forEach(r => { const u = (r.urgencyLevel || '').toUpperCase(); if (c[u] !== undefined) c[u]++; });
+      document.getElementById('cnt-critical').innerText = c.CRITICAL;
+      document.getElementById('cnt-high').innerText = c.HIGH;
+      document.getElementById('cnt-medium').innerText = c.MEDIUM;
+      document.getElementById('cnt-low').innerText = c.LOW;
+    }
+
+    // ── POLICE GROUPS ─────────────────────────────────────────────────────────────
+    function renderPoliceGroups(data) {
+      const stats = {
+        CRITICAL: { total: 0, active: 0, resolved: 0 },
+        HIGH: { total: 0, active: 0, resolved: 0 },
+        MEDIUM: { total: 0, active: 0, resolved: 0 },
+        LOW: { total: 0, active: 0, resolved: 0 },
+      };
+      data.forEach(r => {
+        const u = (r.urgencyLevel || 'LOW').toUpperCase();
+        const s = (r.status || '').toUpperCase();
+        if (!stats[u]) return;
+        stats[u].total++;
+        if (s === 'RESOLVED') stats[u].resolved++;
+        else stats[u].active++;
+      });
+      const set = (prefix, urg) => {
+        document.getElementById(`adm-${prefix}-total`).innerText = stats[urg].total;
+        document.getElementById(`adm-${prefix}-active`).innerText = stats[urg].active;
+        document.getElementById(`adm-${prefix}-resolved`).innerText = stats[urg].resolved;
+      };
+      set('alpha', 'CRITICAL');
+      set('bravo', 'HIGH');
+      set('charlie', 'MEDIUM');
+      set('delta', 'LOW');
+    }
+
+    // ── PIE CHART ─────────────────────────────────────────────────────────────────
+    function renderPieChart(data) {
+      const c = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+      data.forEach(r => { const u = (r.urgencyLevel || '').toUpperCase(); if (c[u] !== undefined) c[u]++; });
+
+      const labels = URGENCY_ORDER.map(u => u[0] + u.slice(1).toLowerCase());
+      const values = URGENCY_ORDER.map(u => c[u]);
+      const colors = URGENCY_ORDER.map(u => URGENCY_COLORS[u].fill);
+
+      if (pieChart) pieChart.destroy();
+      pieChart = new Chart(document.getElementById('urgencyPieChart').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels,
+          datasets: [{ data: values, backgroundColor: colors, borderColor: '#161c36', borderWidth: 3, hoverOffset: 8 }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '62%',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  const tot = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                  const pct = tot ? ((ctx.parsed / tot) * 100).toFixed(1) : 0;
+                  return ` ${ctx.label}: ${ctx.parsed} cases (${pct}%)`;
+                }
+              },
+              backgroundColor: '#1a1d2e', borderColor: '#2d3154', borderWidth: 1,
+              padding: 10, titleColor: '#e2e8f0', bodyColor: '#94a3b8'
+            }
+          }
+        }
+      });
+    }
+
+    // ── BAR CHART ─────────────────────────────────────────────────────────────────
+    function renderBarChart(data) {
+      const resolved = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+      const active = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+      data.forEach(r => {
+        const u = (r.urgencyLevel || '').toUpperCase();
+        const s = (r.status || '').toUpperCase();
+        if (resolved[u] === undefined) return;
+        if (s === 'RESOLVED') resolved[u]++; else active[u]++;
+      });
+
+      const labels = URGENCY_ORDER.map(u => u[0] + u.slice(1).toLowerCase());
+
+      if (barChart) barChart.destroy();
+      barChart = new Chart(document.getElementById('resolvedBarChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: '✅ Resolved',
+              data: URGENCY_ORDER.map(u => resolved[u]),
+              backgroundColor: 'rgba(52,211,153,0.75)',
+              borderColor: '#34d399', borderWidth: 1.5,
+              borderRadius: 6, borderSkipped: false
+            },
+            {
+              label: '🔴 Active / Pending',
+              data: URGENCY_ORDER.map(u => active[u]),
+              backgroundColor: URGENCY_ORDER.map(u => URGENCY_COLORS[u].alpha),
+              borderColor: URGENCY_ORDER.map(u => URGENCY_COLORS[u].fill),
+              borderWidth: 1.5, borderRadius: 6, borderSkipped: false
+            }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { padding: 16, boxWidth: 12, usePointStyle: true, pointStyle: 'rectRounded' }
+            },
+            tooltip: {
+              backgroundColor: '#1a1d2e', borderColor: '#2d3154', borderWidth: 1,
+              padding: 10, titleColor: '#e2e8f0', bodyColor: '#94a3b8'
+            }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(45,49,84,0.4)' }, ticks: { color: '#64748b' } },
+            y: { beginAtZero: true, grid: { color: 'rgba(45,49,84,0.4)' }, ticks: { color: '#64748b', precision: 0 } }
+          }
+        }
+      });
+    }
+
+    // ── TABLE ─────────────────────────────────────────────────────────────────────
+    function renderTable(data) {
+      const tbody = document.getElementById('tableBody');
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📭</div><p>No requests found</p></div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = data.map(r => {
+        const u = (r.urgencyLevel || 'LOW').toUpperCase();
+        const s = (r.status || 'PENDING').toUpperCase();
+        const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
+
+        // ── Time column ────────────────────────────────────────────────────────────
+        const timeHtml = r.responseTimeMinutes != null
+          ? `<span style="color:var(--resolved);font-weight:700;">⏱ ${r.responseTimeMinutes} min</span>`
+          : '—';
+
+        // ── Police Group column ───────────────────────────────────────────────────
+        const assigned = (s === 'IN_PROGRESS' || s === 'RESOLVED');
+        const groupHtml = assigned
+          ? `<span class="grp-badge ${grp.cls}">${grp.icon} ${grp.squad}</span>`
+          : `<span style="font-size:11px;color:var(--text-3);">—</span>`;
+
+        // ── Action buttons — STATUS AWARE ─────────────────────────────────────────
+        let actionHtml;
+        if (s === 'RESOLVED') {
+          actionHtml = `
+        <span style="font-size:11px;color:var(--resolved);font-weight:600;">✅ Resolved by Police</span><br>
+        <button class="btn-tbl btn-tbl-reassign" style="margin-top:6px;" onclick="reassignRequest('${r.requestId}')"
+          title="Reassign reopens this case so police can act again">
+          🔁 Reassign &amp; Reopen
+        </button>`;
+        } else {
+          actionHtml = `
+        <button class="btn-tbl btn-tbl-resolve"  onclick="resolveRequest('${r.requestId}')">✅ Resolve</button>
+        <button class="btn-tbl btn-tbl-reassign" onclick="reassignRequest('${r.requestId}')">🔁 Reassign</button>`;
+        }
+
+        return `<tr>
+      <td>${r.requestId}</td>
+      <td>${r.department || '—'}</td>
+      <td><span class="badge badge-${s}">${s.replace('_', ' ')}</span></td>
+      <td><span class="badge badge-${u}">${u}</span></td>
+      <td>${groupHtml}</td>
+      <td>${timeHtml}</td>
+      <td>${actionHtml}</td>
+    </tr>`;
+      }).join('');
+    }
+
+    // ── RESOLVE (admin manual override) ──────────────────────────────────────────
+    function resolveRequest(id) {
+      if (!confirm(`Mark request ${id} as RESOLVED?\n\nThis will sync immediately to the Police and Tracking pages.`)) return;
+      fetch('http://localhost:8080/api/help/status', {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestId: id, status: 'RESOLVED' })
+      }).then(() => loadRequests());
+    }
+
+    // ── REASSIGN (reopens a resolved case back to SUBMITTED) ──────────────────────
+    function reassignRequest(id) {
+      const a = prompt(`Reassign request ${id} to a new authority:\n\n(This will reopen the case and change status back to SUBMITTED so police can assign and resolve again)`);
+      if (!a) return;
+      // Step 1: reassign authority
+      fetch('http://localhost:8080/api/help/reassign', {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requestId: id, authority: a })
+      })
+        .then(() =>
+          // Step 2: reset status to SUBMITTED so police can re-act
+          fetch('http://localhost:8080/api/help/status', {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ requestId: id, status: 'SUBMITTED' })
+          })
+        )
+        .then(() => loadRequests());
+    }
+  </script>
 
 </body>
+
 </html>

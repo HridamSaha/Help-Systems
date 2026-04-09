@@ -14,6 +14,7 @@ public class HelpRequestDTO {
     private String voiceText;
     private String locationArea;
     private String urgency;
-
+    private double latitude;
+    private double longitude;
 
 }

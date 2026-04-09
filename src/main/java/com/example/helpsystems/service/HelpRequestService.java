@@ -17,4 +17,6 @@ public interface HelpRequestService {
 
    // HelpRequest updateStatus(StatusUpdateDTO dto);
    HelpRequest reassign(String requestId, String authority);
+    HelpRequest assignRequest(String requestId);
+    HelpRequest resolveRequest(String requestId);
 }

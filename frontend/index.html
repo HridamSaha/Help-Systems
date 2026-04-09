@@ -1,101 +1,472 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Anonymous Help Request</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Help Request – Help Systems</title>
+  <meta name="description"
+    content="Submit an anonymous emergency help request. Voice input in any Indian language supported.">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/franc-min@6/index.min.js"></script>
+
+  <style>
+    /* Page-specific overrides */
+    .form-hero {
+      text-align: center;
+      padding: 40px 0 28px;
+    }
+
+    .form-hero .hero-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 26px rgba(239, 68, 68, 0.35);
+    }
+
+    .form-hero h2 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .form-hero p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-top: 6px;
+    }
+
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .issue-select-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .issue-option {
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: all 0.2s;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .issue-option:hover {
+      border-color: var(--accent);
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .issue-option.selected {
+      border-color: var(--accent);
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      font-weight: 700;
+    }
+
+    .issue-option .opt-icon {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* Hidden native select */
+    #issueType {
+      display: none;
+    }
+
+    .map-wrap {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      margin-top: 10px;
+    }
+
+    #map {
+      height: 240px;
+    }
+
+    /* Submit area */
+    .submit-area {
+      margin-top: 24px;
+    }
+
+    .sos-hint {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 12px;
+    }
+
+    .sos-hint a {
+      color: #818cf8;
+      text-decoration: none;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>Submit Help Request</h2>
+
+  <!-- TOP BAR -->
+  <nav class="topbar">
+    <a class="topbar-brand" href="index.html">
+      <div class="brand-icon">🛡️</div>
+      <h1>Help <span>Systems</span></h1>
+    </a>
+    <div class="topbar-nav">
+      <a href="index.html" class="active">Submit</a>
+      <a href="track.html">Track</a>
+      <a href="admin.html">Admin</a>
+      <a href="police.html">Police</a>
+    </div>
+  </nav>
+
+  <!-- PAGE -->
+  <div class="page-wrap" style="max-width:600px;">
+
+    <div class="form-hero">
+      <div class="hero-icon">🚨</div>
+      <h2>Submit Help Request</h2>
+      <p>Your request is anonymous. Help will be dispatched immediately.</p>
     </div>
 
-    <div class="help">
-        <form id="helpForm">
-            <!-- 
-            <label>Issue Type</label>
-            <input type="text" id="issueType" required><br><br> -->
-            <label for="issueType">Select Issue Type:</label>
-            <select id="issueType" name="issueType" required>
-                <option value="">-- Select Issue Type --</option>
-                <option value="MEDICAL">Medical Emergency</option>
-                <option value="FIRE">Fire</option>
-                <option value="POLICE">Police</option>
-                <option value="WOMEN_SAFETY">Women Safety</option>
-                <option value="ACCIDENT">Accident</option>
-            </select>
-            <br><br>
+    <div class="form-card">
+      <form onsubmit="submitRequest(event)">
 
-            <label>Message</label>
-            <textarea id="message" required></textarea><br>
-
-            <button type="button" onclick="startVoice()"> Enter Complaint using voice 🎤</button><br><br>
-            <label>Language</label>
-            <label>Select Language</label>
-            <select id="language">
-                <option value="en-IN">English</option>
-                <option value="hi-IN">Hindi</option>
-                <option value="ta-IN">Tamil</option>
-                <option value="te-IN">Telugu</option>
-                <option value="bn-IN">Bengali</option>
-            </select><br><br>
-
-            <!-- <label>Voice Text</label>
-            <input type="text" id="voiceText"><br><br> -->
-
-
-            <label>Location Area</label>
-            <input type="text" id="locationArea"><br><br>
-            <div class="sub">
-                <button type="submit">Submit</button>
-
+        <!-- Issue Type -->
+        <div class="form-group">
+          <label>Select Issue Type</label>
+          <div class="issue-select-grid" id="issueGrid">
+            <div class="issue-option" onclick="selectIssue('MEDICAL',this)">
+              <span class="opt-icon">🏥</span>Medical
             </div>
+            <div class="issue-option" onclick="selectIssue('FIRE',this)">
+              <span class="opt-icon">🔥</span>Fire
+            </div>
+            <div class="issue-option" onclick="selectIssue('POLICE',this)">
+              <span class="opt-icon">🚔</span>Police
+            </div>
+            <div class="issue-option" onclick="selectIssue('WOMEN_SAFETY',this)">
+              <span class="opt-icon">🚺</span>Women Safety
+            </div>
+            <div class="issue-option" onclick="selectIssue('ACCIDENT',this)">
+              <span class="opt-icon">🚗</span>Accident
+            </div>
+            <div class="issue-option" onclick="selectIssue('OTHER',this)">
+              <span class="opt-icon">🆘</span>Other
+            </div>
+          </div>
+          <select id="issueType" required>
+            <option value="">-- Select Issue --</option>
+            <option value="MEDICAL">Medical Emergency</option>
+            <option value="FIRE">Fire</option>
+            <option value="POLICE">Police</option>
+            <option value="WOMEN_SAFETY">Women Safety</option>
+            <option value="ACCIDENT">Accident</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
 
+        <!-- Message -->
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="message" rows="3" placeholder="Describe your situation briefly…" required></textarea>
+        </div>
 
-        </form>
+        <!-- Voice -->
+        <div class="form-group">
+          <label>Voice Input <small>(auto-detects language)</small></label>
+          <button type="button" class="btn btn-voice" id="voiceBtn" onclick="startVoice()">
+            🎤 Enter Complaint using Voice
+          </button>
+          <span id="langDetectedBadge">🌐 Auto-Detected</span>
+          <div id="voiceStatus"></div>
+        </div>
+
+        <!-- Language -->
+        <div class="form-group">
+          <label>Language <small>(auto-updated from voice)</small></label>
+          <select id="language">
+            <option value="en-IN">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="te-IN">Telugu</option>
+            <option value="bn-IN">Bengali</option>
+            <option value="ml-IN">Malayalam</option>
+            <option value="kn-IN">Kannada</option>
+            <option value="mr-IN">Marathi</option>
+            <option value="gu-IN">Gujarati</option>
+            <option value="pa-IN">Punjabi</option>
+            <option value="ur-IN">Urdu</option>
+          </select>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+          <label>Location Area</label>
+          <button type="button" class="btn btn-location" onclick="getLocation()" style="margin-bottom:10px;">
+            📍 Detect My Location
+          </button>
+          <input type="text" id="locationArea" placeholder="Location will appear here…" readonly>
+          <input type="hidden" id="lat">
+          <input type="hidden" id="lon">
+          <div class="map-wrap">
+            <div id="map"></div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-area">
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            🚀 Submit Emergency Request
+          </button>
+          <p class="sos-hint">
+            Already submitted? <a href="track.html">Track your request →</a>
+          </p>
+        </div>
+
+      </form>
     </div>
 
     <h3 id="response"></h3>
 
-    <script>
+  </div>
 
-        document.getElementById("helpForm").addEventListener("submit", async function (e) {
+  <script>
+    // ── Issue type visual selector ───────────────────────────────────────────────
+    let selectedIssue = null;
+    function selectIssue(val, el) {
+      selectedIssue = val;
+      document.getElementById('issueType').value = val;
+      document.querySelectorAll('.issue-option').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+    }
 
-            e.preventDefault();
+    // ── Map ──────────────────────────────────────────────────────────────────────
+    let map, marker;
+    function initMap(lat = 20.5937, lon = 78.9629) {
+      map = L.map('map', { zoomControl: true }).setView([lat, lon], 5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+      }).addTo(map);
+    }
 
-            const data = {
-                issueType: document.getElementById("issueType").value,
-               
-                message: document.getElementById("message").value,
-                language: document.getElementById("language").value,
-                // voiceText: document.getElementById("voiceText").value,
-                locationArea: document.getElementById("locationArea").value
-            };
-            console.log(document.getElementById("message").value);
+    function getLocation() {
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          document.getElementById('lat').value = lat;
+          document.getElementById('lon').value = lon;
+          map.setView([lat, lon], 15);
+          if (marker) marker.setLatLng([lat, lon]);
+          else marker = L.marker([lat, lon]).addTo(map).bindPopup('📍 Your Location').openPopup();
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+            .then(r => r.json())
+            .then(d => { document.getElementById('locationArea').value = d.display_name; })
+            .catch(() => { document.getElementById('locationArea').value = lat + ', ' + lon; });
+        },
+        () => alert('Location access denied. Please allow location in your browser.')
+      );
+    }
 
-            const res = await fetch("http://localhost:8080/api/help/submit", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
+    // ── Language detection map ───────────────────────────────────────────────────
+    const LANG_MAP = {
+      'eng': { code: 'en-IN', name: 'English' },
+      'hin': { code: 'hi-IN', name: 'Hindi' },
+      'tam': { code: 'ta-IN', name: 'Tamil' },
+      'tel': { code: 'te-IN', name: 'Telugu' },
+      'ben': { code: 'bn-IN', name: 'Bengali' },
+      'mal': { code: 'ml-IN', name: 'Malayalam' },
+      'kan': { code: 'kn-IN', name: 'Kannada' },
+      'mar': { code: 'mr-IN', name: 'Marathi' },
+      'guj': { code: 'gu-IN', name: 'Gujarati' },
+      'pan': { code: 'pa-IN', name: 'Punjabi' },
+      'urd': { code: 'ur-IN', name: 'Urdu' },
+    };
 
-            const result = await res.json();
+    let isListening = false;
 
-            document.getElementById("response").innerText =
-                "Request Submitted. Request ID: " + result.requestId;
+    function setVoiceStatus(msg, color) {
+      const el = document.getElementById('voiceStatus');
+      el.style.color = color || 'var(--text-3)';
+      el.innerText = msg;
+    }
 
+    function startVoice() {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert('Voice recognition requires Google Chrome.');
+        return;
+      }
+      if (isListening) return;
+
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const btn = document.getElementById('voiceBtn');
+      const badge = document.getElementById('langDetectedBadge');
+
+      const rec = new SR();
+      rec.lang = 'hi-IN';
+      rec.interimResults = false;
+      rec.maxAlternatives = 3;
+
+      isListening = true;
+      btn.classList.add('listening');
+      btn.innerText = '🔴 Listening… Speak now';
+      badge.style.display = 'none';
+      setVoiceStatus('🎙️ Speak in any language…', '#f87171');
+
+      rec.onresult = e => {
+        const transcript = e.results[0][0].transcript.trim();
+        let detectedLang = null, detectedName = null;
+
+        if (typeof franc !== 'undefined' && transcript.length > 2) {
+          const iso = franc(transcript, { minLength: 2 });
+          if (iso && LANG_MAP[iso]) {
+            detectedLang = LANG_MAP[iso].code;
+            detectedName = LANG_MAP[iso].name;
+          }
+        }
+
+        if (detectedLang && detectedLang !== 'hi-IN' && detectedLang !== 'en-IN') {
+          const rec2 = new SR();
+          rec2.lang = detectedLang;
+          rec2.interimResults = false;
+          setVoiceStatus(`🔍 Detected ${detectedName}! Speak once more for best accuracy…`, '#a78bfa');
+          rec2.onresult = e2 => populateMessage(e2.results[0][0].transcript.trim(), detectedLang, detectedName);
+          rec2.onerror = () => populateMessage(transcript, detectedLang, detectedName);
+          rec2.onend = () => { isListening = false; btn.classList.remove('listening'); btn.innerText = '🎤 Enter Complaint using Voice'; };
+          rec2.start();
+        } else {
+          populateMessage(transcript, detectedLang || 'en-IN', detectedName || 'English');
+          isListening = false;
+          btn.classList.remove('listening');
+          btn.innerText = '🎤 Enter Complaint using Voice';
+        }
+      };
+
+      rec.onerror = () => {
+        isListening = false;
+        btn.classList.remove('listening');
+        btn.innerText = '🎤 Enter Complaint using Voice';
+        setVoiceStatus('❌ Could not hear. Please try again.', '#f87171');
+      };
+      rec.onend = () => {
+        if (isListening) {
+          isListening = false;
+          btn.classList.remove('listening');
+          btn.innerText = '🎤 Enter Complaint using Voice';
+        }
+      };
+      rec.start();
+    }
+
+    function populateMessage(text, langCode, langName) {
+      document.getElementById('message').value = text;
+      const sel = document.getElementById('language');
+      for (let i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === langCode) { sel.selectedIndex = i; break; }
+      }
+      const badge = document.getElementById('langDetectedBadge');
+      badge.style.display = 'inline';
+      badge.innerText = `🌐 ${langName} Detected`;
+      setVoiceStatus(`✅ Message captured in ${langName}. Edit if needed.`, '#34d399');
+    }
+
+    // ── Squad map (mirrors police.html) ─────────────────────────────────────────
+    const SQUAD_MAP = {
+      CRITICAL: { squad: 'Alpha Squad', icon: '🚨', color: '#f87171' },
+      HIGH: { squad: 'Bravo Squad', icon: '🚔', color: '#fb923c' },
+      MEDIUM: { squad: 'Charlie Squad', icon: '🚗', color: '#facc15' },
+      LOW: { squad: 'Delta Squad', icon: '🚶', color: '#4ade80' },
+    };
+
+    // ── Submit ───────────────────────────────────────────────────────────────────
+    async function submitRequest(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.innerText = '⏳ Submitting…';
+      btn.disabled = true;
+
+      const data = {
+        issueType: document.getElementById('issueType').value,
+        message: document.getElementById('message').value,
+        language: document.getElementById('language').value,
+        locationArea: document.getElementById('locationArea').value,
+        latitude: parseFloat(document.getElementById('lat').value),
+        longitude: parseFloat(document.getElementById('lon').value)
+      };
+
+      try {
+        // Step 1 — Submit complaint
+        const res = await fetch('http://localhost:8080/api/help/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         });
+        const result = await res.json();
+        const rid = result.requestId;
 
-    </script>
+        const respEl = document.getElementById('response');
+        respEl.style.color = '#34d399';
+        respEl.innerText = `✅ Request Submitted! ID: ${rid}`;
 
-    <script src="script.js"></script>
+        // Step 2 — Auto-assign to police squad immediately
+        btn.innerText = '🚔 Auto-dispatching to squad…';
+        try {
+          await fetch(`http://localhost:8080/api/help/assign/${rid}`, { method: 'PUT' });
 
-    <a href="http://127.0.0.1:5500/track.html" class="track-btn">
-        Track Request
-    </a>
+          // Determine which squad based on urgency returned by backend
+          const urgency = (result.urgencyLevel || result.urgency || 'LOW').toUpperCase();
+          const squad = SQUAD_MAP[urgency] || SQUAD_MAP['LOW'];
+
+          respEl.innerHTML = `
+        <span style="color:#34d399;font-size:15px;font-weight:700;display:block;margin-bottom:4px;">✅ Complaint Submitted &amp; Auto-Assigned!</span>
+        <span style="color:${squad.color};font-size:13px;font-weight:700;">${squad.icon} Dispatched to ${squad.squad}</span>
+        <span style="color:var(--text-3);font-size:12px;display:block;margin-top:2px;">Request ID: ${rid} &nbsp;•&nbsp; En route to your location</span>
+      `;
+        } catch {
+          // Auto-assign failed, still show success
+          respEl.innerHTML = `✅ Submitted (ID: ${rid}) — will be assigned shortly.`;
+        }
+
+        setTimeout(() => { window.location.href = `track.html?requestId=${rid}`; }, 3000);
+      } catch {
+        document.getElementById('response').style.color = '#f87171';
+        document.getElementById('response').innerText = '⚠️ Connection error. Is the server running?';
+        btn.innerText = '🚀 Submit Emergency Request';
+        btn.disabled = false;
+      }
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────────────────
+    window.onload = () => initMap();
+  </script>
 
 </body>
 

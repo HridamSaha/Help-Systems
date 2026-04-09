@@ -1,67 +1,868 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Track Request</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Request – Help Systems</title>
+  <meta name="description" content="Track the real-time status of your emergency help request.">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    .track-hero {
+      text-align: center;
+      padding: 36px 0 24px;
+    }
+
+    .track-hero .hero-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 14px;
+      box-shadow: 0 8px 26px rgba(99, 102, 241, 0.35);
+    }
+
+    .track-hero h2 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .track-hero p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-top: 5px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .search-row input {
+      flex: 1;
+    }
+
+    .search-row .btn-track {
+      width: auto;
+      white-space: nowrap;
+      padding: 11px 28px;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 20px 0;
+    }
+
+    .timeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding-bottom: 20px;
+      position: relative;
+    }
+
+    .timeline-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 30px;
+      width: 2px;
+      height: calc(100% - 10px);
+      background: var(--border-soft);
+    }
+
+    .tl-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      border: 2px solid var(--border-soft);
+      background: var(--bg-card);
+      position: relative;
+      z-index: 1;
+    }
+
+    .tl-dot.done {
+      background: rgba(52, 211, 153, 0.2);
+      border-color: var(--resolved);
+    }
+
+    .tl-dot.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent);
+      animation: tl-glow 1.5s infinite;
+    }
+
+    .tl-dot.pending {
+      opacity: 0.35;
+    }
+
+    @keyframes tl-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+      }
+    }
+
+    .tl-content {
+      padding-top: 4px;
+    }
+
+    .tl-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+
+    .tl-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-top: 2px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .di-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 3px;
+    }
+
+    .di-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+
+    /* ── Feedback Card ──────────────────────────────────────────── */
+    .feedback-card {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid rgba(250, 204, 21, 0.2);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+      margin-top: 20px;
+      animation: fadeSlide 0.4s ease;
+    }
+
+    .feedback-card.visible {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .feedback-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.2), rgba(251, 146, 60, 0.2));
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .feedback-header-text h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .feedback-header-text p {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    /* Star Rating */
+    .star-section {
+      margin-bottom: 20px;
+    }
+
+    .star-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 10px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 6px;
+    }
+
+    .star {
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.15s, filter 0.15s;
+      filter: grayscale(1) opacity(0.4);
+      user-select: none;
+    }
+
+    .star:hover,
+    .star.selected {
+      filter: grayscale(0) opacity(1);
+      transform: scale(1.15);
+    }
+
+    .star-feedback-text {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 7px;
+      min-height: 16px;
+      font-style: italic;
+      transition: color 0.2s;
+    }
+
+    /* Issue checkboxes */
+    .issue-section {
+      margin-bottom: 20px;
+    }
+
+    .issue-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .issue-chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-soft);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-2);
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .issue-chip:hover {
+      border-color: var(--accent);
+      color: #818cf8;
+    }
+
+    .issue-chip.selected {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+      border-color: rgba(248, 113, 113, 0.4);
+    }
+
+    /* Comment */
+    .comment-section {
+      margin-bottom: 22px;
+    }
+
+    .comment-section label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .comment-section textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      color: var(--text-1);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 10px 14px;
+      outline: none;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.2s;
+    }
+
+    .comment-section textarea:focus {
+      border-color: var(--accent);
+    }
+
+    /* Feedback action buttons */
+    .feedback-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-feedback-submit {
+      flex: 1;
+      background: linear-gradient(135deg, #34d399, #059669);
+      color: #fff;
+      border: none;
+      padding: 11px 20px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-feedback-submit:hover {
+      box-shadow: 0 4px 18px rgba(52, 211, 153, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-dispute {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(185, 28, 28, 0.15));
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      padding: 11px 20px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-dispute:hover {
+      background: rgba(239, 68, 68, 0.25);
+      box-shadow: 0 4px 18px rgba(239, 68, 68, 0.2);
+    }
+
+    /* Feedback submitted state */
+    .feedback-thanks {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .feedback-thanks .ty-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .feedback-thanks h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .feedback-thanks p {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    /* Dispute success banner */
+    .dispute-banner {
+      display: none;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #f87171;
+      font-weight: 600;
+      animation: fadeSlide 0.35s ease;
+    }
+
+    .dispute-banner.show {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
-<h2>Track Help Request</h2>
-</div>
-<input type="text" id="requestId" placeholder="Enter Request ID">
 
-<button onclick="track()">Track</button>
+  <!-- TOP BAR -->
+  <nav class="topbar">
+    <a class="topbar-brand" href="index.html">
+      <div class="brand-icon">🛡️</div>
+      <h1>Help <span>Systems</span></h1>
+    </a>
+    <div class="topbar-nav">
+      <a href="index.html">Submit</a>
+      <a href="track.html" class="active">Track</a>
+      <a href="admin.html">Admin</a>
+      <a href="police.html">Police</a>
+    </div>
+  </nav>
 
-<table border="1" id="resultTable">
-<thead>
-<tr>
-<th>Request ID</th>
-<th>Message</th>
-<th>Department</th>
-<th>Urgency</th>
-<th>Status</th>
-<th>Authority</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+  <!-- PAGE -->
+  <div class="page-wrap" style="max-width:680px;">
 
-<script>
+    <div class="track-hero">
+      <div class="hero-icon">📍</div>
+      <h2>Track Your Request</h2>
+      <p>Live updates every 2 seconds. Help is on the way.</p>
+    </div>
 
-async function track(){
+    <!-- Search -->
+    <div class="card card-sm" style="margin-bottom:20px;">
+      <div class="search-row">
+        <div style="flex:1;">
+          <label
+            style="font-size:11px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:6px;">Request
+            ID</label>
+          <input type="text" id="requestId" placeholder="e.g. REQ-2A9BA731">
+        </div>
+        <button class="btn btn-track" onclick="startTracking()">🔍 Track</button>
+      </div>
+    </div>
 
-const id = document.getElementById("requestId").value;
+    <!-- Status Box -->
+    <div class="status-box" id="statusBox">
+      <div class="status-label">Current Status</div>
+      <div class="status-value" id="statusValue">—</div>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
 
-if(!id){
-alert("Please enter Request ID");
-return;
-}
+    <!-- Timeline -->
+    <div class="card" id="timelineCard" style="display:none;">
+      <p
+        style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:16px;">
+        Response Timeline</p>
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="tl-dot done" id="tl-submitted">✓</div>
+          <div class="tl-content">
+            <div class="tl-title">Request Submitted</div>
+            <div class="tl-desc">Your request has been received and logged</div>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="tl-dot pending" id="tl-dispatched">🚓</div>
+          <div class="tl-content">
+            <div class="tl-title">Responders Dispatched</div>
+            <div class="tl-desc" id="tl-dispatched-desc">Waiting for assignment…</div>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="tl-dot pending" id="tl-resolved">✅</div>
+          <div class="tl-content">
+            <div class="tl-title">Request Resolved</div>
+            <div class="tl-desc" id="tl-resolved-desc">Help will arrive soon</div>
+          </div>
+        </div>
+      </div>
 
-const res = await fetch("http://localhost:8080/api/help/track/" + id);
+      <!-- Detail Grid -->
+      <hr class="divider">
+      <div class="detail-grid" id="detailGrid" style="display:none;">
+        <div class="detail-item">
+          <div class="di-label">Department</div>
+          <div class="di-value" id="di-dept">—</div>
+        </div>
+        <div class="detail-item">
+          <div class="di-label">Urgency</div>
+          <div class="di-value" id="di-urgency">—</div>
+        </div>
+        <div class="detail-item">
+          <div class="di-label">Response Time</div>
+          <div class="di-value" id="di-time">—</div>
+        </div>
+        <div class="detail-item">
+          <div class="di-label">Police Group</div>
+          <div class="di-value" id="di-group">—</div>
+        </div>
+      </div>
+    </div>
 
-const data = await res.json();
+    <!-- Map -->
+    <div class="card" id="mapCard" style="display:none;padding:16px;">
+      <p
+        style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:12px;">
+        📡 Live Location Map</p>
+      <div class="map-wrap">
+        <div id="map"></div>
+      </div>
+    </div>
 
-const tbody = document.querySelector("#resultTable tbody");
+    <!-- ── FEEDBACK FORM (shown only when RESOLVED) ─────────────── -->
+    <div class="feedback-card" id="feedbackCard">
 
-tbody.innerHTML = "";
+      <!-- Form view -->
+      <div id="feedbackForm">
+        <div class="feedback-header">
+          <div class="feedback-icon">📝</div>
+          <div class="feedback-header-text">
+            <h3>Share Your Feedback</h3>
+            <p>Was the police response satisfactory? Your feedback improves future response.</p>
+          </div>
+        </div>
 
-const row = `
-<tr>
-<td>${data.requestId}</td>
-<td>${data.message}</td>
-<td>${data.department}</td>
-<td>${data.urgencyLevel}</td>
-<td>${data.status}</td>
-<td>${data.assignedAuthority}</td>
-</tr>
-`;
+        <!-- Star Rating -->
+        <div class="star-section">
+          <div class="star-label">Rate the Police Response</div>
+          <div class="stars" id="starRow">
+            <span class="star" data-val="1" onclick="rateStar(1)">⭐</span>
+            <span class="star" data-val="2" onclick="rateStar(2)">⭐</span>
+            <span class="star" data-val="3" onclick="rateStar(3)">⭐</span>
+            <span class="star" data-val="4" onclick="rateStar(4)">⭐</span>
+            <span class="star" data-val="5" onclick="rateStar(5)">⭐</span>
+          </div>
+          <div class="star-feedback-text" id="starFeedbackText">Click a star to rate</div>
+        </div>
 
-tbody.innerHTML = row;
+        <!-- Issue tags -->
+        <div class="issue-section">
+          <div class="star-label">What was the issue? <span
+              style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-3);">(select all that
+              apply)</span></div>
+          <div class="issue-chips">
+            <span class="issue-chip" onclick="toggleChip(this)" data-val="not_resolved">⚠️ Not Actually Resolved</span>
+            <span class="issue-chip" onclick="toggleChip(this)" data-val="late_arrival">🕐 Police Arrived Late</span>
+            <span class="issue-chip" onclick="toggleChip(this)" data-val="rude_behavior">😠 Rude Behavior</span>
+            <span class="issue-chip" onclick="toggleChip(this)" data-val="no_action">🚫 No Action Taken</span>
+            <span class="issue-chip" onclick="toggleChip(this)" data-val="wrong_location">📍 Wrong Location</span>
+            <span class="issue-chip" onclick="toggleChip(this)" data-val="all_good">✅ Everything Was Fine</span>
+          </div>
+        </div>
 
-}
+        <!-- Comment -->
+        <div class="comment-section">
+          <label for="feedbackComment">Additional Comments <span
+              style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-3);">(optional)</span></label>
+          <textarea id="feedbackComment" placeholder="Describe what happened or what could be improved…"></textarea>
+        </div>
 
-</script>
+        <!-- Action Buttons -->
+        <div class="feedback-actions">
+          <button class="btn-feedback-submit" onclick="submitFeedback()">
+            ✅ Submit Feedback
+          </button>
+          <button class="btn-dispute" onclick="disputeResolution()">
+            🚨 Not Resolved — Reopen Case
+          </button>
+        </div>
+
+        <!-- Dispute result banner -->
+        <div class="dispute-banner" id="disputeBanner">
+          <span>🚨</span>
+          <span id="disputeBannerText">Case reopened and reassigned to police. Help is on the way again.</span>
+        </div>
+      </div>
+
+      <!-- Thank you view (shown after submit) -->
+      <div class="feedback-thanks" id="feedbackThanks">
+        <div class="ty-icon" id="tyIcon">🙏</div>
+        <h4 id="tyTitle">Thank you for your feedback!</h4>
+        <p id="tyDesc">Your response helps us improve police accountability and response quality.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let map = null, userMarker = null, policeMarker = null, routeLine = null, intervalId = null;
+    let currentRequestId = null;
+    let feedbackShown = false;
+    let selectedRating = 0;
+    let selectedIssues = new Set();
+
+    // ── Star rating labels ───────────────────────────────────────────────────────
+    const STAR_LABELS = {
+      1: '😟 Very Poor — Serious issues with this response',
+      2: '😕 Poor — Response was inadequate',
+      3: '😐 Okay — Response was average',
+      4: '😊 Good — Response was satisfactory',
+      5: '🌟 Excellent — Outstanding response!',
+    };
+
+    // ── Auto-load from URL ───────────────────────────────────────────────────────
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('requestId');
+      if (id) {
+        document.getElementById('requestId').value = id;
+        startTracking();
+      }
+    };
+
+    // ── Map ──────────────────────────────────────────────────────────────────────
+    function initMap(lat, lon) {
+      map = L.map('map').setView([lat, lon], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap', maxZoom: 19
+      }).addTo(map);
+    }
+
+    // ── Start tracking ───────────────────────────────────────────────────────────
+    function startTracking() {
+      const id = document.getElementById('requestId').value.trim();
+      if (!id) { alert('Please enter a Request ID'); return; }
+      if (intervalId) clearInterval(intervalId);
+      currentRequestId = id;
+      feedbackShown = false;
+      updateTracking(id);
+      intervalId = setInterval(() => updateTracking(id), 2000);
+    }
+
+    function isValidCoord(lat, lng) {
+      return lat >= 8 && lat <= 37 && lng >= 68 && lng <= 97;
+    }
+
+    // ── Polling ──────────────────────────────────────────────────────────────────
+    async function updateTracking(id) {
+      try {
+        const res = await fetch('http://localhost:8080/api/help/track/' + id);
+        const data = await res.json();
+
+        const status = (data.status || 'PENDING').toUpperCase();
+
+        // Status box
+        const sb = document.getElementById('statusBox');
+        sb.classList.add('visible');
+        const sv = document.getElementById('statusValue');
+        sv.className = 'status-value s-' + status.toLowerCase().replace('_', '-');
+        sv.innerText = status.replace('_', ' ');
+
+        const sm = document.getElementById('statusMsg');
+        sm.innerText =
+          status === 'RESOLVED' ? '✅ Police marked this as resolved. Was it? Share your feedback below.' :
+            status === 'IN_PROGRESS' ? '🚓 Responders are on the way to you.' :
+              '⏳ Your request is being reviewed…';
+
+        // Timeline
+        document.getElementById('timelineCard').style.display = 'block';
+        const tlD = document.getElementById('tl-dispatched');
+        const tlR = document.getElementById('tl-resolved');
+        if (status === 'IN_PROGRESS' || status === 'RESOLVED') {
+          tlD.className = 'tl-dot ' + (status === 'IN_PROGRESS' ? 'active' : 'done');
+          document.getElementById('tl-dispatched-desc').innerText = 'Responders are en route to your location';
+        }
+        if (status === 'RESOLVED') {
+          tlR.className = 'tl-dot done';
+          document.getElementById('tl-resolved-desc').innerText = 'Request resolved by police. Please confirm below.';
+        }
+
+        // Detail grid
+        if (data.department || data.urgencyLevel) {
+          document.getElementById('detailGrid').style.display = 'grid';
+          document.getElementById('di-dept').innerText = data.department || '—';
+          document.getElementById('di-urgency').innerHTML = data.urgencyLevel
+            ? `<span class="badge badge-${data.urgencyLevel.toUpperCase()}">${data.urgencyLevel}</span>` : '—';
+          document.getElementById('di-time').innerText = data.responseTimeMinutes != null ? data.responseTimeMinutes + ' min' : '—';
+          document.getElementById('di-group').innerText = data.policeGroup || '—';
+        }
+
+        // Map
+        document.getElementById('mapCard').style.display = 'block';
+        if (!map) initMap(data.latitude, data.longitude);
+
+        if (!userMarker) {
+          userMarker = L.marker([data.latitude, data.longitude], {
+            icon: L.icon({
+              iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+              shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+              iconSize: [25, 41], iconAnchor: [12, 41], shadowSize: [41, 41]
+            })
+          }).addTo(map).bindPopup('📍 Your Location').openPopup();
+        }
+
+        if (data.policeLat != null && data.policeLng != null && !isNaN(data.policeLat) && isValidCoord(data.policeLat, data.policeLng)) {
+          const pll = [data.policeLat, data.policeLng];
+          const ull = [data.latitude, data.longitude];
+          if (!policeMarker) {
+            policeMarker = L.marker(pll, {
+              icon: L.divIcon({ html: '<div class="police-dot"></div>', iconSize: [18, 18], iconAnchor: [9, 9], className: '' })
+            }).addTo(map).bindPopup('🚓 Police En Route');
+          } else {
+            policeMarker.setLatLng(pll);
+          }
+          if (routeLine) map.removeLayer(routeLine);
+          routeLine = L.polyline([pll, ull], { color: '#6366f1', weight: 3, dashArray: '8,8' }).addTo(map);
+          map.fitBounds(L.latLngBounds([pll, ull]), { padding: [50, 50] });
+        }
+
+        // ── Show feedback form when RESOLVED ─────────────────────────
+        if (status === 'RESOLVED' && !feedbackShown) {
+          feedbackShown = true;
+          const fc = document.getElementById('feedbackCard');
+          fc.classList.add('visible');
+          fc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+
+      } catch (err) {
+        console.error('Tracking error:', err);
+        document.getElementById('statusBox').classList.add('visible');
+        document.getElementById('statusValue').innerText = '⚠️ Could not load status';
+        document.getElementById('statusValue').className = 'status-value';
+      }
+    }
+
+    // ── Star Rating ───────────────────────────────────────────────────────────────
+    function rateStar(val) {
+      selectedRating = val;
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.classList.toggle('selected', i < val);
+      });
+      const txt = document.getElementById('starFeedbackText');
+      txt.innerText = STAR_LABELS[val] || '';
+      txt.style.color = val <= 2 ? '#f87171' : val === 3 ? '#facc15' : '#4ade80';
+    }
+
+    // ── Issue Chips ───────────────────────────────────────────────────────────────
+    function toggleChip(el) {
+      el.classList.toggle('selected');
+      const val = el.dataset.val;
+      if (selectedIssues.has(val)) selectedIssues.delete(val);
+      else selectedIssues.add(val);
+    }
+
+    // ── Submit Feedback ───────────────────────────────────────────────────────────
+    async function submitFeedback() {
+      const comment = document.getElementById('feedbackComment').value.trim();
+      const issues = [...selectedIssues];
+
+      // Save to localStorage (no extra backend endpoint needed)
+      const feedbackData = {
+        requestId: currentRequestId,
+        rating: selectedRating || null,
+        issues,
+        comment,
+        timestamp: new Date().toISOString(),
+        type: 'feedback'
+      };
+      saveFeedback(feedbackData);
+
+      // Show thank you
+      showThanks('🙏', 'Thank you for your feedback!', 'Your response helps us improve police accountability and response quality.');
+    }
+
+    // ── Dispute Resolution ────────────────────────────────────────────────────────
+    async function disputeResolution() {
+      const comment = document.getElementById('feedbackComment').value.trim();
+      const btn = document.querySelector('.btn-dispute');
+      btn.disabled = true;
+      btn.innerText = '⏳ Reopening case…';
+
+      try {
+        // Step 1: Reset status back to SUBMITTED so police can re-act
+        await fetch('http://localhost:8080/api/help/status', {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ requestId: currentRequestId, status: 'SUBMITTED' })
+        });
+
+        // Step 2: Auto-reassign immediately
+        await fetch(`http://localhost:8080/api/help/assign/${currentRequestId}`, { method: 'PUT' });
+
+        // Save dispute feedback
+        saveFeedback({
+          requestId: currentRequestId,
+          rating: selectedRating || null,
+          issues: [...selectedIssues],
+          comment,
+          timestamp: new Date().toISOString(),
+          type: 'dispute'
+        });
+
+        // Show dispute banner
+        const banner = document.getElementById('disputeBanner');
+        banner.classList.add('show');
+        document.getElementById('disputeBannerText').innerText =
+          `🚨 Case ${currentRequestId} has been reopened and auto-dispatched to police again. We apologize for the inconvenience.`;
+
+        // After 3s show thank you
+        setTimeout(() => {
+          showThanks('🚨', 'Case Reopened!', 'Police have been re-dispatched to your location. We apologize that the issue was not fully resolved. Stay safe.');
+          // Restart tracking
+          feedbackShown = false;
+          intervalId = setInterval(() => updateTracking(currentRequestId), 2000);
+        }, 2500);
+
+      } catch {
+        btn.disabled = false;
+        btn.innerText = '🚨 Not Resolved — Reopen Case';
+        const banner = document.getElementById('disputeBanner');
+        banner.classList.add('show');
+        document.getElementById('disputeBannerText').innerText = '⚠️ Could not reopen case — server unreachable. Please call emergency services.';
+        document.getElementById('disputeBanner').style.borderColor = 'rgba(250,204,21,0.3)';
+        document.getElementById('disputeBanner').style.color = '#facc15';
+      }
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────────
+    function saveFeedback(data) {
+      const all = JSON.parse(localStorage.getItem('hs_feedback') || '[]');
+      all.push(data);
+      localStorage.setItem('hs_feedback', JSON.stringify(all));
+    }
+
+    function showThanks(icon, title, desc) {
+      document.getElementById('feedbackForm').style.display = 'none';
+      document.getElementById('feedbackThanks').style.display = 'block';
+      document.getElementById('tyIcon').innerText = icon;
+      document.getElementById('tyTitle').innerText = title;
+      document.getElementById('tyDesc').innerText = desc;
+    }
+  </script>
 
 </body>
+
 </html>

@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Police Dashboard – Help Systems</title>
+  <meta name="description"
+    content="Police officer dashboard to manage and resolve emergency help requests with group-based auto-assignment.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── Police page specific ─────────────────────────────────── */
+    .police-hero {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding: 24px 0 0;
+    }
+
+    .police-hero-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 8px 26px rgba(59, 130, 246, 0.35);
+      flex-shrink: 0;
+    }
+
+    .police-hero-text h2 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .police-hero-text p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+
+    /* Officer ID bar */
+    .officer-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(16px);
+    }
+
+    .officer-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .officer-avatar {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .officer-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .officer-id {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-top: 2px;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #4ade80;
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: live-blink 1.2s infinite;
+    }
+
+    @keyframes live-blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    /* ── Police Groups Panel ──────────────────────────────────── */
+    .groups-panel {
+      margin-bottom: 24px;
+    }
+
+    .groups-panel-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .groups-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media(max-width:700px) {
+      .groups-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width:420px) {
+      .groups-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .group-card {
+      border-radius: 14px;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: default;
+    }
+
+    .group-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .group-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      transition: opacity 0.2s;
+    }
+
+    .group-card:hover::before {
+      opacity: 0.11;
+    }
+
+    .group-card.gc-critical {
+      background: rgba(248, 113, 113, 0.08);
+      border: 1px solid rgba(248, 113, 113, 0.28);
+    }
+
+    .group-card.gc-critical::before {
+      background: #f87171;
+    }
+
+    .group-card.gc-high {
+      background: rgba(251, 146, 60, 0.08);
+      border: 1px solid rgba(251, 146, 60, 0.28);
+    }
+
+    .group-card.gc-high::before {
+      background: #fb923c;
+    }
+
+    .group-card.gc-medium {
+      background: rgba(250, 204, 21, 0.08);
+      border: 1px solid rgba(250, 204, 21, 0.28);
+    }
+
+    .group-card.gc-medium::before {
+      background: #facc15;
+    }
+
+    .group-card.gc-low {
+      background: rgba(74, 222, 128, 0.08);
+      border: 1px solid rgba(74, 222, 128, 0.28);
+    }
+
+    .group-card.gc-low::before {
+      background: #4ade80;
+    }
+
+    .gc-squad-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      margin-bottom: 2px;
+    }
+
+    .gc-critical .gc-squad-name {
+      color: #f87171;
+    }
+
+    .gc-high .gc-squad-name {
+      color: #fb923c;
+    }
+
+    .gc-medium .gc-squad-name {
+      color: #facc15;
+    }
+
+    .gc-low .gc-squad-name {
+      color: #4ade80;
+    }
+
+    .gc-handles {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 12px;
+    }
+
+    .gc-count-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .gc-count {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .gc-critical .gc-count {
+      color: #f87171;
+    }
+
+    .gc-high .gc-count {
+      color: #fb923c;
+    }
+
+    .gc-medium .gc-count {
+      color: #facc15;
+    }
+
+    .gc-low .gc-count {
+      color: #4ade80;
+    }
+
+    .gc-icon {
+      font-size: 28px;
+      opacity: 0.5;
+    }
+
+    .gc-pending-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    .gc-critical .gc-pending-tag {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+    }
+
+    .gc-high .gc-pending-tag {
+      background: rgba(251, 146, 60, 0.15);
+      color: #fb923c;
+    }
+
+    .gc-medium .gc-pending-tag {
+      background: rgba(250, 204, 21, 0.15);
+      color: #facc15;
+    }
+
+    .gc-low .gc-pending-tag {
+      background: rgba(74, 222, 128, 0.15);
+      color: #4ade80;
+    }
+
+    /* ── Assign Group Badge (inline in table) ─────────────────── */
+    .group-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .group-badge.gb-alpha {
+      background: rgba(248, 113, 113, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .group-badge.gb-bravo {
+      background: rgba(251, 146, 60, 0.12);
+      color: #fb923c;
+      border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    .group-badge.gb-charlie {
+      background: rgba(250, 204, 21, 0.12);
+      color: #facc15;
+      border: 1px solid rgba(250, 204, 21, 0.3);
+    }
+
+    .group-badge.gb-delta {
+      background: rgba(74, 222, 128, 0.12);
+      color: #4ade80;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+
+    /* Stats mini row */
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    @media(max-width:600px) {
+      .mini-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .mini-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      backdrop-filter: blur(12px);
+      text-align: center;
+    }
+
+    .mini-stat .ms-num {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .mini-stat .ms-label {
+      font-size: 11px;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+
+    .ms-total .ms-num {
+      color: #818cf8;
+    }
+
+    .ms-progress .ms-num {
+      color: #60a5fa;
+    }
+
+    .ms-resolved .ms-num {
+      color: var(--resolved);
+    }
+
+    .ms-critical .ms-num {
+      color: var(--critical);
+    }
+
+    /* Table filter pills */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .filter-pill {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-soft);
+      background: transparent;
+      color: var(--text-2);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--accent);
+      color: #818cf8;
+    }
+
+    .filter-pill.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .filter-search {
+      margin-left: auto;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      color: var(--text-1);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 7px 14px;
+      outline: none;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    .filter-search:focus {
+      border-color: var(--accent);
+    }
+
+    /* Resolve timer badge */
+    .timer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #facc15;
+      background: rgba(250, 204, 21, 0.1);
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* Resolve confirmation modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: #1a1d2e;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 18px;
+      padding: 32px;
+      max-width: 460px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      transform: scale(0.96);
+      transition: transform 0.2s;
+    }
+
+    .modal-backdrop.open .modal {
+      transform: scale(1);
+    }
+
+    .modal .modal-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .modal h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal p {
+      font-size: 14px;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-actions .btn {
+      flex: 1;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      box-shadow: 0 4px 18px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-2);
+      border: 1px solid var(--border-soft);
+    }
+
+    /* Assignment preview in modal */
+    .assignment-preview {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ap-icon {
+      font-size: 24px;
+    }
+
+    .ap-text {
+      flex: 1;
+    }
+
+    .ap-squad {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .ap-squad.alpha {
+      color: #f87171;
+    }
+
+    .ap-squad.bravo {
+      color: #fb923c;
+    }
+
+    .ap-squad.charlie {
+      color: #facc15;
+    }
+
+    .ap-squad.delta {
+      color: #4ade80;
+    }
+
+    .ap-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    /* Success toast */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: rgba(22, 28, 54, 0.95);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-1);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      z-index: 3000;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      font-size: 20px;
+    }
+
+    /* Message column truncate */
+    .msg-cell {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+
+    .msg-cell:hover {
+      white-space: normal;
+      overflow: visible;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <nav class="topbar">
+    <a class="topbar-brand" href="index.html">
+      <div class="brand-icon">🛡️</div>
+      <h1>Help <span>Systems</span></h1>
+    </a>
+    <div class="topbar-nav">
+      <a href="index.html">Submit</a>
+      <a href="track.html">Track</a>
+      <a href="admin.html">Admin</a>
+      <a href="police.html" class="active">Police</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="page-wrap-wide">
+
+    <!-- Hero -->
+    <div class="police-hero">
+      <div class="police-hero-icon">🚓</div>
+      <div class="police-hero-text">
+        <h2>Police Dashboard</h2>
+        <p>Complaints are <strong style="color:#4ade80;">auto-dispatched</strong> on submission — Critical→Alpha,
+          High→Bravo, Medium→Charlie, Low→Delta</p>
+      </div>
+    </div>
+
+    <!-- Officer Bar -->
+    <div class="officer-bar">
+      <div class="officer-info">
+        <div class="officer-avatar">👮</div>
+        <div>
+          <div class="officer-name">Officer On Duty</div>
+          <div class="officer-id">Police Control Room · Unit Active</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          Auto-refresh: every 5s
+        </div>
+        <span style="font-size:12px;color:var(--text-3);" id="lastRefresh"></span>
+        <button class="btn btn-track" style="width:auto;padding:9px 20px;" onclick="loadRequests()">🔄 Refresh
+          Now</button>
+      </div>
+    </div>
+
+    <!-- Police Groups Panel -->
+    <div class="groups-panel">
+      <div class="groups-panel-title">🚔 Police Unit Groups — Auto-Assignment by Priority</div>
+      <div class="groups-grid">
+        <div class="group-card gc-critical">
+          <div class="gc-squad-name">🔴 Alpha Squad</div>
+          <div class="gc-handles">Handles Critical Cases</div>
+          <div class="gc-count-row">
+            <div>
+              <div class="gc-count" id="grp-alpha">—</div>
+              <div class="gc-pending-tag" id="grp-alpha-resolved">Loading…</div>
+            </div>
+            <div class="gc-icon">🚨</div>
+          </div>
+        </div>
+        <div class="group-card gc-high">
+          <div class="gc-squad-name">🟠 Bravo Squad</div>
+          <div class="gc-handles">Handles High Cases</div>
+          <div class="gc-count-row">
+            <div>
+              <div class="gc-count" id="grp-bravo">—</div>
+              <div class="gc-pending-tag" id="grp-bravo-resolved">Loading…</div>
+            </div>
+            <div class="gc-icon">🚔</div>
+          </div>
+        </div>
+        <div class="group-card gc-medium">
+          <div class="gc-squad-name">🟡 Charlie Squad</div>
+          <div class="gc-handles">Handles Medium Cases</div>
+          <div class="gc-count-row">
+            <div>
+              <div class="gc-count" id="grp-charlie">—</div>
+              <div class="gc-pending-tag" id="grp-charlie-resolved">Loading…</div>
+            </div>
+            <div class="gc-icon">🚗</div>
+          </div>
+        </div>
+        <div class="group-card gc-low">
+          <div class="gc-squad-name">🟢 Delta Squad</div>
+          <div class="gc-handles">Handles Low Cases</div>
+          <div class="gc-count-row">
+            <div>
+              <div class="gc-count" id="grp-delta">—</div>
+              <div class="gc-pending-tag" id="grp-delta-resolved">Loading…</div>
+            </div>
+            <div class="gc-icon">🚶</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini Stats -->
+    <div class="mini-stats">
+      <div class="mini-stat ms-total">
+        <div class="ms-num" id="ms-total">—</div>
+        <div class="ms-label">Total Cases</div>
+      </div>
+      <div class="mini-stat ms-progress">
+        <div class="ms-num" id="ms-progress">—</div>
+        <div class="ms-label">In Progress</div>
+      </div>
+      <div class="mini-stat ms-resolved">
+        <div class="ms-num" id="ms-resolved">—</div>
+        <div class="ms-label">Resolved</div>
+      </div>
+      <div class="mini-stat ms-critical">
+        <div class="ms-num" id="ms-critical">—</div>
+        <div class="ms-label">Critical</div>
+      </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="table-card">
+      <div class="table-header" style="flex-wrap:wrap;gap:12px;">
+        <h3>📋 All Help Requests</h3>
+        <span class="count-badge" id="totalBadge">0 cases</span>
+      </div>
+
+      <!-- Filter Bar -->
+      <div style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.05);">
+        <div class="filter-bar">
+          <button class="filter-pill active" onclick="setFilter('ALL',this)">All</button>
+          <button class="filter-pill" onclick="setFilter('SUBMITTED',this)">⏳ Submitted</button>
+          <button class="filter-pill" onclick="setFilter('IN_PROGRESS',this)">🚓 In Progress</button>
+          <button class="filter-pill" onclick="setFilter('RESOLVED',this)">✅ Resolved</button>
+          <button class="filter-pill" onclick="setFilterGroup('ALPHA',this)">🔴 Alpha</button>
+          <button class="filter-pill" onclick="setFilterGroup('BRAVO',this)">🟠 Bravo</button>
+          <button class="filter-pill" onclick="setFilterGroup('CHARLIE',this)">🟡 Charlie</button>
+          <button class="filter-pill" onclick="setFilterGroup('DELTA',this)">🟢 Delta</button>
+          <input class="filter-search" id="searchInput" oninput="applyFilter()"
+            placeholder="🔍  Search by ID or location…">
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Message</th>
+              <th>Location</th>
+              <th>Urgency</th>
+              <th>Assigned Unit</th>
+              <th>Status</th>
+              <th>Time Taken</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr>
+              <td colspan="8">
+                <div class="empty-state">
+                  <div class="empty-icon">⏳</div>
+                  <p>Loading requests…</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── ASSIGN MODAL ──────────────────────────────────────────── -->
+  <div class="modal-backdrop" id="assignModal">
+    <div class="modal">
+      <div class="modal-icon">🚓</div>
+      <h3>Assign to Police Group</h3>
+      <p id="assignModalMsg">This case will be dispatched to the appropriate squad based on urgency level.</p>
+      <div class="assignment-preview" id="assignPreview">
+        <div class="ap-icon" id="apIcon">🚨</div>
+        <div class="ap-text">
+          <div class="ap-squad" id="apSquad">Alpha Squad</div>
+          <div class="ap-desc" id="apDesc">Rapid Response — Critical Priority</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeAssignModal()">Cancel</button>
+        <button class="btn btn-danger" id="assignConfirmBtn" onclick="confirmAssign()">🚓 Dispatch Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESOLVE MODAL ──────────────────────────────────────────── -->
+  <div class="modal-backdrop" id="resolveModal">
+    <div class="modal">
+      <div class="modal-icon">✅</div>
+      <h3>Confirm Resolution</h3>
+      <p id="modalMsg">Are you sure you want to mark this request as resolved?</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-danger" id="modalConfirmBtn" onclick="confirmResolve()">✅ Mark Resolved</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOAST ──────────────────────────────────────────────────── -->
+  <div class="toast" id="toast">
+    <span class="toast-icon" id="toastIcon">✅</span>
+    <span id="toastMsg">Action completed</span>
+  </div>
+
+  <script>
+    // ── Police Group Mapping ─────────────────────────────────────────────────────
+    const URGENCY_GROUP = {
+      CRITICAL: { squad: 'Alpha Squad', cls: 'alpha', badge: 'gb-alpha', btnCls: 'btn-tbl-alpha', icon: '🚨', color: '#f87171', desc: 'Rapid Response — Critical Priority', key: 'ALPHA' },
+      HIGH: { squad: 'Bravo Squad', cls: 'bravo', badge: 'gb-bravo', btnCls: 'btn-tbl-bravo', icon: '🚔', color: '#fb923c', desc: 'Priority Unit — High Urgency Cases', key: 'BRAVO' },
+      MEDIUM: { squad: 'Charlie Squad', cls: 'charlie', badge: 'gb-charlie', btnCls: 'btn-tbl-charlie', icon: '🚗', color: '#facc15', desc: 'General Unit — Medium Priority Cases', key: 'CHARLIE' },
+      LOW: { squad: 'Delta Squad', cls: 'delta', badge: 'gb-delta', btnCls: 'btn-tbl-delta', icon: '🚶', color: '#4ade80', desc: 'Standard Patrol — Routine Low Cases', key: 'DELTA' },
+    };
+
+    // ── State ────────────────────────────────────────────────────────────────────
+    let allData = [];
+    let currentFilter = 'ALL';
+    let currentGroupFilter = null;  // null = no group filter
+    let pendingResolveId = null;
+    let pendingAssignId = null;
+    const startTimes = {};   // requestId → timestamp when first seen as IN_PROGRESS
+
+    // ── Toast ────────────────────────────────────────────────────────────────────
+    function showToast(msg, icon = '✅') {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      document.getElementById('toastIcon').innerText = icon;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    // ── Resolve Modal ────────────────────────────────────────────────────────────
+    function openModal(requestId) {
+      pendingResolveId = requestId;
+      document.getElementById('modalMsg').innerText =
+        `Mark request ${requestId} as RESOLVED? This will be reflected immediately in the Admin Dashboard and the victim's tracking page.`;
+      document.getElementById('resolveModal').classList.add('open');
+    }
+    function closeModal() {
+      document.getElementById('resolveModal').classList.remove('open');
+      pendingResolveId = null;
+    }
+
+    // ── Assign Modal ─────────────────────────────────────────────────────────────
+    function openAssignModal(requestId, urgency) {
+      pendingAssignId = requestId;
+      const u = (urgency || 'LOW').toUpperCase();
+      const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
+
+      document.getElementById('assignModalMsg').innerText =
+        `Request ${requestId} (${u} urgency) will be dispatched to the designated unit.`;
+      document.getElementById('apIcon').innerText = grp.icon;
+      document.getElementById('apSquad').innerText = grp.squad;
+      document.getElementById('apSquad').className = `ap-squad ${grp.cls}`;
+      document.getElementById('apDesc').innerText = grp.desc;
+
+      document.getElementById('assignModal').classList.add('open');
+    }
+    function closeAssignModal() {
+      document.getElementById('assignModal').classList.remove('open');
+      pendingAssignId = null;
+    }
+
+    // ── LOAD REQUESTS ─────────────────────────────────────────────────────────────
+    async function loadRequests() {
+      try {
+        const res = await fetch('http://localhost:8080/api/help/all');
+        allData = await res.json();
+
+        allData.forEach(r => {
+          if (r.status === 'IN_PROGRESS' && !startTimes[r.requestId]) {
+            startTimes[r.requestId] = Date.now();
+          }
+        });
+
+        updateMiniStats(allData);
+        updateGroupCounts(allData);
+        applyFilter();
+        document.getElementById('lastRefresh').innerText = 'Last refreshed: ' + new Date().toLocaleTimeString();
+      } catch (err) {
+        console.error('Load error:', err);
+      }
+    }
+
+    // ── MINI STATS ────────────────────────────────────────────────────────────────
+    function updateMiniStats(data) {
+      const total = data.length;
+      const progress = data.filter(r => r.status === 'IN_PROGRESS').length;
+      const resolved = data.filter(r => r.status === 'RESOLVED').length;
+      const critical = data.filter(r => (r.urgencyLevel || '').toUpperCase() === 'CRITICAL').length;
+      document.getElementById('ms-total').innerText = total;
+      document.getElementById('ms-progress').innerText = progress;
+      document.getElementById('ms-resolved').innerText = resolved;
+      document.getElementById('ms-critical').innerText = critical;
+      document.getElementById('totalBadge').innerText = `${total} case${total !== 1 ? 's' : ''}`;
+    }
+
+    // ── GROUP COUNTS ──────────────────────────────────────────────────────────────
+    function updateGroupCounts(data) {
+      const counts = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+      const resolved = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+
+      data.forEach(r => {
+        const u = (r.urgencyLevel || 'LOW').toUpperCase();
+        if (counts[u] !== undefined) {
+          counts[u]++;
+          if ((r.status || '').toUpperCase() === 'RESOLVED') resolved[u]++;
+        }
+      });
+
+      const setCard = (id, resolvedId, count, res) => {
+        document.getElementById(id).innerText = count;
+        document.getElementById(resolvedId).innerText = `${res} resolved`;
+      };
+      setCard('grp-alpha', 'grp-alpha-resolved', counts.CRITICAL, resolved.CRITICAL);
+      setCard('grp-bravo', 'grp-bravo-resolved', counts.HIGH, resolved.HIGH);
+      setCard('grp-charlie', 'grp-charlie-resolved', counts.MEDIUM, resolved.MEDIUM);
+      setCard('grp-delta', 'grp-delta-resolved', counts.LOW, resolved.LOW);
+    }
+
+    // ── FILTER ────────────────────────────────────────────────────────────────────
+    function setFilter(val, el) {
+      currentFilter = val;
+      currentGroupFilter = null;
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      applyFilter();
+    }
+
+    function setFilterGroup(groupKey, el) {
+      currentGroupFilter = groupKey;
+      currentFilter = 'ALL';
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      applyFilter();
+    }
+
+    function applyFilter() {
+      const search = (document.getElementById('searchInput').value || '').toLowerCase();
+      let filtered = allData;
+
+      if (currentFilter !== 'ALL') {
+        filtered = filtered.filter(r => r.status === currentFilter);
+      }
+      if (currentGroupFilter) {
+        // Map group key back to urgency level
+        const urgencyFor = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+        const targetUrgency = urgencyFor[currentGroupFilter];
+        filtered = filtered.filter(r => (r.urgencyLevel || '').toUpperCase() === targetUrgency);
+      }
+      if (search) {
+        filtered = filtered.filter(r =>
+          (r.requestId || '').toLowerCase().includes(search) ||
+          (r.locationArea || '').toLowerCase().includes(search) ||
+          (r.message || '').toLowerCase().includes(search)
+        );
+      }
+      renderTable(filtered);
+    }
+
+    // ── RENDER TABLE ──────────────────────────────────────────────────────────────
+    function renderTable(data) {
+      const tbody = document.getElementById('tableBody');
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📭</div><p>No requests match the current filter</p></div></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = '';
+      data.forEach(r => {
+        const row = document.createElement('tr');
+        const u = (r.urgencyLevel || 'LOW').toUpperCase();
+        const s = (r.status || 'SUBMITTED').toUpperCase();
+        const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
+
+        // Time taken
+        let timeCellHtml = '—';
+        if (r.responseTimeMinutes != null) {
+          timeCellHtml = `<span class="timer-badge">⏱ ${r.responseTimeMinutes} min</span>`;
+        } else if (s === 'IN_PROGRESS' && startTimes[r.requestId]) {
+          const elapsed = Math.floor((Date.now() - startTimes[r.requestId]) / 60000);
+          timeCellHtml = `<span class="timer-badge">⏱ ${elapsed} min (live)</span>`;
+        }
+
+        // Group badge — only shown if case is assigned (IN_PROGRESS or RESOLVED)
+        const showGroup = (s === 'IN_PROGRESS' || s === 'RESOLVED');
+        const groupHtml = showGroup
+          ? `<span class="group-badge ${grp.badge}">${grp.icon} ${grp.squad}</span>`
+          : `<span style="font-size:11px;color:var(--text-3);">Unassigned</span>`;
+
+        row.innerHTML = `
+      <td style="font-family:monospace;color:#818cf8;font-size:12px;">${r.requestId}</td>
+      <td><div class="msg-cell" title="${(r.message || '').replace(/"/g, '&quot;')}">${r.message || '—'}</div></td>
+      <td style="font-size:12px;color:var(--text-2);">${r.locationArea || '—'}</td>
+      <td><span class="badge badge-${u}">${u}</span></td>
+      <td>${groupHtml}</td>
+      <td><span class="badge badge-${s}">${s.replace('_', ' ')}</span></td>
+      <td>${timeCellHtml}</td>
+      <td id="action-${r.requestId}"></td>
+    `;
+
+        tbody.appendChild(row);
+
+        const actionCell = document.getElementById(`action-${r.requestId}`);
+
+        // ── SUBMITTED → auto-assign fires on submission; show fallback manual dispatch
+        if (s === 'SUBMITTED') {
+          actionCell.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <span style="font-size:11px;color:#facc15;font-weight:700;display:flex;align-items:center;gap:5px;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#facc15;display:inline-block;animation:live-blink 1s infinite;"></span>
+            Pending Assignment
+          </span>
+          <button class="btn-tbl ${grp.btnCls}" onclick="openAssignModal('${r.requestId}','${u}')" style="font-size:10px;padding:4px 10px;">
+            ${grp.icon} Force Dispatch → ${grp.squad}
+          </button>
+        </div>
+      `;
+        }
+        // ── IN_PROGRESS → En Route; can Resolve ──────────────────────
+        else if (s === 'IN_PROGRESS') {
+          actionCell.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11px;color:${grp.color || '#60a5fa'};font-weight:700;display:flex;align-items:center;gap:5px;">
+            <span style="width:7px;height:7px;border-radius:50%;background:${grp.color || '#60a5fa'};display:inline-block;animation:live-blink 1s infinite;"></span>
+            ${grp.icon} ${grp.squad} En Route
+          </span>
+          <button class="btn-tbl btn-tbl-resolve" onclick="openModal('${r.requestId}')">✅ Resolve</button>
+        </div>
+      `;
+        }
+        // ── RESOLVED → locked ────────────────────────────────────────
+        else if (s === 'RESOLVED') {
+          actionCell.innerHTML = `
+        <span style="font-size:11px;color:var(--resolved);font-weight:600;">✅ Resolved by ${grp.squad}</span>
+        <span style="font-size:11px;color:var(--text-3);display:block;margin-top:3px;">Admin must reassign to reopen</span>
+      `;
+        }
+      });
+    }
+
+    // ── ASSIGN (with group routing) ───────────────────────────────────────────────
+    async function confirmAssign() {
+      if (!pendingAssignId) return;
+      const id = pendingAssignId;
+      closeAssignModal();
+
+      // Find the case to get its urgency and decide its group
+      const record = allData.find(r => r.requestId === id);
+      const u = record ? (record.urgencyLevel || 'LOW').toUpperCase() : 'LOW';
+      const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
+
+      try {
+        await fetch(`http://localhost:8080/api/help/assign/${id}`, { method: 'PUT' });
+        startTimes[id] = Date.now();
+        showToast(`${grp.icon} Case ${id} dispatched to ${grp.squad}`, grp.icon);
+        loadRequests();
+      } catch {
+        showToast('❌ Failed to assign officer', '❌');
+      }
+    }
+
+    // ── RESOLVE (2-step: modal → confirm) ─────────────────────────────────────────
+    async function confirmResolve() {
+      if (!pendingResolveId) return;
+      const id = pendingResolveId;
+      closeModal();
+
+      try {
+        await fetch(`http://localhost:8080/api/help/resolve/${id}`, { method: 'PUT' });
+        showToast(`✅ Case ${id} marked RESOLVED — Admin dashboard updated`, '✅');
+        loadRequests();
+      } catch {
+        showToast('❌ Failed to resolve', '❌');
+      }
+    }
+
+    // ── AUTO REFRESH ───────────────────────────────────────────────────────────────
+    setInterval(loadRequests, 5000);
+    loadRequests();
+  </script>
+
+</body>
+
+</html>

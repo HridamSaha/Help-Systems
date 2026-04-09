@@ -1,0 +1,114 @@
+.page { padding: 3rem 2rem; min-height: calc(100vh - 140px); }
+.container { max-width: 1100px; margin: 0 auto; }
+
+.header { text-align: center; margin-bottom: 2.5rem; animation: fadeUp 0.5s ease both; }
+.badge {
+  display: inline-block;
+  background: var(--rose-soft); color: var(--rose);
+  padding: 0.3rem 0.9rem; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  border: 1px solid rgba(232,83,106,0.2); margin-bottom: 1rem;
+}
+.title { font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--charcoal); }
+.sub { margin-top: 0.75rem; color: var(--muted); line-height: 1.7; max-width: 540px; margin-inline: auto; }
+
+/* Issue selector bar */
+.issueBar {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-bottom: 1.5rem; justify-content: center;
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+.issueBtn {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1.1rem; border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: white; color: var(--slate);
+  font-size: 0.88rem; font-weight: 600;
+  transition: all 0.15s; cursor: pointer;
+}
+.issueBtn:hover { border-color: var(--rose); color: var(--rose); }
+.issueBtnActive {
+  border-color: var(--ic) !important;
+  color: var(--ic) !important;
+  background: var(--ib) !important;
+}
+
+/* Emergency banner */
+.emergencyBanner {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #fff0f2; border: 1.5px solid var(--rose);
+  border-radius: var(--radius-sm); margin-bottom: 2rem;
+  font-size: 0.9rem; color: var(--charcoal);
+  animation: fadeUp 0.5s 0.15s ease both;
+}
+.emergencyBanner span { font-size: 1.4rem; }
+.emergencyBanner a { color: var(--rose); font-weight: 700; text-decoration: none; }
+.emergencyBanner a:hover { text-decoration: underline; }
+
+/* Section */
+.section { margin-bottom: 3rem; }
+.sectionTitle {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 1.15rem; color: var(--charcoal);
+  margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;
+}
+
+/* Resource grid */
+.resourceGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.resourceCard { display: flex; flex-direction: column; gap: 0.75rem; }
+.cardTop { display: flex; justify-content: space-between; align-items: flex-start; }
+.badge2 {
+  display: inline-block; padding: 0.2rem 0.65rem;
+  border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.resourceName { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; color: var(--charcoal); }
+.resourceDesc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; flex: 1; }
+.callBtn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: linear-gradient(135deg, var(--rose), #c0395a);
+  color: white; padding: 0.55rem 1.1rem; border-radius: 100px;
+  text-decoration: none; font-size: 0.85rem; font-weight: 700;
+  transition: opacity 0.2s, transform 0.2s; align-self: flex-start;
+  box-shadow: 0 3px 10px rgba(232,83,106,0.3);
+}
+.callBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+.address, .hours { font-size: 0.82rem; color: var(--muted); }
+
+/* Loading skeletons */
+.loadingRow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.skeleton {
+  height: 160px; border-radius: var(--radius);
+  background: linear-gradient(90deg, var(--border) 25%, #f5eaef 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+.empty { color: var(--muted); font-size: 0.92rem; padding: 2rem 0; }
+
+/* Quick ref */
+.quickRef {
+  background: var(--charcoal); border-radius: var(--radius-lg);
+  padding: 2rem; animation: fadeUp 0.5s 0.2s ease both;
+}
+.quickTitle { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; color: white; margin-bottom: 1.25rem; }
+.quickGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.quickItem {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.85rem 1rem; border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.07);
+  text-decoration: none; transition: background 0.2s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.quickItem:hover { background: rgba(232,83,106,0.25); }
+.quickNum { font-family: monospace; font-size: 1rem; font-weight: 700; color: var(--rose-light); }
+.quickLabel { font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.4; }
+
+@media (max-width: 900px) {
+  .resourceGrid, .quickGrid, .loadingRow { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .resourceGrid, .quickGrid, .loadingRow { grid-template-columns: 1fr; }
+}
