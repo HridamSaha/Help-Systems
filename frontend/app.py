@@ -1,4 +1,11 @@
 import os
+# Force PyTorch and numpy to use 1 thread to drastically save memory on Render 512MB free tier
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
 import pickle
 import logging
 import numpy as np
