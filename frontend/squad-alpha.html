@@ -494,7 +494,7 @@
       saveResolutionTime(id, resolutionMins);
 
       try {
-        await fetch(`http://localhost:8080/api/help/resolve/${id}`, { method: 'PUT' });
+        await fetch(`https://helpsystems-java-backend.onrender.com/api/help/resolve/${id}`, { method: 'PUT' });
         showToast(`✅ Case ${id} resolved in ${resolutionMins} min`, '✅');
         loadCases();
       } catch {
@@ -506,7 +506,7 @@
 
     async function loadCases() {
       try {
-        const res = await fetch('http://localhost:8080/api/help/all');
+        const res = await fetch('https://helpsystems-java-backend.onrender.com/api/help/all');
         allData = await res.json();
 
         // Filter only cases assigned to THIS squad

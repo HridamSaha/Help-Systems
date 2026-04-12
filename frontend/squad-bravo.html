@@ -129,12 +129,12 @@
       if (!pendingResolveId) return; const id = pendingResolveId; const btn = document.getElementById('resolveConfirmBtn'); btn.disabled = true; btn.innerText = '⏳ Resolving…'; closeResolveModal();
       let resolutionMins = 0; if (startTimes[id]) { resolutionMins = Math.max(1, Math.round((Date.now() - startTimes[id]) / 60000)); }
       saveResolutionTime(id, resolutionMins);
-      try { await fetch(`http://localhost:8080/api/help/resolve/${id}`, { method: 'PUT' }); showToast(`✅ Case ${id} resolved in ${resolutionMins} min`, '✅'); loadCases(); } catch { showToast('❌ Failed to resolve case', '❌'); }
+      try { await fetch(`https://helpsystems-java-backend.onrender.com/api/help/resolve/${id}`, { method: 'PUT' }); showToast(`✅ Case ${id} resolved in ${resolutionMins} min`, '✅'); loadCases(); } catch { showToast('❌ Failed to resolve case', '❌'); }
       btn.disabled = false; btn.innerText = '✅ Confirm Resolve';
     }
     async function loadCases() {
       try {
-        const res = await fetch('http://localhost:8080/api/help/all'); allData = await res.json();
+        const res = await fetch('https://helpsystems-java-backend.onrender.com/api/help/all'); allData = await res.json();
         const myCases = allData.filter(r => { const sq = getStoredSquad(r.requestId); const status = (r.status || '').toUpperCase(); return sq === SQUAD_KEY && status !== 'RESOLVED'; });
         myCases.forEach(r => { if (r.status === 'IN_PROGRESS' && !startTimes[r.requestId]) startTimes[r.requestId] = Date.now(); });
         renderCases(myCases);

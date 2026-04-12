@@ -415,7 +415,7 @@
       };
 
       try {
-        const res = await fetch('http://localhost:8080/api/help/submit', {
+        const res = await fetch('https://helpsystems-java-backend.onrender.com/api/help/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)

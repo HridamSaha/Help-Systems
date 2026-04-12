@@ -935,7 +935,7 @@
     // ── LOAD REQUESTS ─────────────────────────────────────────────────────────────
     async function loadRequests() {
       try {
-        const res = await fetch('http://localhost:8080/api/help/all');
+        const res = await fetch('https://helpsystems-java-backend.onrender.com/api/help/all');
         allData = await res.json();
 
         allData.forEach(r => {
@@ -1133,7 +1133,7 @@
       const grp = URGENCY_GROUP[KEY_URG[chosenSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
       try {
-        await fetch(`http://localhost:8080/api/help/assign/${id}`, { method: 'PUT' });
+        await fetch(`https://helpsystems-java-backend.onrender.com/api/help/assign/${id}`, { method: 'PUT' });
         storeSquad(id, chosenSquadKey);
         startTimes[id] = Date.now();
         showToast(`${grp.icon} Case ${id} assigned to ${grp.squad}`, grp.icon);
@@ -1160,7 +1160,7 @@
       saveResolutionTime(id, resolutionMins);
 
       try {
-        await fetch(`http://localhost:8080/api/help/resolve/${id}`, { method: 'PUT' });
+        await fetch(`https://helpsystems-java-backend.onrender.com/api/help/resolve/${id}`, { method: 'PUT' });
         showToast(`✅ Case ${id} resolved in ${resolutionMins} min — Admin dashboard updated`, '✅');
         loadRequests();
       } catch {

@@ -3,3 +3,5 @@ numpy
 sentence-transformers
 scikit-learn
 gunicorn
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch

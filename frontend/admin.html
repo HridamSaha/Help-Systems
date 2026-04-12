@@ -729,7 +729,7 @@
       btn.innerText = '⏳ Loading…';
 
       try {
-        const res = await fetch('http://localhost:8080/api/help/all');
+        const res = await fetch('https://helpsystems-java-backend.onrender.com/api/help/all');
         const data = await res.json();
 
         renderStatCards(data);
@@ -934,7 +934,7 @@
     // ── RESOLVE (admin manual override) ──────────────────────────────────────────
     function resolveRequest(id) {
       if (!confirm(`Mark request ${id} as RESOLVED?\n\nThis will sync immediately to the Police and Tracking pages.`)) return;
-      fetch('http://localhost:8080/api/help/status', {
+      fetch('https://helpsystems-java-backend.onrender.com/api/help/status', {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ requestId: id, status: 'RESOLVED' })
       }).then(() => loadRequests());
@@ -945,13 +945,13 @@
       const a = prompt(`Reassign request ${id} to a new authority:\n\n(This will reopen the case and change status back to SUBMITTED so police can assign and resolve again)`);
       if (!a) return;
       // Step 1: reassign authority
-      fetch('http://localhost:8080/api/help/reassign', {
+      fetch('https://helpsystems-java-backend.onrender.com/api/help/reassign', {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ requestId: id, authority: a })
       })
         .then(() =>
           // Step 2: reset status to SUBMITTED so police can re-act
-          fetch('http://localhost:8080/api/help/status', {
+          fetch('https://helpsystems-java-backend.onrender.com/api/help/status', {
             method: 'PUT', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ requestId: id, status: 'SUBMITTED' })
           })
