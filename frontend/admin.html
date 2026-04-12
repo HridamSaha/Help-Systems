@@ -263,6 +263,169 @@
       color: #4ade80;
       border: 1px solid rgba(74, 222, 128, 0.25);
     }
+
+    /* ── Feedback Panel ─────────────────────────────────────── */
+    .feedback-section {
+      margin-top: 28px;
+    }
+
+    .feedback-summary-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .fb-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+      min-width: 120px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .fb-stat .fbs-num {
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1;
+      color: #facc15;
+    }
+
+    .fb-stat .fbs-label {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 3px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .fb-avg-good .fbs-num { color: #4ade80; }
+    .fb-avg-mid .fbs-num  { color: #facc15; }
+    .fb-avg-bad .fbs-num  { color: #f87171; }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    .fb-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      backdrop-filter: blur(14px);
+      transition: transform 0.18s;
+    }
+
+    .fb-card:hover { transform: translateY(-2px); }
+
+    .fb-card.fb-dispute {
+      border-color: rgba(248, 113, 113, 0.35);
+      background: rgba(248, 113, 113, 0.04);
+    }
+
+    .fb-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .fb-req-id {
+      font-family: monospace;
+      font-size: 11px;
+      color: #818cf8;
+      font-weight: 700;
+    }
+
+    .fb-type-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .fb-type-feedback {
+      background: rgba(52, 211, 153, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.25);
+    }
+
+    .fb-type-dispute {
+      background: rgba(248, 113, 113, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.25);
+    }
+
+    .fb-stars {
+      font-size: 16px;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+
+    .fb-issues {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .fb-issue-chip {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(99, 102, 241, 0.1);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .fb-comment {
+      font-size: 12px;
+      color: var(--text-2);
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      border-left: 2px solid var(--border-soft);
+      padding-left: 10px;
+    }
+
+    .fb-time {
+      font-size: 10px;
+      color: var(--text-3);
+    }
+
+    .fb-empty {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-3);
+      font-size: 13px;
+    }
+
+    .fb-empty-icon { font-size: 36px; margin-bottom: 10px; }
+
+    .fb-clear-btn {
+      background: rgba(248,113,113,0.1);
+      border: 1px solid rgba(248,113,113,0.25);
+      color: #f87171;
+      border-radius: var(--radius-sm);
+      padding: 6px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: auto;
+      transition: all 0.15s;
+    }
+
+    .fb-clear-btn:hover { background: rgba(248,113,113,0.2); }
   </style>
 </head>
 
@@ -514,6 +677,21 @@
       </div>
     </div>
 
+    <!-- FEEDBACK PANEL -->
+    <div class="feedback-section">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+        <div class="section-label" style="margin-bottom:0;">⭐ User Feedback &amp; Disputes</div>
+        <button class="fb-clear-btn" onclick="clearFeedback()">🗑 Clear All Feedback</button>
+      </div>
+      <div class="feedback-summary-row" id="fbSummaryRow"></div>
+      <div class="feedback-grid" id="feedbackGrid">
+        <div class="fb-empty">
+          <div class="fb-empty-icon">📭</div>
+          <p>No user feedback yet. Feedback appears here when users rate resolved cases on the Track page.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -539,6 +717,11 @@
 
     let pieChart = null, barChart = null;
 
+    // ── Resolution time from localStorage (written by police.html on resolve)
+    function getResolutionTime(id) {
+      try { const v = localStorage.getItem(`rt_${id}`); return v != null ? Number(v) : null; } catch (_) { return null; }
+    }
+
     // ── LOAD ──────────────────────────────────────────────────────────────────────
     async function loadRequests() {
       const btn = document.getElementById('refreshBtn');
@@ -554,6 +737,7 @@
         renderPieChart(data);
         renderBarChart(data);
         renderTable(data);
+        renderFeedback();
 
         document.getElementById('totalBadge').innerText = `${data.length} request${data.length !== 1 ? 's' : ''}`;
         document.getElementById('lastUpdated').innerText = 'Updated: ' + new Date().toLocaleTimeString();
@@ -707,10 +891,12 @@
         const s = (r.status || 'PENDING').toUpperCase();
         const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
 
-        // ── Time column ────────────────────────────────────────────────────────────
-        const timeHtml = r.responseTimeMinutes != null
-          ? `<span style="color:var(--resolved);font-weight:700;">⏱ ${r.responseTimeMinutes} min</span>`
-          : '—';
+        // ── Time column ──────────────────────────────────────────────────
+        const storedTime = getResolutionTime(r.requestId);
+        const resolvedMins = r.responseTimeMinutes != null ? r.responseTimeMinutes : storedTime;
+        const timeHtml = resolvedMins != null
+          ? `<span style="color:#34d399;font-weight:700;">⏱ ${resolvedMins} min</span>`
+          : (s === 'RESOLVED' ? '<span style="color:var(--text-3);font-size:11px;">resolved</span>' : '—');
 
         // ── Police Group column ───────────────────────────────────────────────────
         const assigned = (s === 'IN_PROGRESS' || s === 'RESOLVED');
@@ -772,6 +958,75 @@
         )
         .then(() => loadRequests());
     }
+
+    // ── FEEDBACK PANEL ────────────────────────────────────────────────────────────
+    const ISSUE_LABELS = {
+      not_resolved:  '⚠️ Not Actually Resolved',
+      late_arrival:  '🕐 Police Arrived Late',
+      rude_behavior: '😠 Rude Behavior',
+      no_action:     '🚫 No Action Taken',
+      wrong_location:'📍 Wrong Location',
+      all_good:      '✅ Everything Was Fine',
+    };
+
+    function renderFeedback() {
+      const all = JSON.parse(localStorage.getItem('hs_feedback') || '[]');
+      const grid   = document.getElementById('feedbackGrid');
+      const sumRow = document.getElementById('fbSummaryRow');
+
+      if (!all.length) {
+        grid.innerHTML = `<div class="fb-empty"><div class="fb-empty-icon">📭</div><p>No user feedback yet. Feedback appears here when users rate resolved cases on the Track page.</p></div>`;
+        sumRow.innerHTML = '';
+        return;
+      }
+
+      // Summary stats
+      const total    = all.length;
+      const disputes = all.filter(f => f.type === 'dispute').length;
+      const rated    = all.filter(f => f.rating);
+      const avgRaw   = rated.length ? (rated.reduce((s, f) => s + f.rating, 0) / rated.length) : null;
+      const avg      = avgRaw != null ? avgRaw.toFixed(1) : '—';
+      const avgCls   = avgRaw == null ? '' : avgRaw >= 4 ? 'fb-avg-good' : avgRaw >= 3 ? 'fb-avg-mid' : 'fb-avg-bad';
+
+      sumRow.innerHTML = `
+        <div class="fb-stat"><div class="fbs-num">${total}</div><div class="fbs-label">Total Feedback</div></div>
+        <div class="fb-stat ${avgCls}"><div class="fbs-num">${avg}${avgRaw != null ? ' ⭐' : ''}</div><div class="fbs-label">Avg Rating</div></div>
+        <div class="fb-stat" style="${disputes > 0 ? 'border-color:rgba(248,113,113,.3);' : ''}">
+          <div class="fbs-num" style="${disputes > 0 ? 'color:#f87171;' : 'color:#4ade80;'}">${disputes}</div>
+          <div class="fbs-label">Disputes / Reopens</div>
+        </div>
+      `;
+
+      // Cards — newest first
+      grid.innerHTML = [...all].reverse().map(f => {
+        const stars   = f.rating ? '⭐'.repeat(f.rating) + '☆'.repeat(5 - f.rating) : null;
+        const issues  = (f.issues || []).map(k => `<span class="fb-issue-chip">${ISSUE_LABELS[k] || k}</span>`).join('');
+        const comment = f.comment ? `<div class="fb-comment">"${f.comment}"</div>` : '';
+        const time    = f.timestamp ? new Date(f.timestamp).toLocaleString() : '';
+        const isDisp  = f.type === 'dispute';
+
+        return `
+          <div class="fb-card ${isDisp ? 'fb-dispute' : ''}">
+            <div class="fb-card-top">
+              <div>
+                <div class="fb-req-id">${f.requestId || '—'}</div>
+                <div style="font-size:11px;color:var(--text-3);margin-top:2px;">${time}</div>
+              </div>
+              <span class="fb-type-badge ${isDisp ? 'fb-type-dispute' : 'fb-type-feedback'}">${isDisp ? '🚨 Dispute' : '✅ Feedback'}</span>
+            </div>
+            ${stars ? `<div class="fb-stars">${stars}</div>` : '<div style="font-size:11px;color:var(--text-3);margin-bottom:8px;">No rating given</div>'}
+            ${issues ? `<div class="fb-issues">${issues}</div>` : ''}
+            ${comment}
+          </div>`;
+      }).join('');
+    }
+
+    function clearFeedback() {
+      if (!confirm('Clear all user feedback? This cannot be undone.')) return;
+      localStorage.removeItem('hs_feedback');
+      renderFeedback();
+    }
+
   </script>
 
 </body>

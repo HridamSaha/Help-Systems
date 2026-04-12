@@ -659,9 +659,8 @@
     <div class="police-hero">
       <div class="police-hero-icon">🚓</div>
       <div class="police-hero-text">
-        <h2>Police Dashboard</h2>
-        <p>Complaints are <strong style="color:#4ade80;">auto-dispatched</strong> on submission — Critical→Alpha,
-          High→Bravo, Medium→Charlie, Low→Delta</p>
+        <h2>Police Control Room</h2>
+        <p>Manually assign squads to incoming requests. Each squad has its own dedicated interface.</p>
       </div>
     </div>
 
@@ -687,11 +686,11 @@
 
     <!-- Police Groups Panel -->
     <div class="groups-panel">
-      <div class="groups-panel-title">🚔 Police Unit Groups — Auto-Assignment by Priority</div>
+      <div class="groups-panel-title">🚔 Police Unit Groups — Tap to open Squad Interface</div>
       <div class="groups-grid">
-        <div class="group-card gc-critical">
+        <a href="squad-alpha.html" class="group-card gc-critical" style="text-decoration:none;cursor:pointer;">
           <div class="gc-squad-name">🔴 Alpha Squad</div>
-          <div class="gc-handles">Handles Critical Cases</div>
+          <div class="gc-handles">Critical Cases</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-alpha">—</div>
@@ -699,10 +698,10 @@
             </div>
             <div class="gc-icon">🚨</div>
           </div>
-        </div>
-        <div class="group-card gc-high">
+        </a>
+        <a href="squad-bravo.html" class="group-card gc-high" style="text-decoration:none;cursor:pointer;">
           <div class="gc-squad-name">🟠 Bravo Squad</div>
-          <div class="gc-handles">Handles High Cases</div>
+          <div class="gc-handles">High Cases</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-bravo">—</div>
@@ -710,10 +709,10 @@
             </div>
             <div class="gc-icon">🚔</div>
           </div>
-        </div>
-        <div class="group-card gc-medium">
+        </a>
+        <a href="squad-charlie.html" class="group-card gc-medium" style="text-decoration:none;cursor:pointer;">
           <div class="gc-squad-name">🟡 Charlie Squad</div>
-          <div class="gc-handles">Handles Medium Cases</div>
+          <div class="gc-handles">Medium Cases</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-charlie">—</div>
@@ -721,10 +720,10 @@
             </div>
             <div class="gc-icon">🚗</div>
           </div>
-        </div>
-        <div class="group-card gc-low">
+        </a>
+        <a href="squad-delta.html" class="group-card gc-low" style="text-decoration:none;cursor:pointer;">
           <div class="gc-squad-name">🟢 Delta Squad</div>
-          <div class="gc-handles">Handles Low Cases</div>
+          <div class="gc-handles">Low Cases</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-delta">—</div>
@@ -732,7 +731,7 @@
             </div>
             <div class="gc-icon">🚶</div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
 
@@ -786,8 +785,9 @@
               <th>Request ID</th>
               <th>Message</th>
               <th>Location</th>
+              <th>Coordinates</th>
               <th>Urgency</th>
-              <th>Assigned Unit</th>
+              <th>Assigned Squad</th>
               <th>Status</th>
               <th>Time Taken</th>
               <th>Action</th>
@@ -857,13 +857,33 @@
       LOW: { squad: 'Delta Squad', cls: 'delta', badge: 'gb-delta', btnCls: 'btn-tbl-delta', icon: '🚶', color: '#4ade80', desc: 'Standard Patrol — Routine Low Cases', key: 'DELTA' },
     };
 
+    // Squad dropdown options
+    const ALL_SQUADS = [
+      { key: 'ALPHA',   label: '🚨 Alpha Squad' },
+      { key: 'BRAVO',   label: '🚔 Bravo Squad' },
+      { key: 'CHARLIE', label: '🚗 Charlie Squad' },
+      { key: 'DELTA',   label: '🚶 Delta Squad' },
+    ];
+    function storeSquad(id, key) {
+      try { localStorage.setItem('request_squad_' + id, key); } catch(_) {}
+    }
+
     // ── State ────────────────────────────────────────────────────────────────────
     let allData = [];
     let currentFilter = 'ALL';
     let currentGroupFilter = null;  // null = no group filter
     let pendingResolveId = null;
     let pendingAssignId = null;
+    let pendingAssignSquadKey = 'ALPHA'; // captured from dropdown at click-time
     const startTimes = {};   // requestId → timestamp when first seen as IN_PROGRESS
+
+    // ── Resolution time helpers (localStorage so admin.html can also read)
+    function saveResolutionTime(id, minutes) {
+      try { localStorage.setItem(`rt_${id}`, String(minutes)); } catch (_) { }
+    }
+    function getResolutionTime(id) {
+      try { const v = localStorage.getItem(`rt_${id}`); return v != null ? Number(v) : null; } catch (_) { return null; }
+    }
 
     // ── Toast ────────────────────────────────────────────────────────────────────
     function showToast(msg, icon = '✅') {
@@ -889,11 +909,17 @@
     // ── Assign Modal ─────────────────────────────────────────────────────────────
     function openAssignModal(requestId, urgency) {
       pendingAssignId = requestId;
-      const u = (urgency || 'LOW').toUpperCase();
-      const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
+
+      // Capture the dropdown value NOW before any auto-refresh re-renders the table
+      const selectEl = document.getElementById('squad-select-' + requestId);
+      pendingAssignSquadKey = selectEl ? selectEl.value : 'ALPHA';
+
+      // Show the CHOSEN squad in the modal preview
+      const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+      const grp = URGENCY_GROUP[KEY_URG[pendingAssignSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
       document.getElementById('assignModalMsg').innerText =
-        `Request ${requestId} (${u} urgency) will be dispatched to the designated unit.`;
+        `Request ${requestId} will be assigned to ${grp.squad}. Confirm to dispatch.`;
       document.getElementById('apIcon').innerText = grp.icon;
       document.getElementById('apSquad').innerText = grp.squad;
       document.getElementById('apSquad').className = `ap-squad ${grp.cls}`;
@@ -915,6 +941,10 @@
         allData.forEach(r => {
           if (r.status === 'IN_PROGRESS' && !startTimes[r.requestId]) {
             startTimes[r.requestId] = Date.now();
+          }
+          // If backend now returns responseTimeMinutes, persist it to localStorage too
+          if (r.status === 'RESOLVED' && r.responseTimeMinutes != null && getResolutionTime(r.requestId) == null) {
+            saveResolutionTime(r.requestId, r.responseTimeMinutes);
           }
         });
 
@@ -1018,10 +1048,13 @@
         const s = (r.status || 'SUBMITTED').toUpperCase();
         const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
 
-        // Time taken
+        // Time taken — priority: backend value → localStorage → live counter
         let timeCellHtml = '—';
+        const storedTime = getResolutionTime(r.requestId);
         if (r.responseTimeMinutes != null) {
-          timeCellHtml = `<span class="timer-badge">⏱ ${r.responseTimeMinutes} min</span>`;
+          timeCellHtml = `<span class="timer-badge" style="color:#34d399;border-color:rgba(52,211,153,.3);">⏱ ${r.responseTimeMinutes} min</span>`;
+        } else if (s === 'RESOLVED' && storedTime != null) {
+          timeCellHtml = `<span class="timer-badge" style="color:#34d399;border-color:rgba(52,211,153,.3);">⏱ ${storedTime} min</span>`;
         } else if (s === 'IN_PROGRESS' && startTimes[r.requestId]) {
           const elapsed = Math.floor((Date.now() - startTimes[r.requestId]) / 60000);
           timeCellHtml = `<span class="timer-badge">⏱ ${elapsed} min (live)</span>`;
@@ -1037,6 +1070,9 @@
       <td style="font-family:monospace;color:#818cf8;font-size:12px;">${r.requestId}</td>
       <td><div class="msg-cell" title="${(r.message || '').replace(/"/g, '&quot;')}">${r.message || '—'}</div></td>
       <td style="font-size:12px;color:var(--text-2);">${r.locationArea || '—'}</td>
+      <td style="font-size:11px;font-family:monospace;color:#94a3b8;">
+        ${r.latitude != null ? `📌 ${r.latitude.toFixed(5)},<br>${r.longitude.toFixed(5)}` : '—'}
+      </td>
       <td><span class="badge badge-${u}">${u}</span></td>
       <td>${groupHtml}</td>
       <td><span class="badge badge-${s}">${s.replace('_', ' ')}</span></td>
@@ -1048,19 +1084,21 @@
 
         const actionCell = document.getElementById(`action-${r.requestId}`);
 
-        // ── SUBMITTED → auto-assign fires on submission; show fallback manual dispatch
+        // ── SUBMITTED → manual squad dropdown
         if (s === 'SUBMITTED') {
+          const squadOptions = ALL_SQUADS.map(sq =>
+            `<option value="${sq.key}">${sq.label}</option>`
+          ).join('');
           actionCell.innerHTML = `
-        <div style="display:flex;flex-direction:column;gap:5px;">
-          <span style="font-size:11px;color:#facc15;font-weight:700;display:flex;align-items:center;gap:5px;">
-            <span style="width:7px;height:7px;border-radius:50%;background:#facc15;display:inline-block;animation:live-blink 1s infinite;"></span>
-            Pending Assignment
-          </span>
-          <button class="btn-tbl ${grp.btnCls}" onclick="openAssignModal('${r.requestId}','${u}')" style="font-size:10px;padding:4px 10px;">
-            ${grp.icon} Force Dispatch → ${grp.squad}
-          </button>
-        </div>
-      `;
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <select id="squad-select-${r.requestId}" style="background:rgba(255,255,255,0.06);border:1px solid var(--border-soft);border-radius:8px;color:var(--text-1);font-size:12px;padding:5px 8px;font-family:'Inter',sans-serif;outline:none;">
+              ${squadOptions}
+            </select>
+            <button class="btn-tbl btn-tbl-alpha" onclick="openAssignModal('${r.requestId}','${u}')" style="font-size:11px;padding:5px 12px;">
+              🚔 Assign Squad
+            </button>
+          </div>
+        `;
         }
         // ── IN_PROGRESS → En Route; can Resolve ──────────────────────
         else if (s === 'IN_PROGRESS') {
@@ -1084,24 +1122,24 @@
       });
     }
 
-    // ── ASSIGN (with group routing) ───────────────────────────────────────────────
+    // ── ASSIGN ───────────────────────────────────────────────────────────────────
     async function confirmAssign() {
       if (!pendingAssignId) return;
       const id = pendingAssignId;
+      const chosenSquadKey = pendingAssignSquadKey || 'ALPHA'; // pre-captured — immune to DOM re-render
       closeAssignModal();
 
-      // Find the case to get its urgency and decide its group
-      const record = allData.find(r => r.requestId === id);
-      const u = record ? (record.urgencyLevel || 'LOW').toUpperCase() : 'LOW';
-      const grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
+      const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+      const grp = URGENCY_GROUP[KEY_URG[chosenSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
       try {
         await fetch(`http://localhost:8080/api/help/assign/${id}`, { method: 'PUT' });
+        storeSquad(id, chosenSquadKey);
         startTimes[id] = Date.now();
-        showToast(`${grp.icon} Case ${id} dispatched to ${grp.squad}`, grp.icon);
+        showToast(`${grp.icon} Case ${id} assigned to ${grp.squad}`, grp.icon);
         loadRequests();
       } catch {
-        showToast('❌ Failed to assign officer', '❌');
+        showToast('❌ Failed to assign squad', '❌');
       }
     }
 
@@ -1111,9 +1149,19 @@
       const id = pendingResolveId;
       closeModal();
 
+      // Stamp resolution time NOW (before the reload clears startTimes)
+      let resolutionMins = null;
+      if (startTimes[id]) {
+        resolutionMins = Math.max(1, Math.round((Date.now() - startTimes[id]) / 60000));
+      } else {
+        // Fallback: at least note it was resolved this moment (0 min if assigned & resolved instantly)
+        resolutionMins = 0;
+      }
+      saveResolutionTime(id, resolutionMins);
+
       try {
         await fetch(`http://localhost:8080/api/help/resolve/${id}`, { method: 'PUT' });
-        showToast(`✅ Case ${id} marked RESOLVED — Admin dashboard updated`, '✅');
+        showToast(`✅ Case ${id} resolved in ${resolutionMins} min — Admin dashboard updated`, '✅');
         loadRequests();
       } catch {
         showToast('❌ Failed to resolve', '❌');

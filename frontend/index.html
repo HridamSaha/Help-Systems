@@ -152,7 +152,7 @@
     <div class="form-hero">
       <div class="hero-icon">🚨</div>
       <h2>Submit Help Request</h2>
-      <p>Your request is anonymous. Help will be dispatched immediately.</p>
+      <p>Your request is anonymous. A squad will be assigned to you shortly.</p>
     </div>
 
     <div class="form-card">
@@ -398,14 +398,6 @@
       setVoiceStatus(`✅ Message captured in ${langName}. Edit if needed.`, '#34d399');
     }
 
-    // ── Squad map (mirrors police.html) ─────────────────────────────────────────
-    const SQUAD_MAP = {
-      CRITICAL: { squad: 'Alpha Squad', icon: '🚨', color: '#f87171' },
-      HIGH: { squad: 'Bravo Squad', icon: '🚔', color: '#fb923c' },
-      MEDIUM: { squad: 'Charlie Squad', icon: '🚗', color: '#facc15' },
-      LOW: { squad: 'Delta Squad', icon: '🚶', color: '#4ade80' },
-    };
-
     // ── Submit ───────────────────────────────────────────────────────────────────
     async function submitRequest(e) {
       e.preventDefault();
@@ -423,7 +415,6 @@
       };
 
       try {
-        // Step 1 — Submit complaint
         const res = await fetch('http://localhost:8080/api/help/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -432,30 +423,18 @@
         const result = await res.json();
         const rid = result.requestId;
 
+        const isMed = data.issueType === 'MEDICAL';
+        const msgIcon = isMed ? '🚑' : '🚔';
+        const msgText = isMed ? 'A medical team is being assigned' : 'A squad is being assigned';
+
         const respEl = document.getElementById('response');
-        respEl.style.color = '#34d399';
-        respEl.innerText = `✅ Request Submitted! ID: ${rid}`;
+        respEl.innerHTML = `
+          <span style="color:#34d399;font-size:15px;font-weight:700;display:block;margin-bottom:4px;">✅ Request Submitted!</span>
+          <span style="color:#818cf8;font-size:13px;font-weight:700;">${msgIcon} ${msgText} — tracking will update shortly.</span>
+          <span style="color:var(--text-3);font-size:12px;display:block;margin-top:4px;">Request ID: ${rid}</span>
+        `;
 
-        // Step 2 — Auto-assign to police squad immediately
-        btn.innerText = '🚔 Auto-dispatching to squad…';
-        try {
-          await fetch(`http://localhost:8080/api/help/assign/${rid}`, { method: 'PUT' });
-
-          // Determine which squad based on urgency returned by backend
-          const urgency = (result.urgencyLevel || result.urgency || 'LOW').toUpperCase();
-          const squad = SQUAD_MAP[urgency] || SQUAD_MAP['LOW'];
-
-          respEl.innerHTML = `
-        <span style="color:#34d399;font-size:15px;font-weight:700;display:block;margin-bottom:4px;">✅ Complaint Submitted &amp; Auto-Assigned!</span>
-        <span style="color:${squad.color};font-size:13px;font-weight:700;">${squad.icon} Dispatched to ${squad.squad}</span>
-        <span style="color:var(--text-3);font-size:12px;display:block;margin-top:2px;">Request ID: ${rid} &nbsp;•&nbsp; En route to your location</span>
-      `;
-        } catch {
-          // Auto-assign failed, still show success
-          respEl.innerHTML = `✅ Submitted (ID: ${rid}) — will be assigned shortly.`;
-        }
-
-        setTimeout(() => { window.location.href = `track.html?requestId=${rid}`; }, 3000);
+        setTimeout(() => { window.location.href = `track.html?requestId=${rid}`; }, 2500);
       } catch {
         document.getElementById('response').style.color = '#f87171';
         document.getElementById('response').innerText = '⚠️ Connection error. Is the server running?';

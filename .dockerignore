@@ -1,0 +1,10 @@
+.git
+.idea
+target
+python
+frontend/helpsystems-frontend
+frontend/venv
+node_modules
+__pycache__
+*.pyc
+*.pyo

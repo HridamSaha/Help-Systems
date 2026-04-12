@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delta Squad — Help Systems</title>
+  <meta name="description" content="Delta Squad interface — view and resolve assigned emergency cases.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --squad-color: #4ade80;
+      --squad-color-dim: rgba(74, 222, 128, 0.12);
+      --squad-border: rgba(74, 222, 128, 0.3);
+      --squad-glow: rgba(74, 222, 128, 0.25);
+    }
+    .squad-hero { display:flex; align-items:center; gap:20px; padding:28px 0 20px; margin-bottom:24px; }
+    .squad-hero-icon { width:64px; height:64px; background:linear-gradient(135deg,#4ade80,#15803d); border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 8px 28px var(--squad-glow); flex-shrink:0; }
+    .squad-hero-text h2 { font-size:26px; font-weight:900; color:var(--squad-color); letter-spacing:-0.4px; }
+    .squad-hero-text p { font-size:14px; color:var(--text-2); margin-top:4px; }
+    .squad-bar { background:var(--bg-card); border:1px solid var(--squad-border); border-radius:var(--radius); padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:24px; backdrop-filter:blur(16px); }
+    .squad-status { display:flex; align-items:center; gap:10px; }
+    .squad-dot { width:10px; height:10px; border-radius:50%; background:var(--squad-color); animation:live-blink 1.2s infinite; }
+    .squad-status-text { font-size:13px; font-weight:700; color:var(--squad-color); }
+    .cases-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:18px; }
+    .case-card { background:var(--bg-card); border:1px solid var(--squad-border); border-radius:16px; padding:22px 24px; backdrop-filter:blur(18px); transition:transform 0.18s,box-shadow 0.18s; position:relative; overflow:hidden; }
+    .case-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--squad-color),transparent); }
+    .case-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px var(--squad-glow); }
+    .case-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; gap:10px; }
+    .case-id { font-family:monospace; font-size:12px; font-weight:700; color:var(--squad-color); background:var(--squad-color-dim); border:1px solid var(--squad-border); padding:3px 10px; border-radius:6px; }
+    .case-message { font-size:14px; color:var(--text-1); line-height:1.55; margin-bottom:14px; font-weight:500; }
+    .case-meta { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+    .meta-item { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:10px 12px; }
+    .meta-label { font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px; }
+    .meta-value { font-size:12px; color:var(--text-1); font-weight:600; word-break:break-word; }
+    .meta-value.coords { font-family:monospace; font-size:11px; color:#94a3b8; }
+    .case-actions { display:flex; gap:10px; }
+    .btn-resolve { flex:1; background:linear-gradient(135deg,#34d399,#059669); color:#fff; border:none; padding:11px 18px; border-radius:10px; font-family:'Inter',sans-serif; font-size:13px; font-weight:700; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:7px; }
+    .btn-resolve:hover { box-shadow:0 5px 20px rgba(52,211,153,0.4); transform:translateY(-1px); }
+    .btn-resolve:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+    .no-cases { text-align:center; padding:80px 20px; color:var(--text-3); }
+    .no-cases-icon { font-size:52px; margin-bottom:16px; opacity:0.5; }
+    .no-cases h3 { font-size:18px; font-weight:700; color:var(--text-2); margin-bottom:8px; }
+    .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px; }
+    .section-title-squad { font-size:14px; font-weight:700; color:var(--text-2); text-transform:uppercase; letter-spacing:0.08em; }
+    .case-count-pill { background:var(--squad-color-dim); border:1px solid var(--squad-border); color:var(--squad-color); font-size:12px; font-weight:700; padding:4px 14px; border-radius:20px; }
+    .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:2000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+    .modal-backdrop.open { opacity:1; pointer-events:all; }
+    .modal { background:#1a1d2e; border:1px solid var(--squad-border); border-radius:18px; padding:32px; max-width:440px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.6); transform:scale(0.96); transition:transform 0.2s; }
+    .modal-backdrop.open .modal { transform:scale(1); }
+    .modal-icon { font-size:36px; margin-bottom:12px; }
+    .modal h3 { font-size:18px; font-weight:700; margin-bottom:8px; }
+    .modal p { font-size:14px; color:var(--text-2); margin-bottom:20px; }
+    .modal-actions { display:flex; gap:10px; }
+    .modal-actions .btn { flex:1; }
+    .btn-ghost { background:rgba(255,255,255,0.05); color:var(--text-2); border:1px solid var(--border-soft); }
+    .toast { position:fixed; bottom:28px; right:28px; background:rgba(22,28,54,0.95); border:1px solid rgba(52,211,153,0.4); border-radius:12px; padding:14px 20px; display:flex; align-items:center; gap:12px; font-size:14px; font-weight:500; color:var(--text-1); box-shadow:0 8px 30px rgba(0,0,0,0.4); z-index:3000; transform:translateY(80px); opacity:0; transition:all 0.35s cubic-bezier(.34,1.56,.64,1); }
+    .toast.show { transform:translateY(0); opacity:1; }
+  </style>
+</head>
+
+<body>
+  <nav class="topbar">
+    <a class="topbar-brand" href="index.html"><div class="brand-icon">🛡️</div><h1>Help <span>Systems</span></h1></a>
+    <div class="topbar-nav">
+      <a href="index.html">Submit</a>
+      <a href="track.html">Track</a>
+      <a href="admin.html">Admin</a>
+      <a href="police.html">Control Room</a>
+      <a href="squad-delta.html" class="active">🟢 Delta</a>
+    </div>
+  </nav>
+
+  <div class="page-wrap-wide">
+    <div class="squad-hero">
+      <div class="squad-hero-icon">🚶</div>
+      <div class="squad-hero-text">
+        <h2>Delta Squad</h2>
+        <p>Your assigned cases — Low priority. Only your cases are visible here.</p>
+      </div>
+    </div>
+
+    <div class="squad-bar">
+      <div class="squad-status">
+        <div class="squad-dot"></div>
+        <span class="squad-status-text">Delta Squad — Live Feed</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-size:12px;color:var(--text-3);" id="lastRefresh"></span>
+        <button class="btn btn-track" style="width:auto;padding:8px 18px;" onclick="loadCases()">🔄 Refresh</button>
+        <a href="police.html" style="font-size:12px;color:var(--text-3);text-decoration:none;">← Control Room</a>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title-squad">📋 Assigned Cases</div>
+      <div class="case-count-pill" id="caseCountPill">0 cases</div>
+    </div>
+
+    <div class="cases-grid" id="casesGrid">
+      <div class="no-cases" style="grid-column:1/-1;"><div class="no-cases-icon">⏳</div><h3>Loading…</h3><p>Fetching your assigned cases.</p></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="resolveModal">
+    <div class="modal">
+      <div class="modal-icon">✅</div>
+      <h3>Mark Case Resolved</h3>
+      <p id="resolveModalMsg">Are you sure you want to mark this case as resolved?</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeResolveModal()">Cancel</button>
+        <button class="btn btn-primary" id="resolveConfirmBtn" onclick="confirmResolve()">✅ Confirm Resolve</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><span id="toastIcon">✅</span><span id="toastMsg">Action completed</span></div>
+
+  <script>
+    const SQUAD_KEY = 'DELTA';
+    function getStoredSquad(id) { try { return localStorage.getItem('request_squad_' + id) || null; } catch (_) { return null; } }
+    function saveResolutionTime(id, minutes) { try { localStorage.setItem(`rt_${id}`, String(minutes)); } catch (_) { } }
+    const startTimes = {}; let allData = []; let pendingResolveId = null;
+    function showToast(msg, icon = '✅') { const t = document.getElementById('toast'); document.getElementById('toastMsg').innerText = msg; document.getElementById('toastIcon').innerText = icon; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3200); }
+    function openResolveModal(id) { pendingResolveId = id; document.getElementById('resolveModalMsg').innerText = `Mark request ${id} as RESOLVED?`; document.getElementById('resolveModal').classList.add('open'); }
+    function closeResolveModal() { document.getElementById('resolveModal').classList.remove('open'); pendingResolveId = null; }
+    async function confirmResolve() {
+      if (!pendingResolveId) return; const id = pendingResolveId; const btn = document.getElementById('resolveConfirmBtn'); btn.disabled = true; btn.innerText = '⏳ Resolving…'; closeResolveModal();
+      let resolutionMins = 0; if (startTimes[id]) { resolutionMins = Math.max(1, Math.round((Date.now() - startTimes[id]) / 60000)); }
+      saveResolutionTime(id, resolutionMins);
+      try { await fetch(`http://localhost:8080/api/help/resolve/${id}`, { method: 'PUT' }); showToast(`✅ Case ${id} resolved in ${resolutionMins} min`, '✅'); loadCases(); } catch { showToast('❌ Failed to resolve case', '❌'); }
+      btn.disabled = false; btn.innerText = '✅ Confirm Resolve';
+    }
+    async function loadCases() {
+      try {
+        const res = await fetch('http://localhost:8080/api/help/all'); allData = await res.json();
+        const myCases = allData.filter(r => { const sq = getStoredSquad(r.requestId); const status = (r.status || '').toUpperCase(); return sq === SQUAD_KEY && status !== 'RESOLVED'; });
+        myCases.forEach(r => { if (r.status === 'IN_PROGRESS' && !startTimes[r.requestId]) startTimes[r.requestId] = Date.now(); });
+        renderCases(myCases);
+        document.getElementById('lastRefresh').innerText = 'Updated: ' + new Date().toLocaleTimeString();
+        document.getElementById('caseCountPill').innerText = `${myCases.length} case${myCases.length !== 1 ? 's' : ''}`;
+      } catch (err) { document.getElementById('casesGrid').innerHTML = `<div class="no-cases" style="grid-column:1/-1;"><div class="no-cases-icon">⚠️</div><h3>Connection Error</h3><p>Could not reach server on port 8080.</p></div>`; }
+    }
+    function renderCases(cases) {
+      const grid = document.getElementById('casesGrid');
+      if (!cases.length) { grid.innerHTML = `<div class="no-cases" style="grid-column:1/-1;"><div class="no-cases-icon">🟢</div><h3>No Active Cases</h3><p>You have no cases assigned right now.</p></div>`; return; }
+      grid.innerHTML = '';
+      cases.forEach(r => {
+        const u = (r.urgencyLevel || 'LOW').toUpperCase(); const s = (r.status || 'SUBMITTED').toUpperCase();
+        const lat = r.latitude != null ? r.latitude.toFixed(6) : '—'; const lon = r.longitude != null ? r.longitude.toFixed(6) : '—';
+        const card = document.createElement('div'); card.className = 'case-card';
+        card.innerHTML = `<div class="case-header"><span class="case-id">${r.requestId}</span><span class="badge badge-${u}">${u}</span></div>
+          <div class="case-message">${r.message || 'No message provided.'}</div>
+          <div class="case-meta">
+            <div class="meta-item"><div class="meta-label">📍 Location</div><div class="meta-value">${r.locationArea || '—'}</div></div>
+            <div class="meta-item"><div class="meta-label">🗺 Coordinates</div><div class="meta-value coords">Lat: ${lat}<br>Lon: ${lon}</div></div>
+            <div class="meta-item"><div class="meta-label">🏷 Issue Type</div><div class="meta-value">${r.issueType || r.department || '—'}</div></div>
+            <div class="meta-item"><div class="meta-label">📊 Status</div><div class="meta-value"><span class="badge badge-${s}">${s.replace('_',' ')}</span></div></div>
+          </div>
+          <div class="case-actions"><button class="btn-resolve" onclick="openResolveModal('${r.requestId}')">✅ Mark Resolved</button></div>`;
+        grid.appendChild(card);
+      });
+    }
+    setInterval(loadCases, 5000); loadCases();
+  </script>
+</body>
+</html>

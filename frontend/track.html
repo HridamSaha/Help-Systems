@@ -493,10 +493,17 @@
           </div>
         </div>
         <div class="timeline-step">
+          <div class="tl-dot pending" id="tl-review">⏳</div>
+          <div class="tl-content">
+            <div class="tl-title">Under Review</div>
+            <div class="tl-desc" id="tl-review-desc">Police control room is assigning a squad…</div>
+          </div>
+        </div>
+        <div class="timeline-step">
           <div class="tl-dot pending" id="tl-dispatched">🚓</div>
           <div class="tl-content">
-            <div class="tl-title">Responders Dispatched</div>
-            <div class="tl-desc" id="tl-dispatched-desc">Waiting for assignment…</div>
+            <div class="tl-title">Squad Assigned &amp; En Route</div>
+            <div class="tl-desc" id="tl-dispatched-desc">Awaiting squad assignment</div>
           </div>
         </div>
         <div class="timeline-step">
@@ -665,6 +672,45 @@
       return lat >= 8 && lat <= 37 && lng >= 68 && lng <= 97;
     }
 
+    // ── Squad info from localStorage ─────────────────────────────────────────────
+    const SQUAD_INFO = {
+      ALPHA:   { name: 'Alpha Squad',   icon: '🚨', color: '#f87171' },
+      BRAVO:   { name: 'Bravo Squad',   icon: '🚔', color: '#fb923c' },
+      CHARLIE: { name: 'Charlie Squad', icon: '🚗', color: '#facc15' },
+      DELTA:   { name: 'Delta Squad',   icon: '🚶', color: '#4ade80' },
+    };
+    function getAssignedSquad(id) {
+      try { return localStorage.getItem('request_squad_' + id) || null; } catch(_) { return null; }
+    }
+
+    // ── Squad banner helpers ─────────────────────────────────────────────────────
+    function showSquadBanner(id) {
+      const key = getAssignedSquad(id);
+      let bannerEl = document.getElementById('squadBanner');
+      if (!bannerEl) {
+        bannerEl = document.createElement('div');
+        bannerEl.id = 'squadBanner';
+        bannerEl.style.cssText = 'margin-top:16px;padding:14px 18px;border-radius:12px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:14px;animation:fadeSlide .4s ease;';
+        document.getElementById('timelineCard').appendChild(bannerEl);
+      }
+      if (key && SQUAD_INFO[key]) {
+        const sq = SQUAD_INFO[key];
+        bannerEl.style.background = `rgba(${hexToRgb(sq.color)},0.1)`;
+        bannerEl.style.border = `1px solid rgba(${hexToRgb(sq.color)},0.3)`;
+        bannerEl.style.color = sq.color;
+        bannerEl.innerHTML = `<span style="font-size:22px;">${sq.icon}</span><span>${sq.name} has been assigned and is on the way to your location!</span>`;
+      } else {
+        bannerEl.style.background = 'rgba(99,102,241,0.08)';
+        bannerEl.style.border = '1px solid rgba(99,102,241,0.25)';
+        bannerEl.style.color = '#818cf8';
+        bannerEl.innerHTML = `<span style="font-size:22px;">🚓</span><span>A squad has been assigned and is on the way!</span>`;
+      }
+    }
+    function hexToRgb(hex) {
+      const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+      return `${r},${g},${b}`;
+    }
+
     // ── Polling ──────────────────────────────────────────────────────────────────
     async function updateTracking(id) {
       try {
@@ -677,26 +723,57 @@
         const sb = document.getElementById('statusBox');
         sb.classList.add('visible');
         const sv = document.getElementById('statusValue');
-        sv.className = 'status-value s-' + status.toLowerCase().replace('_', '-');
-        sv.innerText = status.replace('_', ' ');
 
-        const sm = document.getElementById('statusMsg');
-        sm.innerText =
-          status === 'RESOLVED' ? '✅ Police marked this as resolved. Was it? Share your feedback below.' :
-            status === 'IN_PROGRESS' ? '🚓 Responders are on the way to you.' :
-              '⏳ Your request is being reviewed…';
+        // Show friendly status label
+        const squadKey = getAssignedSquad(id);
+        const squadInfo = squadKey ? SQUAD_INFO[squadKey] : null;
 
-        // Timeline
-        document.getElementById('timelineCard').style.display = 'block';
-        const tlD = document.getElementById('tl-dispatched');
-        const tlR = document.getElementById('tl-resolved');
-        if (status === 'IN_PROGRESS' || status === 'RESOLVED') {
-          tlD.className = 'tl-dot ' + (status === 'IN_PROGRESS' ? 'active' : 'done');
-          document.getElementById('tl-dispatched-desc').innerText = 'Responders are en route to your location';
+        if (status === 'SUBMITTED') {
+          sv.className = 'status-value s-submitted';
+          sv.innerText = 'In Progress';
+          document.getElementById('statusMsg').innerText = '⏳ Your request is in progress — a squad is being assigned by the control room.';
+        } else if (status === 'IN_PROGRESS') {
+          sv.className = 'status-value s-in-progress';
+          sv.innerText = squadInfo ? `${squadInfo.icon} ${squadInfo.name} Assigned` : '🚓 Squad Assigned';
+          document.getElementById('statusMsg').innerText = squadInfo
+            ? `${squadInfo.icon} ${squadInfo.name} is on the way to your location!`
+            : '🚓 A squad has been assigned and is on the way to you.';
+        } else if (status === 'RESOLVED') {
+          sv.className = 'status-value s-resolved';
+          sv.innerText = '✅ Resolved';
+          document.getElementById('statusMsg').innerText = '✅ The squad has resolved your case. Share your feedback below.';
         }
+
+        // ── Timeline steps ───────────────────────────────────────────
+        document.getElementById('timelineCard').style.display = 'block';
+        const tlReview     = document.getElementById('tl-review');
+        const tlDispatched = document.getElementById('tl-dispatched');
+        const tlResolved   = document.getElementById('tl-resolved');
+
+        if (status === 'SUBMITTED') {
+          tlReview.className = 'tl-dot active';
+          tlReview.innerText = '⏳';
+          document.getElementById('tl-review-desc').innerText = 'Control room is assigning a squad to your case…';
+        }
+
+        if (status === 'IN_PROGRESS' || status === 'RESOLVED') {
+          tlReview.className = 'tl-dot done';
+          tlReview.innerText = '✓';
+          document.getElementById('tl-review-desc').innerText = 'Squad has been assigned by control room';
+
+          tlDispatched.className = 'tl-dot ' + (status === 'IN_PROGRESS' ? 'active' : 'done');
+          tlDispatched.innerText = status === 'IN_PROGRESS' ? '🚓' : '✓';
+          const squadLabel = squadInfo ? `${squadInfo.name} is en route to your location` : 'Responders are en route to your location';
+          document.getElementById('tl-dispatched-desc').innerText = squadLabel;
+
+          // Show squad banner
+          showSquadBanner(id);
+        }
+
         if (status === 'RESOLVED') {
-          tlR.className = 'tl-dot done';
-          document.getElementById('tl-resolved-desc').innerText = 'Request resolved by police. Please confirm below.';
+          tlResolved.className = 'tl-dot done';
+          tlResolved.innerText = '✓';
+          document.getElementById('tl-resolved-desc').innerText = 'Case resolved. Thank you for using Help Systems.';
         }
 
         // Detail grid
@@ -706,36 +783,41 @@
           document.getElementById('di-urgency').innerHTML = data.urgencyLevel
             ? `<span class="badge badge-${data.urgencyLevel.toUpperCase()}">${data.urgencyLevel}</span>` : '—';
           document.getElementById('di-time').innerText = data.responseTimeMinutes != null ? data.responseTimeMinutes + ' min' : '—';
-          document.getElementById('di-group').innerText = data.policeGroup || '—';
+          document.getElementById('di-group').innerText = squadInfo ? squadInfo.name : (data.policeGroup || '—');
         }
 
-        // Map
-        document.getElementById('mapCard').style.display = 'block';
-        if (!map) initMap(data.latitude, data.longitude);
+        // ── MAP: only show after squad is assigned (IN_PROGRESS or RESOLVED) ───
+        if (status === 'IN_PROGRESS' || status === 'RESOLVED') {
+          document.getElementById('mapCard').style.display = 'block';
+          if (!map && data.latitude && data.longitude) initMap(data.latitude, data.longitude);
 
-        if (!userMarker) {
-          userMarker = L.marker([data.latitude, data.longitude], {
-            icon: L.icon({
-              iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-              shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-              iconSize: [25, 41], iconAnchor: [12, 41], shadowSize: [41, 41]
-            })
-          }).addTo(map).bindPopup('📍 Your Location').openPopup();
-        }
-
-        if (data.policeLat != null && data.policeLng != null && !isNaN(data.policeLat) && isValidCoord(data.policeLat, data.policeLng)) {
-          const pll = [data.policeLat, data.policeLng];
-          const ull = [data.latitude, data.longitude];
-          if (!policeMarker) {
-            policeMarker = L.marker(pll, {
-              icon: L.divIcon({ html: '<div class="police-dot"></div>', iconSize: [18, 18], iconAnchor: [9, 9], className: '' })
-            }).addTo(map).bindPopup('🚓 Police En Route');
-          } else {
-            policeMarker.setLatLng(pll);
+          if (map && data.latitude && data.longitude && !userMarker) {
+            userMarker = L.marker([data.latitude, data.longitude], {
+              icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                iconSize: [25, 41], iconAnchor: [12, 41], shadowSize: [41, 41]
+              })
+            }).addTo(map).bindPopup('📍 Your Location').openPopup();
           }
-          if (routeLine) map.removeLayer(routeLine);
-          routeLine = L.polyline([pll, ull], { color: '#6366f1', weight: 3, dashArray: '8,8' }).addTo(map);
-          map.fitBounds(L.latLngBounds([pll, ull]), { padding: [50, 50] });
+
+          if (data.policeLat != null && data.policeLng != null && !isNaN(data.policeLat) && isValidCoord(data.policeLat, data.policeLng)) {
+            const pll = [data.policeLat, data.policeLng];
+            const ull = [data.latitude, data.longitude];
+            if (!policeMarker) {
+              policeMarker = L.marker(pll, {
+                icon: L.divIcon({ html: '<div class="police-dot"></div>', iconSize: [18, 18], iconAnchor: [9, 9], className: '' })
+              }).addTo(map).bindPopup('🚓 Squad En Route');
+            } else {
+              policeMarker.setLatLng(pll);
+            }
+            if (routeLine) map.removeLayer(routeLine);
+            routeLine = L.polyline([pll, ull], { color: '#6366f1', weight: 3, dashArray: '8,8' }).addTo(map);
+            map.fitBounds(L.latLngBounds([pll, ull]), { padding: [50, 50] });
+          }
+        } else {
+          // SUBMITTED — hide map
+          document.getElementById('mapCard').style.display = 'none';
         }
 
         // ── Show feedback form when RESOLVED ─────────────────────────

@@ -184,25 +184,34 @@ function updateLocations(data) {
     userMarker.setLatLng(userLatLng);
   }
 
-  // Police marker — pulsing blue dot
-  const policeIcon = L.divIcon({
-    html: `<div class="police-dot"></div>`,
+  const isMedical = data.issueType === 'MEDICAL' || data.policeGroup === 'MEDICAL_TEAM';
+
+  // Dynamic marker icon (Medical vs Police)
+  const markerIconHtml = isMedical ? `<div class="medical-dot"></div>` : `<div class="police-dot"></div>`;
+  const popupLabel = isMedical ? "🚑 Medical Team En Route" : "🚓 Police En Route";
+
+  const customIcon = L.divIcon({
+    html: markerIconHtml,
     iconSize: [22, 22],
     className: ''
   });
 
   if (!policeMarker) {
-    policeMarker = L.marker(policeLatLng, { icon: policeIcon })
+    policeMarker = L.marker(policeLatLng, { icon: customIcon })
       .addTo(map)
-      .bindPopup("🚓 Police En Route");
+      .bindPopup(popupLabel);
   } else {
     policeMarker.setLatLng(policeLatLng);
+    if (!policeMarker.getPopup().getContent().includes(isMedical ? "Medical" : "Police")) {
+      policeMarker.setIcon(customIcon);
+      policeMarker.getPopup().setContent(popupLabel);
+    }
   }
 
-  // Route line between police and user
+  // Route line between team and user
   if (routeLine) map.removeLayer(routeLine);
   routeLine = L.polyline([policeLatLng, userLatLng], {
-    color: '#1a73e8',
+    color: isMedical ? '#ef4444' : '#1a73e8',
     weight: 3,
     dashArray: '8, 8'
   }).addTo(map);

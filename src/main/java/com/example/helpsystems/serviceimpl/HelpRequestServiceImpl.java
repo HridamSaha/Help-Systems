@@ -28,7 +28,7 @@ public class HelpRequestServiceImpl implements HelpRequestService {
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${ml.service.url:http://localhost:5000}")
+    @Value("${ml.service.url:}")
     private String mlServiceUrl;
 
     public HelpRequestServiceImpl(HelpRequestRepository helpRequestRepository,
@@ -45,6 +45,10 @@ public class HelpRequestServiceImpl implements HelpRequestService {
     }
 
     private MlResult callMlService(String message) {
+        if (mlServiceUrl == null || mlServiceUrl.isBlank()) {
+            return null;
+        }
+
         try {
             String body = objectMapper.writeValueAsString(
                     java.util.Map.of("message", message)
@@ -238,7 +242,8 @@ public class HelpRequestServiceImpl implements HelpRequestService {
             request.setUrgencyLevel(detectUrgencyFallback(finalMessage));
         }
         //  String group = assignPoliceGroup(request.getUrgencyLevel());
-       String group = assignPoliceGroup(request.getUrgencyLevel()); request.setPoliceGroup(group);
+       String group = "MEDICAL".equalsIgnoreCase(dto.getIssueType()) ? "MEDICAL_TEAM" : assignPoliceGroup(request.getUrgencyLevel()); 
+       request.setPoliceGroup(group);
         request.setDepartment(detectDepartment(finalMessage));
         request.setAssignedAuthority(assignAuthority(dto.getIssueType(), dto.getLocationArea()));
         request.setStatus("SUBMITTED");
@@ -359,7 +364,7 @@ public class HelpRequestServiceImpl implements HelpRequestService {
         if (optional.isPresent()) {
 
             HelpRequest req = optional.get();
-            String group = assignPoliceGroup(req.getUrgencyLevel());
+            String group = "MEDICAL".equalsIgnoreCase(req.getIssueType()) ? "MEDICAL_TEAM" : assignPoliceGroup(req.getUrgencyLevel());
             req.setPoliceGroup(group);
             // 🚓 SET POLICE LOCATION (VERY IMPORTANT)
             req.setPoliceLat(req.getLatitude() - 0.01);

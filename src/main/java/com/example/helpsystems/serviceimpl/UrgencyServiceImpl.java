@@ -21,6 +21,10 @@ public class UrgencyServiceImpl implements UrgencyService {
 
     @Override
     public String detectUrgency(String message) {
+        if (mlApiUrl == null || mlApiUrl.isBlank()) {
+            return "Medium";
+        }
+
         try {
             Map<String, String> body = Map.of("message", message);
             UrgencyResponse response = restTemplate.postForObject(
