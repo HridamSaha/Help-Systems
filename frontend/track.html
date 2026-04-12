@@ -714,7 +714,7 @@
     // ── Polling ──────────────────────────────────────────────────────────────────
     async function updateTracking(id) {
       try {
-        const res = await fetch('https://helpsystems-java-backend.onrender.com/api/help/track/' + id);
+        const res = await fetch('http://localhost:8080/api/help/track/' + id);
         const data = await res.json();
 
         const status = (data.status || 'PENDING').toUpperCase();
@@ -886,13 +886,13 @@
 
       try {
         // Step 1: Reset status back to SUBMITTED so police can re-act
-        await fetch('https://helpsystems-java-backend.onrender.com/api/help/status', {
+        await fetch('http://localhost:8080/api/help/status', {
           method: 'PUT', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ requestId: currentRequestId, status: 'SUBMITTED' })
         });
 
         // Step 2: Auto-reassign immediately
-        await fetch(`https://helpsystems-java-backend.onrender.com/api/help/assign/${currentRequestId}`, { method: 'PUT' });
+        await fetch(`http://localhost:8080/api/help/assign/${currentRequestId}`, { method: 'PUT' });
 
         // Save dispute feedback
         saveFeedback({

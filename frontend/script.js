@@ -141,7 +141,7 @@ async function submitRequest(event) {
   };
 
   try {
-    const res = await fetch("https://helpsystems-java-backend.onrender.com/api/help/submit", {
+    const res = await fetch("http://localhost:8080/api/help/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -227,7 +227,7 @@ function updateLocations(data) {
 async function startTracking(requestId) {
   async function poll() {
     try {
-      const res = await fetch("https://helpsystems-java-backend.onrender.com/api/help/track/" + requestId);
+      const res = await fetch("http://localhost:8080/api/help/track/" + requestId);
       const data = await res.json();
 
       const statusEl = document.getElementById("result");
@@ -267,7 +267,7 @@ async function track() {
 // ==========================
 async function loadRequests() {
   try {
-    const res = await fetch("https://helpsystems-java-backend.onrender.com/api/help/all");
+    const res = await fetch("http://localhost:8080/api/help/all");
     const data = await res.json();
     let counts = { LOW:0, MEDIUM:0, HIGH:0, CRITICAL:0 };
     let resolved = 0;
@@ -350,7 +350,7 @@ else pending++;
 // ==========================
 async function assign(requestId) {
   try {
-    await fetch("https://helpsystems-java-backend.onrender.com/api/help/assign/" + requestId, { method: "PUT" });
+    await fetch("http://localhost:8080/api/help/assign/" + requestId, { method: "PUT" });
     alert("🚓 Police Assigned!");
     loadRequests();
   } catch {
@@ -364,7 +364,7 @@ async function assign(requestId) {
 // ==========================
 async function resolveReq(requestId) {
   try {
-    await fetch("https://helpsystems-java-backend.onrender.com/api/help/resolve/" + requestId, { method: "PUT" });
+    await fetch("http://localhost:8080/api/help/resolve/" + requestId, { method: "PUT" });
     alert("✅ Request Resolved!");
     loadRequests();
   } catch {

@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submit Help Request – Help Systems</title>
+  <title>Medical Emergency – Help Systems</title>
   <meta name="description"
-    content="Submit an anonymous emergency help request. Voice input in any Indian language supported.">
+    content="Submit an anonymous medical emergency help request. Voice input in any Indian language supported.">
 
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -38,6 +38,7 @@
       font-size: 28px;
       font-weight: 800;
       letter-spacing: -0.5px;
+      color: #ef4444;
     }
 
     .form-hero p {
@@ -48,56 +49,12 @@
 
     .form-card {
       background: var(--bg-card);
-      border: 1px solid var(--border-soft);
+      border: 1px solid rgba(239, 68, 68, 0.3);
       border-radius: var(--radius);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       padding: 32px;
-      box-shadow: var(--shadow);
-    }
-
-    .issue-select-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .issue-option {
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-sm);
-      padding: 12px 8px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-2);
-      transition: all 0.2s;
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .issue-option:hover {
-      border-color: var(--accent);
-      color: #818cf8;
-      background: rgba(99, 102, 241, 0.08);
-    }
-
-    .issue-option.selected {
-      border-color: var(--accent);
-      background: rgba(99, 102, 241, 0.15);
-      color: #818cf8;
-      font-weight: 700;
-    }
-
-    .issue-option .opt-icon {
-      font-size: 22px;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    /* Hidden native select */
-    #issueType {
-      display: none;
+      box-shadow: 0 10px 40px rgba(239, 68, 68, 0.1);
     }
 
     .map-wrap {
@@ -116,6 +73,16 @@
       margin-top: 24px;
     }
 
+    .btn-medical {
+      background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+      color: #fff;
+    }
+
+    .btn-medical:hover {
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4) !important;
+      transform: translateY(-2px);
+    }
+
     .sos-hint {
       text-align: center;
       font-size: 12px;
@@ -124,7 +91,7 @@
     }
 
     .sos-hint a {
-      color: #818cf8;
+      color: #f87171;
       text-decoration: none;
     }
   </style>
@@ -139,7 +106,8 @@
       <h1>Help <span>Systems</span></h1>
     </a>
     <div class="topbar-nav">
-      <a href="index.html" class="active">Submit</a>
+      <a href="index.html">Submit</a>
+      <a href="medical.html" class="active" style="color: #ef4444;">Medical</a>
       <a href="track.html">Track</a>
       <a href="admin.html">Admin</a>
       <a href="medical-admin.html">Medical Admin</a>
@@ -151,67 +119,34 @@
   <div class="page-wrap" style="max-width:600px;">
 
     <div class="form-hero">
-      <div class="hero-icon">🚨</div>
-      <h2>Submit Help Request</h2>
-      <p>Your request is anonymous. A squad will be assigned to you shortly.</p>
+      <div class="hero-icon">🏥</div>
+      <h2>Medical Emergency</h2>
+      <p>Need urgent medical assistance? Your request will instantly bypass dispatch and alert the medical team
+        directly.</p>
     </div>
 
     <div class="form-card">
       <form onsubmit="submitRequest(event)">
 
-        <!-- Issue Type -->
-        <div class="form-group">
-          <label>Select Issue Type</label>
-          <div class="issue-select-grid" id="issueGrid">
-            <div class="issue-option" onclick="window.location.href='medical.html'">
-              <span class="opt-icon">🏥</span>Medical
-            </div>
-            <div class="issue-option" onclick="selectIssue('FIRE',this)">
-              <span class="opt-icon">🔥</span>Fire
-            </div>
-            <div class="issue-option" onclick="selectIssue('POLICE',this)">
-              <span class="opt-icon">🚔</span>Police
-            </div>
-            <div class="issue-option" onclick="selectIssue('WOMEN_SAFETY',this)">
-              <span class="opt-icon">🚺</span>Women Safety
-            </div>
-            <div class="issue-option" onclick="selectIssue('ACCIDENT',this)">
-              <span class="opt-icon">🚗</span>Accident
-            </div>
-            <div class="issue-option" onclick="selectIssue('OTHER',this)">
-              <span class="opt-icon">🆘</span>Other
-            </div>
-          </div>
-          <select id="issueType" required>
-            <option value="">-- Select Issue --</option>
-            <option value="MEDICAL">Medical Emergency</option>
-            <option value="FIRE">Fire</option>
-            <option value="POLICE">Police</option>
-            <option value="WOMEN_SAFETY">Women Safety</option>
-            <option value="ACCIDENT">Accident</option>
-            <option value="OTHER">Other</option>
-          </select>
-        </div>
-
         <!-- Message -->
         <div class="form-group">
-          <label>Message</label>
-          <textarea id="message" rows="3" placeholder="Describe your situation briefly…" required></textarea>
+          <label>Describe the Emergency</label>
+          <textarea id="message" rows="3" placeholder="Condition of the patient, injuries, required aids…"
+            required></textarea>
         </div>
 
         <!-- Voice -->
         <div class="form-group">
           <label>Voice Input <small>(auto-detects language)</small></label>
           <button type="button" class="btn btn-voice" id="voiceBtn" onclick="startVoice()">
-            🎤 Enter Complaint using Voice
+            🎤 Speak details via Voice
           </button>
           <span id="langDetectedBadge">🌐 Auto-Detected</span>
           <div id="voiceStatus"></div>
         </div>
 
         <!-- Language -->
-        <div class="form-group">
-          <label>Language <small>(auto-updated from voice)</small></label>
+        <div class="form-group" style="display:none;">
           <select id="language">
             <option value="en-IN">English</option>
             <option value="hi-IN">Hindi</option>
@@ -243,8 +178,8 @@
 
         <!-- Submit -->
         <div class="submit-area">
-          <button type="submit" class="btn btn-primary" id="submitBtn">
-            🚀 Submit Emergency Request
+          <button type="submit" class="btn btn-primary btn-medical" id="submitBtn">
+            🚑 Dispatch Ambulance
           </button>
           <p class="sos-hint">
             Already submitted? <a href="track.html">Track your request →</a>
@@ -259,15 +194,6 @@
   </div>
 
   <script>
-    // ── Issue type visual selector ───────────────────────────────────────────────
-    let selectedIssue = null;
-    function selectIssue(val, el) {
-      selectedIssue = val;
-      document.getElementById('issueType').value = val;
-      document.querySelectorAll('.issue-option').forEach(e => e.classList.remove('selected'));
-      el.classList.add('selected');
-    }
-
     // ── Map ──────────────────────────────────────────────────────────────────────
     let map, marker;
     function initMap(lat = 20.5937, lon = 78.9629) {
@@ -309,7 +235,7 @@
       'mar': { code: 'mr-IN', name: 'Marathi' },
       'guj': { code: 'gu-IN', name: 'Gujarati' },
       'pan': { code: 'pa-IN', name: 'Punjabi' },
-      'urd': { code: 'ur-IN', name: 'Urdu' },
+      'urd': { code: 'ur-IN', name: 'Urdu' }
     };
 
     let isListening = false;
@@ -361,27 +287,27 @@
           setVoiceStatus(`🔍 Detected ${detectedName}! Speak once more for best accuracy…`, '#a78bfa');
           rec2.onresult = e2 => populateMessage(e2.results[0][0].transcript.trim(), detectedLang, detectedName);
           rec2.onerror = () => populateMessage(transcript, detectedLang, detectedName);
-          rec2.onend = () => { isListening = false; btn.classList.remove('listening'); btn.innerText = '🎤 Enter Complaint using Voice'; };
+          rec2.onend = () => { isListening = false; btn.classList.remove('listening'); btn.innerText = '🎤 Speak details via Voice'; };
           rec2.start();
         } else {
           populateMessage(transcript, detectedLang || 'en-IN', detectedName || 'English');
           isListening = false;
           btn.classList.remove('listening');
-          btn.innerText = '🎤 Enter Complaint using Voice';
+          btn.innerText = '🎤 Speak details via Voice';
         }
       };
 
       rec.onerror = () => {
         isListening = false;
         btn.classList.remove('listening');
-        btn.innerText = '🎤 Enter Complaint using Voice';
+        btn.innerText = '🎤 Speak details via Voice';
         setVoiceStatus('❌ Could not hear. Please try again.', '#f87171');
       };
       rec.onend = () => {
         if (isListening) {
           isListening = false;
           btn.classList.remove('listening');
-          btn.innerText = '🎤 Enter Complaint using Voice';
+          btn.innerText = '🎤 Speak details via Voice';
         }
       };
       rec.start();
@@ -403,16 +329,16 @@
     async function submitRequest(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
-      btn.innerText = '⏳ Submitting…';
+      btn.innerText = '⏳ Dispatching…';
       btn.disabled = true;
 
       const data = {
-        issueType: document.getElementById('issueType').value,
+        issueType: 'MEDICAL',
         message: document.getElementById('message').value,
         language: document.getElementById('language').value,
         locationArea: document.getElementById('locationArea').value,
-        latitude: parseFloat(document.getElementById('lat').value),
-        longitude: parseFloat(document.getElementById('lon').value)
+        latitude: parseFloat(document.getElementById('lat').value) || 0.0,
+        longitude: parseFloat(document.getElementById('lon').value) || 0.0
       };
 
       try {
@@ -424,14 +350,10 @@
         const result = await res.json();
         const rid = result.requestId;
 
-        const isMed = data.issueType === 'MEDICAL';
-        const msgIcon = isMed ? '🚑' : '🚔';
-        const msgText = isMed ? 'A medical team is being assigned' : 'A squad is being assigned';
-
         const respEl = document.getElementById('response');
         respEl.innerHTML = `
-          <span style="color:#34d399;font-size:15px;font-weight:700;display:block;margin-bottom:4px;">✅ Request Submitted!</span>
-          <span style="color:#818cf8;font-size:13px;font-weight:700;">${msgIcon} ${msgText} — tracking will update shortly.</span>
+          <span style="color:#ef4444;font-size:15px;font-weight:700;display:block;margin-bottom:4px;">🚨 Medical Emergency Dispatched!</span>
+          <span style="color:#fca5a5;font-size:13px;font-weight:700;">🚑 An ambulance is being assigned — tracking will update shortly.</span>
           <span style="color:var(--text-3);font-size:12px;display:block;margin-top:4px;">Request ID: ${rid}</span>
         `;
 
@@ -439,7 +361,7 @@
       } catch {
         document.getElementById('response').style.color = '#f87171';
         document.getElementById('response').innerText = '⚠️ Connection error. Is the server running?';
-        btn.innerText = '🚀 Submit Emergency Request';
+        btn.innerText = '🚑 Dispatch Ambulance';
         btn.disabled = false;
       }
     }

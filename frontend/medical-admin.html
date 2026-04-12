@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Police Dashboard – Help Systems</title>
+  <title>Medical Admin – Help Systems</title>
   <meta name="description"
     content="Police officer dashboard to manage and resolve emergency help requests with group-based auto-assignment.">
 
@@ -648,8 +648,7 @@
       <a href="index.html">Submit</a>
       <a href="track.html">Track</a>
       <a href="admin.html">Admin</a>
-      <a href="medical-admin.html">Medical Admin</a>
-      <a href="police.html" class="active">Police</a>
+      <a href="medical-admin.html" class="active">Medical Admin</a>
     </div>
   </nav>
 
@@ -658,9 +657,9 @@
 
     <!-- Hero -->
     <div class="police-hero">
-      <div class="police-hero-icon">🚓</div>
+      <div class="police-hero-icon">🏥</div>
       <div class="police-hero-text">
-        <h2>Police Control Room</h2>
+        <h2>Medical Admin</h2>
         <p>Manually assign squads to incoming requests. Each squad has its own dedicated interface.</p>
       </div>
     </div>
@@ -671,7 +670,7 @@
         <div class="officer-avatar">👮</div>
         <div>
           <div class="officer-name">Officer On Duty</div>
-          <div class="officer-id">Police Control Room · Unit Active</div>
+          <div class="officer-id">Medical Admin · Unit Active</div>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
@@ -687,10 +686,10 @@
 
     <!-- Police Groups Panel -->
     <div class="groups-panel">
-      <div class="groups-panel-title">🚔 Police Unit Groups — Tap to open Squad Interface</div>
+      <div class="groups-panel-title">🚔 Medical Departments — Tap to open Squad Interface</div>
       <div class="groups-grid">
-        <a href="squad-alpha.html" class="group-card gc-critical" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🔴 Alpha Squad</div>
+        <a href="med-dept-1.html" class="group-card gc-critical" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">🔴 Ambulance 1</div>
           <div class="gc-handles">Critical Cases</div>
           <div class="gc-count-row">
             <div>
@@ -700,8 +699,8 @@
             <div class="gc-icon">🚨</div>
           </div>
         </a>
-        <a href="squad-bravo.html" class="group-card gc-high" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🟠 Bravo Squad</div>
+        <a href="med-dept-2.html" class="group-card gc-high" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">🟠 Ambulance 2</div>
           <div class="gc-handles">High Cases</div>
           <div class="gc-count-row">
             <div>
@@ -711,8 +710,8 @@
             <div class="gc-icon">🚔</div>
           </div>
         </a>
-        <a href="squad-charlie.html" class="group-card gc-medium" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🟡 Charlie Squad</div>
+        <a href="med-dept-3.html" class="group-card gc-medium" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">🟡 Paramedic Unit</div>
           <div class="gc-handles">Medium Cases</div>
           <div class="gc-count-row">
             <div>
@@ -722,8 +721,8 @@
             <div class="gc-icon">🚗</div>
           </div>
         </a>
-        <a href="squad-delta.html" class="group-card gc-low" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🟢 Delta Squad</div>
+        <a href="med-dept-4.html" class="group-card gc-low" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">🟢 Air Ambulance</div>
           <div class="gc-handles">Low Cases</div>
           <div class="gc-count-row">
             <div>
@@ -768,12 +767,12 @@
         <div class="filter-bar">
           <button class="filter-pill active" onclick="setFilter('ALL',this)">All</button>
           <button class="filter-pill" onclick="setFilter('SUBMITTED',this)">⏳ Submitted</button>
-          <button class="filter-pill" onclick="setFilter('IN_PROGRESS',this)">🚓 In Progress</button>
+          <button class="filter-pill" onclick="setFilter('IN_PROGRESS',this)">🏥 In Progress</button>
           <button class="filter-pill" onclick="setFilter('RESOLVED',this)">✅ Resolved</button>
-          <button class="filter-pill" onclick="setFilterGroup('ALPHA',this)">🔴 Alpha</button>
-          <button class="filter-pill" onclick="setFilterGroup('BRAVO',this)">🟠 Bravo</button>
-          <button class="filter-pill" onclick="setFilterGroup('CHARLIE',this)">🟡 Charlie</button>
-          <button class="filter-pill" onclick="setFilterGroup('DELTA',this)">🟢 Delta</button>
+          <button class="filter-pill" onclick="setFilterGroup('AMB1',this)">🔴 Alpha</button>
+          <button class="filter-pill" onclick="setFilterGroup('AMB2',this)">🟠 Bravo</button>
+          <button class="filter-pill" onclick="setFilterGroup('PARAMEDIC',this)">🟡 Charlie</button>
+          <button class="filter-pill" onclick="setFilterGroup('AIR_AMB',this)">🟢 Delta</button>
           <input class="filter-search" id="searchInput" oninput="applyFilter()"
             placeholder="🔍  Search by ID or location…">
         </div>
@@ -813,19 +812,19 @@
   <!-- ── ASSIGN MODAL ──────────────────────────────────────────── -->
   <div class="modal-backdrop" id="assignModal">
     <div class="modal">
-      <div class="modal-icon">🚓</div>
+      <div class="modal-icon">🏥</div>
       <h3>Assign to Police Group</h3>
       <p id="assignModalMsg">This case will be dispatched to the appropriate squad based on urgency level.</p>
       <div class="assignment-preview" id="assignPreview">
         <div class="ap-icon" id="apIcon">🚨</div>
         <div class="ap-text">
-          <div class="ap-squad" id="apSquad">Alpha Squad</div>
+          <div class="ap-squad" id="apSquad">Ambulance 1</div>
           <div class="ap-desc" id="apDesc">Rapid Response — Critical Priority</div>
         </div>
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeAssignModal()">Cancel</button>
-        <button class="btn btn-danger" id="assignConfirmBtn" onclick="confirmAssign()">🚓 Dispatch Now</button>
+        <button class="btn btn-danger" id="assignConfirmBtn" onclick="confirmAssign()">🏥 Dispatch Now</button>
       </div>
     </div>
   </div>
@@ -852,24 +851,24 @@
   <script>
     // ── Police Group Mapping ─────────────────────────────────────────────────────
     const URGENCY_GROUP = {
-      CRITICAL: { squad: 'Alpha Squad', cls: 'alpha', badge: 'gb-alpha', btnCls: 'btn-tbl-alpha', icon: '🚨', color: '#f87171', desc: 'Rapid Response — Critical Priority', key: 'ALPHA' },
-      HIGH: { squad: 'Bravo Squad', cls: 'bravo', badge: 'gb-bravo', btnCls: 'btn-tbl-bravo', icon: '🚔', color: '#fb923c', desc: 'Priority Unit — High Urgency Cases', key: 'BRAVO' },
-      MEDIUM: { squad: 'Charlie Squad', cls: 'charlie', badge: 'gb-charlie', btnCls: 'btn-tbl-charlie', icon: '🚗', color: '#facc15', desc: 'General Unit — Medium Priority Cases', key: 'CHARLIE' },
-      LOW: { squad: 'Delta Squad', cls: 'delta', badge: 'gb-delta', btnCls: 'btn-tbl-delta', icon: '🚶', color: '#4ade80', desc: 'Standard Patrol — Routine Low Cases', key: 'DELTA' },
+      CRITICAL: { squad: 'Ambulance 1', cls: 'alpha', badge: 'gb-alpha', btnCls: 'btn-tbl-alpha', icon: '🚨', color: '#f87171', desc: 'Rapid Response — Critical Priority', key: 'AMB1' },
+      HIGH: { squad: 'Ambulance 2', cls: 'bravo', badge: 'gb-bravo', btnCls: 'btn-tbl-bravo', icon: '🚔', color: '#fb923c', desc: 'Priority Unit — High Urgency Cases', key: 'AMB2' },
+      MEDIUM: { squad: 'Paramedic Unit', cls: 'charlie', badge: 'gb-charlie', btnCls: 'btn-tbl-charlie', icon: '🚗', color: '#facc15', desc: 'General Unit — Medium Priority Cases', key: 'PARAMEDIC' },
+      LOW: { squad: 'Air Ambulance', cls: 'delta', badge: 'gb-delta', btnCls: 'btn-tbl-delta', icon: '🚶', color: '#4ade80', desc: 'Standard Patrol — Routine Low Cases', key: 'AIR_AMB' },
     };
 
     // Squad dropdown options
     const ALL_SQUADS = [
-      { key: 'ALPHA',   label: '🚨 Alpha Squad' },
-      { key: 'BRAVO',   label: '🚔 Bravo Squad' },
-      { key: 'CHARLIE', label: '🚗 Charlie Squad' },
-      { key: 'DELTA',   label: '🚶 Delta Squad' },
+      { key: 'AMB1',   label: '🚨 Ambulance 1' },
+      { key: 'AMB2',   label: '🚔 Ambulance 2' },
+      { key: 'PARAMEDIC', label: '🚗 Paramedic Unit' },
+      { key: 'AIR_AMB',   label: '🚶 Air Ambulance' },
     ];
     function storeSquad(id, key) {
-      try { localStorage.setItem('request_squad_' + id, key); } catch(_) {}
+      try { localStorage.setItem('request_med_squad_' + id, key); } catch(_) {}
     }
     function getStoredSquad(id) {
-      try { return localStorage.getItem('request_squad_' + id); } catch(_) { return null; }
+      try { return localStorage.getItem('request_med_squad_' + id); } catch(_) { return null; }
     }
 
     // ── State ────────────────────────────────────────────────────────────────────
@@ -878,7 +877,7 @@
     let currentGroupFilter = null;  // null = no group filter
     let pendingResolveId = null;
     let pendingAssignId = null;
-    let pendingAssignSquadKey = 'ALPHA'; // captured from dropdown at click-time
+    let pendingAssignSquadKey = 'AMB1'; // captured from dropdown at click-time
     const startTimes = {};   // requestId → timestamp when first seen as IN_PROGRESS
 
     // ── Resolution time helpers (localStorage so admin.html can also read)
@@ -916,10 +915,10 @@
 
       // Capture the dropdown value NOW before any auto-refresh re-renders the table
       const selectEl = document.getElementById('squad-select-' + requestId);
-      pendingAssignSquadKey = selectEl ? selectEl.value : 'ALPHA';
+      pendingAssignSquadKey = selectEl ? selectEl.value : 'AMB1';
 
       // Show the CHOSEN squad in the modal preview
-      const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+      const KEY_URG = { AMB1: 'CRITICAL', AMB2: 'HIGH', PARAMEDIC: 'MEDIUM', AIR_AMB: 'LOW' };
       const grp = URGENCY_GROUP[KEY_URG[pendingAssignSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
       document.getElementById('assignModalMsg').innerText =
@@ -941,7 +940,7 @@
       try {
         const res = await fetch('http://localhost:8080/api/help/all');
         let rawData = await res.json();
-        allData = rawData.filter(r => (r.issueType || '').toUpperCase() !== 'MEDICAL');
+        allData = rawData.filter(r => (r.issueType || '').toUpperCase() === 'MEDICAL');
 
         allData.forEach(r => {
           if (r.status === 'IN_PROGRESS' && !startTimes[r.requestId]) {
@@ -1024,7 +1023,7 @@
       }
       if (currentGroupFilter) {
         // Map group key back to urgency level
-        const urgencyFor = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+        const urgencyFor = { AMB1: 'CRITICAL', AMB2: 'HIGH', PARAMEDIC: 'MEDIUM', AIR_AMB: 'LOW' };
         const targetUrgency = urgencyFor[currentGroupFilter];
         filtered = filtered.filter(r => (r.urgencyLevel || '').toUpperCase() === targetUrgency);
       }
@@ -1063,7 +1062,7 @@
         let grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
         const storedSq = getStoredSquad(r.requestId);
         if (storedSq) {
-          const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+          const KEY_URG = { AMB1: 'CRITICAL', AMB2: 'HIGH', PARAMEDIC: 'MEDIUM', AIR_AMB: 'LOW' };
           if (KEY_URG[storedSq]) grp = URGENCY_GROUP[KEY_URG[storedSq]];
         }
 
@@ -1126,7 +1125,7 @@
               ${squadOptions}
             </select>
             <button class="btn-tbl btn-tbl-alpha" onclick="openAssignModal('${r.requestId}','${u}')" style="font-size:11px;padding:5px 12px;">
-              🚔 Assign Squad
+              🚑 Assign Unit
             </button>
           </div>
         `;
@@ -1158,10 +1157,10 @@
     async function confirmAssign() {
       if (!pendingAssignId) return;
       const id = pendingAssignId;
-      const chosenSquadKey = pendingAssignSquadKey || 'ALPHA'; // pre-captured — immune to DOM re-render
+      const chosenSquadKey = pendingAssignSquadKey || 'AMB1'; // pre-captured — immune to DOM re-render
       closeAssignModal();
 
-      const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+      const KEY_URG = { AMB1: 'CRITICAL', AMB2: 'HIGH', PARAMEDIC: 'MEDIUM', AIR_AMB: 'LOW' };
       const grp = URGENCY_GROUP[KEY_URG[chosenSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
       try {

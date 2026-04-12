@@ -10,7 +10,7 @@ import java.util.Map;
 @Service
 public class UrgencyServiceImpl implements UrgencyService {
 
-    @Value("${ml.api.url}")
+    @Value("${ml.service.url:http://localhost:5000}")
     private String mlApiUrl;
 
     private final RestTemplate restTemplate;

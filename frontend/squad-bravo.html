@@ -7,6 +7,9 @@
   <title>Bravo Squad — Help Systems</title>
   <meta name="description" content="Bravo Squad interface — view and resolve assigned emergency cases.">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
   <style>
     :root {
       --squad-color: #fb923c;
@@ -45,6 +48,9 @@
     .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px; }
     .section-title-squad { font-size:14px; font-weight:700; color:var(--text-2); text-transform:uppercase; letter-spacing:0.08em; }
     .case-count-pill { background:var(--squad-color-dim); border:1px solid var(--squad-border); color:var(--squad-color); font-size:12px; font-weight:700; padding:4px 14px; border-radius:20px; }
+    #mapModal .modal { max-width: 600px; padding: 20px; }
+    #previewMap { height: 300px; border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border-soft); z-index: 10; }
+
     .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); z-index:2000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.2s; }
     .modal-backdrop.open { opacity:1; pointer-events:all; }
     .modal { background:#1a1d2e; border:1px solid var(--squad-border); border-radius:18px; padding:32px; max-width:440px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.6); transform:scale(0.96); transition:transform 0.2s; }
@@ -114,11 +120,46 @@
       </div>
     </div>
   </div>
+  <!-- Map Modal -->
+  <div class="modal-backdrop" id="mapModal">
+    <div class="modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+        <h3 style="margin:0;">📍 Emergency Location</h3>
+        <button class="btn btn-ghost" style="padding: 4px 10px; width: auto;" onclick="closeMapModal()">✕</button>
+      </div>
+      <div id="previewMap"></div>
+      <p id="mapAddress" style="font-size: 13px; color: var(--text-2); margin: 0; word-break: break-word;">Loading address...</p>
+    </div>
+  </div>
+
 
   <div class="toast" id="toast"><span id="toastIcon">✅</span><span id="toastMsg">Action completed</span></div>
 
   <script>
     const SQUAD_KEY = 'BRAVO';
+        let previewMap, previewMarker;
+
+    function openMapModal(lat, lon, address) {
+      document.getElementById('mapModal').classList.add('open');
+      document.getElementById('mapAddress').innerText = address || "Coordinates: " + lat + ", " + lon;
+      
+      setTimeout(() => {
+        if (!previewMap) {
+          previewMap = L.map('previewMap').setView([lat, lon], 16);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(previewMap);
+          previewMarker = L.marker([lat, lon]).addTo(previewMap);
+        } else {
+          previewMap.invalidateSize();
+          previewMap.setView([lat, lon], 16);
+          previewMarker.setLatLng([lat, lon]);
+        }
+      }, 100); // 100ms delay ensures the modal is fully visible so leaflet can calculate map size
+    }
+
+    function closeMapModal() {
+      document.getElementById('mapModal').classList.remove('open');
+    }
+
     function getStoredSquad(id) { try { return localStorage.getItem('request_squad_' + id) || null; } catch (_) { return null; } }
     function saveResolutionTime(id, minutes) { try { localStorage.setItem(`rt_${id}`, String(minutes)); } catch (_) { } }
     const startTimes = {}; let allData = []; let pendingResolveId = null;
@@ -129,12 +170,12 @@
       if (!pendingResolveId) return; const id = pendingResolveId; const btn = document.getElementById('resolveConfirmBtn'); btn.disabled = true; btn.innerText = '⏳ Resolving…'; closeResolveModal();
       let resolutionMins = 0; if (startTimes[id]) { resolutionMins = Math.max(1, Math.round((Date.now() - startTimes[id]) / 60000)); }
       saveResolutionTime(id, resolutionMins);
-      try { await fetch(`https://helpsystems-java-backend.onrender.com/api/help/resolve/${id}`, { method: 'PUT' }); showToast(`✅ Case ${id} resolved in ${resolutionMins} min`, '✅'); loadCases(); } catch { showToast('❌ Failed to resolve case', '❌'); }
+      try { await fetch(`http://localhost:8080/api/help/resolve/${id}`, { method: 'PUT' }); showToast(`✅ Case ${id} resolved in ${resolutionMins} min`, '✅'); loadCases(); } catch { showToast('❌ Failed to resolve case', '❌'); }
       btn.disabled = false; btn.innerText = '✅ Confirm Resolve';
     }
     async function loadCases() {
       try {
-        const res = await fetch('https://helpsystems-java-backend.onrender.com/api/help/all'); allData = await res.json();
+        const res = await fetch('http://localhost:8080/api/help/all'); allData = await res.json();
         const myCases = allData.filter(r => { const sq = getStoredSquad(r.requestId); const status = (r.status || '').toUpperCase(); return sq === SQUAD_KEY && status !== 'RESOLVED'; });
         myCases.forEach(r => { if (r.status === 'IN_PROGRESS' && !startTimes[r.requestId]) startTimes[r.requestId] = Date.now(); });
         renderCases(myCases);
@@ -158,7 +199,13 @@
             <div class="meta-item"><div class="meta-label">🏷 Issue Type</div><div class="meta-value">${r.issueType || r.department || '—'}</div></div>
             <div class="meta-item"><div class="meta-label">📊 Status</div><div class="meta-value"><span class="badge badge-${s}">${s.replace('_',' ')}</span></div></div>
           </div>
-          <div class="case-actions"><button class="btn-resolve" onclick="openResolveModal('${r.requestId}')">✅ Mark Resolved</button></div>`;
+          <div class="case-actions">
+            <button class="btn-ghost" style="flex:0.8; font-size: 13px; font-weight: 700; border-radius: 10px;" 
+              ${lat === '—' ? 'disabled' : `onclick="openMapModal(${lat}, ${lon}, '${(r.locationArea || '').replace(/'/g, "\'")}')"`}>
+              🗺️ Map
+            </button>
+            <button class="btn-resolve" onclick="openResolveModal('${r.requestId}')">✅ Mark Resolved</button>
+          </div>`;
         grid.appendChild(card);
       });
     }

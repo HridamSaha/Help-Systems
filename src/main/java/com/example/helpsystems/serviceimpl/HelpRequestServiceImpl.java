@@ -28,7 +28,7 @@ public class HelpRequestServiceImpl implements HelpRequestService {
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${ml.service.url:}")
+    @Value("${ml.service.url:http://localhost:5000}")
     private String mlServiceUrl;
 
     public HelpRequestServiceImpl(HelpRequestRepository helpRequestRepository,
@@ -90,12 +90,6 @@ public class HelpRequestServiceImpl implements HelpRequestService {
                 msg.contains("acid") || msg.contains("stab") || msg.contains("trafficking") ||
                 msg.contains("gang rape") || msg.contains("kidnap") || msg.contains("death threat") ||
                 msg.contains("forced sex") || msg.contains("molest")) {
-            return "CRITICAL";
-        }
-        // Hindi
-        if (msg.contains("बलात्कार") || msg.contains("हत्या") || msg.contains("तेज़ाब") ||
-                msg.contains("दहेज") || msg.contains("बंद करके") || msg.contains("चाकू") ||
-                msg.contains("जबरदस्ती") || msg.contains("अपहरण")) {
             return "CRITICAL";
         }
         // Tamil
@@ -179,7 +173,7 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
         // Emergency
         if (msg.contains("bleeding") || msg.contains("attack") || msg.contains("urgent") ||
-                msg.contains("rape") || msg.contains("बलात్కार") || msg.contains("అత్యాచారం")) {
+                msg.contains("rapes") || msg.contains("बलात్కार") || msg.contains("అత్యాచారం")) {
             return Department.EMERGENCY_RESPONSE;
         }
 
