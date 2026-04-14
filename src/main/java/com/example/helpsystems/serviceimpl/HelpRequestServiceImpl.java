@@ -215,17 +215,17 @@ public class HelpRequestServiceImpl implements HelpRequestService {
         request.setLocationArea(dto.getLocationArea());
         request.setLatitude(dto.getLatitude());
         request.setLongitude(dto.getLongitude());
-     //new
+        //new
         request.setDepartment(detectDepartment(finalMessage));
         request.setAssignedAuthority(assignAuthority(dto.getIssueType(), dto.getLocationArea()));
 
 // 🔥 ADD THIS BLOCK HERE
-     //   String group = assignPoliceGroup(request.getUrgencyLevel());
-      //  request.setPoliceGroup(group);
+        //   String group = assignPoliceGroup(request.getUrgencyLevel());
+        //  request.setPoliceGroup(group);
 
         request.setStatus("SUBMITTED");
         request.setCreatedAt(LocalDateTime.now());
-       // request.setStatus("SUBMITTED");
+        // request.setStatus("SUBMITTED");
 
         //return helpRequestRepository.save(request);
         // ── ML urgency with keyword fallback ─────────────────────────────────
@@ -236,8 +236,8 @@ public class HelpRequestServiceImpl implements HelpRequestService {
             request.setUrgencyLevel(detectUrgencyFallback(finalMessage));
         }
         //  String group = assignPoliceGroup(request.getUrgencyLevel());
-       String group = "MEDICAL".equalsIgnoreCase(dto.getIssueType()) ? "MEDICAL_TEAM" : assignPoliceGroup(request.getUrgencyLevel()); 
-       request.setPoliceGroup(group);
+        String group = "MEDICAL".equalsIgnoreCase(dto.getIssueType()) ? "MEDICAL_TEAM" : assignPoliceGroup(request.getUrgencyLevel());
+        request.setPoliceGroup(group);
         request.setDepartment(detectDepartment(finalMessage));
         request.setAssignedAuthority(assignAuthority(dto.getIssueType(), dto.getLocationArea()));
         request.setStatus("SUBMITTED");
@@ -248,43 +248,43 @@ public class HelpRequestServiceImpl implements HelpRequestService {
     private double policeLat = 12.9692;
     private double policeLng = 79.1559;
 
-   /* @Override
-    public HelpRequest trackRequest(String requestId) {
-        // return helpRequestRepository.findByRequestId(requestId)
-        //     .orElseThrow(() -> new RuntimeException("Request ID not found"));
-        HelpRequest req = helpRequestRepository.findByRequestId(requestId)
-                .orElseThrow(() -> new RuntimeException("Request ID not found"));
+    /* @Override
+     public HelpRequest trackRequest(String requestId) {
+         // return helpRequestRepository.findByRequestId(requestId)
+         //     .orElseThrow(() -> new RuntimeException("Request ID not found"));
+         HelpRequest req = helpRequestRepository.findByRequestId(requestId)
+                 .orElseThrow(() -> new RuntimeException("Request ID not found"));
 
-        double userLat = req.getLatitude();
-        double userLng = req.getLongitude();
+         double userLat = req.getLatitude();
+         double userLng = req.getLongitude();
 
-        double offset = 0.0009;
+         double offset = 0.0009;
 
-        double policeLat = userLat +  offset;
-        double policeLng = userLng + offset;
+         double policeLat = userLat +  offset;
+         double policeLng = userLng + offset;
 
-        // 🚓 Move police towards user
-        policeLat += (userLat - policeLat) * 0.05;
-        policeLng += (userLng - policeLng) * 0.05;
+         // 🚓 Move police towards user
+         policeLat += (userLat - policeLat) * 0.05;
+         policeLng += (userLng - policeLng) * 0.05;
 
-        req.setPoliceLat(policeLat);
-        req.setPoliceLng(policeLng);
+         req.setPoliceLat(policeLat);
+         req.setPoliceLng(policeLng);
 
-        // 📏 Distance check
-        double distance = Math.sqrt(
-                Math.pow(userLat - policeLat, 2) +
-                        Math.pow(userLng - policeLng, 2)
-        );
+         // 📏 Distance check
+         double distance = Math.sqrt(
+                 Math.pow(userLat - policeLat, 2) +
+                         Math.pow(userLng - policeLng, 2)
+         );
 
-        // ✅ Auto resolve when reached
-        if (distance < 0.0005) {
-            req.setStatus("RESOLVED");
-        } else {
-            req.setStatus("IN_PROGRESS");
-        }
+         // ✅ Auto resolve when reached
+         if (distance < 0.0005) {
+             req.setStatus("RESOLVED");
+         } else {
+             req.setStatus("IN_PROGRESS");
+         }
 
-        return helpRequestRepository.save(req);
-    }*/
+         return helpRequestRepository.save(req);
+     }*/
     @Override
     public HelpRequest trackRequest(String requestId) {
 
@@ -315,31 +315,31 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
         return helpRequestRepository.save(req);
     }
-   @Override
+    @Override
     public HelpRequest updateStatus(String requestId, String status) {
         HelpRequest request = trackRequest(requestId);
         request.setStatus(status);
         request.setUpdatedAt(LocalDateTime.now());
 
-      //  if ("ACTION_TAKEN".equals(status)) {
-            //    long minutes = java.time.Duration
-            //             .between(request.getCreatedAt(), LocalDateTime.now())
-            //              .toMinutes();
-            //    request.setResponseTimeMinutes(minutes);
-            //  }
+        //  if ("ACTION_TAKEN".equals(status)) {
+        //    long minutes = java.time.Duration
+        //             .between(request.getCreatedAt(), LocalDateTime.now())
+        //              .toMinutes();
+        //    request.setResponseTimeMinutes(minutes);
+        //  }
 
-            if ("RESOLVED".equalsIgnoreCase(status)) {
-                request.setResolvedAt(LocalDateTime.now());
+        if ("RESOLVED".equalsIgnoreCase(status)) {
+            request.setResolvedAt(LocalDateTime.now());
 
-                long minutes = java.time.Duration
-                        .between(request.getCreatedAt(), request.getResolvedAt())
-                        .toMinutes();
+            long minutes = java.time.Duration
+                    .between(request.getCreatedAt(), request.getResolvedAt())
+                    .toMinutes();
 
-                request.setResponseTimeMinutes(minutes);
-            }
-
-            return helpRequestRepository.save(request);
+            request.setResponseTimeMinutes(minutes);
         }
+
+        return helpRequestRepository.save(request);
+    }
 
     @Override
     public HelpRequest reassign(String requestId, String authority) {
@@ -372,10 +372,10 @@ public class HelpRequestServiceImpl implements HelpRequestService {
 
         throw new RuntimeException("Request not found");
     }
-        @Override
-        public List<HelpRequest> getAllRequests () {
-            return helpRequestRepository.findAll();
-        }
+    @Override
+    public List<HelpRequest> getAllRequests () {
+        return helpRequestRepository.findAll();
+    }
 
     @Override
     public HelpRequest resolveRequest(String requestId) {
@@ -409,4 +409,4 @@ public class HelpRequestServiceImpl implements HelpRequestService {
                 return "POLICE_GENERAL";
         }
     }
-    }
+}

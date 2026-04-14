@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>
+    if (localStorage.getItem('auth_police') !== 'true') {
+      window.location.href = 'login.html?role=police&redirect=' + encodeURIComponent(window.location.href);
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Charlie Squad — Help Systems</title>
@@ -63,6 +68,7 @@
     .toast { position:fixed; bottom:28px; right:28px; background:rgba(22,28,54,0.95); border:1px solid rgba(52,211,153,0.4); border-radius:12px; padding:14px 20px; display:flex; align-items:center; gap:12px; font-size:14px; font-weight:500; color:var(--text-1); box-shadow:0 8px 30px rgba(0,0,0,0.4); z-index:3000; transform:translateY(80px); opacity:0; transition:all 0.35s cubic-bezier(.34,1.56,.64,1); }
     .toast.show { transform:translateY(0); opacity:1; }
   </style>
+  
 </head>
 
 <body>
@@ -74,6 +80,7 @@
       <a href="admin.html">Admin</a>
       <a href="police.html">Control Room</a>
       <a href="squad-charlie.html" class="active">🟡 Charlie</a>
+          <button onclick="localStorage.removeItem('auth_police'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
     </div>
   </nav>
 

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Login — Help Systems</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: var(--bg-body);
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .login-container {
+      max-width: 420px;
+      width: 90%;
+      margin: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(20px);
+    }
+    
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    .login-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    
+    .login-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+    
+    .login-subtitle {
+      font-size: 14px;
+      color: var(--text-2);
+    }
+    
+    .input-group {
+      margin-bottom: 24px;
+    }
+    
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: var(--text-1);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+    
+    select.form-control {
+      appearance: none;
+      cursor: pointer;
+    }
+    
+    .btn-login {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+    
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    }
+    
+    .error-msg {
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 12px;
+      text-align: center;
+      display: none;
+    }
+    
+    .error-msg.show {
+      display: block;
+      animation: shake 0.4s ease-in-out;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+  </style>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <nav class="topbar">
+    <a class="topbar-brand" href="index.html">
+      <div class="brand-icon">🛡️</div>
+      <h1>Help <span>Systems</span></h1>
+    </a>
+    <div class="topbar-nav">
+      <a href="index.html">Submit</a>
+      <a href="track.html">Track</a>
+      <a href="login.html" class="active">Login</a>
+    </div>
+  </nav>
+
+  <div class="login-container">
+    <div class="login-header">
+      <div class="login-icon" id="roleIcon">🔐</div>
+      <h2 class="login-title">Secure Login</h2>
+      <p class="login-subtitle">Authenticate to access restricted systems</p>
+    </div>
+    
+    <div class="input-group">
+      <label>Department / Role</label>
+      <select class="form-control" id="roleSelect" onchange="updateIcon()">
+        <option value="admin">Master Admin</option>
+        <option value="police">Police Department</option>
+        <option value="medical">Medical Services</option>
+        <option value="fire">Fire Department</option>
+        <option value="womensafety">Women Safety Unit</option>
+        <option value="accident">Accident Rescue</option>
+      </select>
+    </div>
+    
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Enter security passphrase" onkeypress="handleEnter(event)">
+    </div>
+    
+    <button class="btn-login" onclick="attemptLogin()">Authenticate</button>
+    
+    <div class="error-msg" id="errorMsg">Invalid password for this department</div>
+  </div>
+
+  <script>
+    // Define the passwords and dashboard URLs for each role
+    const ROLES = {
+      'admin':       { pass: 'admin123', icon: '📊', dest: 'admin.html' },
+      'police':      { pass: 'police123', icon: '🚔', dest: 'police.html' },
+      'medical':     { pass: 'med123',   icon: '🏥', dest: 'medical-admin.html' },
+      'fire':        { pass: 'fire123',  icon: '🔥', dest: 'fire-admin.html' },
+      'womensafety': { pass: 'safe123',  icon: '🚺', dest: 'women-safety-admin.html' },
+      'accident':    { pass: 'acc123',   icon: '🚗', dest: 'accident-admin.html' }
+    };
+
+    function updateIcon() {
+      const role = document.getElementById('roleSelect').value;
+      if (ROLES[role]) {
+        document.getElementById('roleIcon').innerText = ROLES[role].icon;
+      }
+    }
+
+    function handleEnter(e) {
+      if (e.key === 'Enter') attemptLogin();
+    }
+
+    function attemptLogin() {
+      const role = document.getElementById('roleSelect').value;
+      const pwd = document.getElementById('password').value;
+      const err = document.getElementById('errorMsg');
+      
+      err.classList.remove('show');
+      void err.offsetWidth; // trigger reflow
+      
+      if (pwd === ROLES[role].pass) {
+        // Success! Set token
+        localStorage.setItem('auth_' + role, 'true');
+        
+        // Handle redirect parameter if came from a protected page
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('redirect')) {
+          window.location.href = params.get('redirect');
+        } else {
+          window.location.href = ROLES[role].dest;
+        }
+      } else {
+        err.classList.add('show');
+        document.getElementById('password').value = '';
+      }
+    }
+
+    // Auto-select role if specified in URL (for better UX when redirected)
+    window.onload = () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('role')) {
+        const sel = document.getElementById('roleSelect');
+        sel.value = params.get('role');
+        updateIcon();
+      }
+    };
+  </script>
+
+</body>
+</html>

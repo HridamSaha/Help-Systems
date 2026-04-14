@@ -3,24 +3,24 @@
 
 <head>
   <script>
-    if (localStorage.getItem('auth_medical') !== 'true') {
-      window.location.href = 'login.html?role=medical&redirect=' + encodeURIComponent(window.location.href);
+    if (localStorage.getItem('auth_womensafety') !== 'true') {
+      window.location.href = 'login.html?role=womensafety&redirect=' + encodeURIComponent(window.location.href);
     }
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paramedic Unit — Help Systems</title>
-  <meta name="description" content="Paramedic Unit interface — view and resolve assigned emergency cases.">
+  <title>Crisis Response — Help Systems</title>
+  <meta name="description" content="Crisis Response interface — view and resolve assigned emergency cases.">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <style>
     :root {
-      --squad-color: #f87171;
-      --squad-color-dim: rgba(248, 113, 113, 0.12);
-      --squad-border: rgba(248, 113, 113, 0.3);
-      --squad-glow: rgba(248, 113, 113, 0.25);
+      --squad-color: #4ade80;
+      --squad-color-dim: rgba(74,222,128,0.12);
+      --squad-border: rgba(74,222,128,0.3);
+      --squad-glow: rgba(74,222,128,0.12);
     }
 
     .squad-hero {
@@ -34,7 +34,7 @@
     .squad-hero-icon {
       width: 64px;
       height: 64px;
-      background: linear-gradient(135deg, #f87171, #b91c1c);
+      background: linear-gradient(135deg, #4ade80, #15803d);
       border-radius: 18px;
       display: flex;
       align-items: center;
@@ -390,9 +390,9 @@
       <a href="index.html">Submit</a>
       <a href="track.html">Track</a>
       <a href="admin.html">Admin</a>
-      <a href="medical-admin.html">Control Room</a>
-      <a href="med-dept-3.html" class="active">🟡 Paramedic Unit</a>
-          <button onclick="localStorage.removeItem('auth_medical'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
+      <a href="women-safety-admin.html">Control Room</a>
+      <a href="safety-unit-4.html" class="active">🟢 Crisis</a>
+          <button onclick="localStorage.removeItem('auth_womensafety'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
     </div>
   </nav>
 
@@ -401,10 +401,10 @@
 
     <!-- Hero -->
     <div class="squad-hero">
-      <div class="squad-hero-icon">🚗</div>
+      <div class="squad-hero-icon">🛡️</div>
       <div class="squad-hero-text">
-        <h2>Paramedic Unit</h2>
-        <p>Your assigned cases — Medium priority. Only your cases are visible here.</p>
+        <h2>Crisis Response</h2>
+        <p>Your assigned cases — Critical priority. Only your cases are visible here.</p>
       </div>
     </div>
 
@@ -412,12 +412,12 @@
     <div class="squad-bar">
       <div class="squad-status">
         <div class="squad-dot"></div>
-        <span class="squad-status-text">Paramedic Unit — Live Feed</span>
+        <span class="squad-status-text">Crisis Response — Live Feed</span>
       </div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
         <span style="font-size:12px;color:var(--text-3);" id="lastRefresh"></span>
         <button class="btn btn-track" style="width:auto;padding:8px 18px;" onclick="loadCases()">🔄 Refresh</button>
-        <a href="medical-admin.html" style="font-size:12px;color:var(--text-3);text-decoration:none;">← Control Room</a>
+        <a href="women-safety-admin.html" style="font-size:12px;color:var(--text-3);text-decoration:none;">← Control Room</a>
       </div>
     </div>
 
@@ -469,7 +469,7 @@
   </div>
 
   <script>
-    const SQUAD_KEY = 'PARAMEDIC';
+    const SQUAD_KEY = 'WS_4';
 
         let previewMap, previewMarker;
 
@@ -495,7 +495,7 @@
     }
 
     function getStoredSquad(id) {
-      try { return localStorage.getItem('request_med_squad_' + id) || null; } catch (_) { return null; }
+      try { return localStorage.getItem('request_safety_squad_' + id) || null; } catch (_) { return null; }
     }
 
     function saveResolutionTime(id, minutes) {

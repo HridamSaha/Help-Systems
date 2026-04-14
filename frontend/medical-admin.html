@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>
+    if (localStorage.getItem('auth_medical') !== 'true') {
+      window.location.href = 'login.html?role=medical&redirect=' + encodeURIComponent(window.location.href);
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medical Admin – Help Systems</title>
@@ -634,6 +639,7 @@
       overflow: visible;
     }
   </style>
+  
 </head>
 
 <body>
@@ -644,11 +650,16 @@
       <div class="brand-icon">🛡️</div>
       <h1>Help <span>Systems</span></h1>
     </a>
-    <div class="topbar-nav">
+        <div class="topbar-nav">
       <a href="index.html">Submit</a>
       <a href="track.html">Track</a>
       <a href="admin.html">Admin</a>
-      <a href="medical-admin.html" class="active">Medical Admin</a>
+      <a href="police.html">Police</a>
+      <a href="medical-admin.html" class="active">Medical</a>
+      <a href="fire-admin.html">Fire</a>
+      <a href="women-safety-admin.html">Women Safety</a>
+      <a href="accident-admin.html">Accident</a>
+          <button onclick="localStorage.removeItem('auth_medical'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
     </div>
   </nav>
 
@@ -1163,14 +1174,15 @@
       const KEY_URG = { AMB1: 'CRITICAL', AMB2: 'HIGH', PARAMEDIC: 'MEDIUM', AIR_AMB: 'LOW' };
       const grp = URGENCY_GROUP[KEY_URG[chosenSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
+      storeSquad(id, chosenSquadKey);
+      startTimes[id] = Date.now();
       try {
         await fetch(`http://localhost:8080/api/help/assign/${id}`, { method: 'PUT' });
-        storeSquad(id, chosenSquadKey);
-        startTimes[id] = Date.now();
         showToast(`${grp.icon} Case ${id} assigned to ${grp.squad}`, grp.icon);
         loadRequests();
       } catch {
-        showToast('❌ Failed to assign squad', '❌');
+        showToast(`${grp.icon} ${grp.squad} assigned locally (server offline)`, grp.icon);
+        loadRequests();
       }
     }
 

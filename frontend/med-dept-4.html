@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>
+    if (localStorage.getItem('auth_medical') !== 'true') {
+      window.location.href = 'login.html?role=medical&redirect=' + encodeURIComponent(window.location.href);
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Air Ambulance — Help Systems</title>
@@ -370,6 +375,7 @@
       opacity: 1;
     }
   </style>
+  
 </head>
 
 <body>
@@ -386,6 +392,7 @@
       <a href="admin.html">Admin</a>
       <a href="medical-admin.html">Control Room</a>
       <a href="med-dept-4.html" class="active">🟢 Air Ambulance</a>
+          <button onclick="localStorage.removeItem('auth_medical'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
     </div>
   </nav>
 

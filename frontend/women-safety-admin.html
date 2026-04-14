@@ -3,15 +3,15 @@
 
 <head>
   <script>
-    if (localStorage.getItem('auth_police') !== 'true') {
-      window.location.href = 'login.html?role=police&redirect=' + encodeURIComponent(window.location.href);
+    if (localStorage.getItem('auth_womensafety') !== 'true') {
+      window.location.href = 'login.html?role=womensafety&redirect=' + encodeURIComponent(window.location.href);
     }
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Police Dashboard – Help Systems</title>
+  <title>Women Safety Control Room – Help Systems</title>
   <meta name="description"
-    content="Police officer dashboard to manage and resolve emergency help requests with group-based auto-assignment.">
+    content="Women safety control room to manage and dispatch pink patrol units.">
 
   <link rel="stylesheet" href="style.css">
 
@@ -28,13 +28,13 @@
     .police-hero-icon {
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 28px;
-      box-shadow: 0 8px 26px rgba(59, 130, 246, 0.35);
+      box-shadow: 0 8px 26px rgba(168, 85, 247, 0.35);
       flex-shrink: 0;
     }
 
@@ -74,7 +74,7 @@
     .officer-avatar {
       width: 42px;
       height: 42px;
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      background: linear-gradient(135deg, #a855f7, #6366f1);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -654,12 +654,12 @@
       <a href="index.html">Submit</a>
       <a href="track.html">Track</a>
       <a href="admin.html">Admin</a>
-      <a href="police.html" class="active">Police</a>
+      <a href="police.html">Police</a>
       <a href="medical-admin.html">Medical</a>
       <a href="fire-admin.html">Fire</a>
-      <a href="women-safety-admin.html">Women Safety</a>
+      <a href="women-safety-admin.html" class="active">Women Safety</a>
       <a href="accident-admin.html">Accident</a>
-          <button onclick="localStorage.removeItem('auth_police'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
+          <button onclick="localStorage.removeItem('auth_womensafety'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
     </div>
   </nav>
 
@@ -668,9 +668,9 @@
 
     <!-- Hero -->
     <div class="police-hero">
-      <div class="police-hero-icon">🚓</div>
+      <div class="police-hero-icon">🚺</div>
       <div class="police-hero-text">
-        <h2>Police Control Room</h2>
+        <h2>Women Safety Control Room</h2>
         <p>Manually assign squads to incoming requests. Each squad has its own dedicated interface.</p>
       </div>
     </div>
@@ -681,7 +681,7 @@
         <div class="officer-avatar">👮</div>
         <div>
           <div class="officer-name">Officer On Duty</div>
-          <div class="officer-id">Police Control Room · Unit Active</div>
+          <div class="officer-id">Women Safety Admin · Unit Active</div>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
@@ -697,50 +697,50 @@
 
     <!-- Police Groups Panel -->
     <div class="groups-panel">
-      <div class="groups-panel-title">🚔 Police Unit Groups — Tap to open Squad Interface</div>
-      <div class="groups-grid">
-        <a href="squad-alpha.html" class="group-card gc-critical" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🔴 Alpha Squad</div>
-          <div class="gc-handles">Critical Cases</div>
+      <div class="groups-panel-title">🚺 Women Safety Units — Tap to Open Squad Interface</div>
+      <div class="groups-grid" id="groupsGrid">
+        <a href="safety-unit-1.html" class="group-card gc-critical" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">👩‍✈️ Pink Patrol Alpha</div>
+          <div class="gc-handles">WS_1 Unit</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-alpha">—</div>
               <div class="gc-pending-tag" id="grp-alpha-resolved">Loading…</div>
             </div>
-            <div class="gc-icon">🚨</div>
+            <div class="gc-icon">👩‍✈️</div>
           </div>
         </a>
-        <a href="squad-bravo.html" class="group-card gc-high" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🟠 Bravo Squad</div>
-          <div class="gc-handles">High Cases</div>
+        <a href="safety-unit-2.html" class="group-card gc-high" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">👩‍✈️ Pink Patrol Bravo</div>
+          <div class="gc-handles">WS_2 Unit</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-bravo">—</div>
               <div class="gc-pending-tag" id="grp-bravo-resolved">Loading…</div>
             </div>
-            <div class="gc-icon">🚔</div>
+            <div class="gc-icon">👩‍✈️</div>
           </div>
         </a>
-        <a href="squad-charlie.html" class="group-card gc-medium" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🟡 Charlie Squad</div>
-          <div class="gc-handles">Medium Cases</div>
+        <a href="safety-unit-3.html" class="group-card gc-medium" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">🏥 Women Help Desk</div>
+          <div class="gc-handles">WS_3 Unit</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-charlie">—</div>
               <div class="gc-pending-tag" id="grp-charlie-resolved">Loading…</div>
             </div>
-            <div class="gc-icon">🚗</div>
+            <div class="gc-icon">🏥</div>
           </div>
         </a>
-        <a href="squad-delta.html" class="group-card gc-low" style="text-decoration:none;cursor:pointer;">
-          <div class="gc-squad-name">🟢 Delta Squad</div>
-          <div class="gc-handles">Low Cases</div>
+        <a href="safety-unit-4.html" class="group-card gc-low" style="text-decoration:none;cursor:pointer;">
+          <div class="gc-squad-name">🛡️ Crisis Response</div>
+          <div class="gc-handles">WS_4 Unit</div>
           <div class="gc-count-row">
             <div>
               <div class="gc-count" id="grp-delta">—</div>
               <div class="gc-pending-tag" id="grp-delta-resolved">Loading…</div>
             </div>
-            <div class="gc-icon">🚶</div>
+            <div class="gc-icon">🛡️</div>
           </div>
         </a>
       </div>
@@ -778,12 +778,12 @@
         <div class="filter-bar">
           <button class="filter-pill active" onclick="setFilter('ALL',this)">All</button>
           <button class="filter-pill" onclick="setFilter('SUBMITTED',this)">⏳ Submitted</button>
-          <button class="filter-pill" onclick="setFilter('IN_PROGRESS',this)">🚓 In Progress</button>
+          <button class="filter-pill" onclick="setFilter('IN_PROGRESS',this)">🏥 In Progress</button>
           <button class="filter-pill" onclick="setFilter('RESOLVED',this)">✅ Resolved</button>
-          <button class="filter-pill" onclick="setFilterGroup('ALPHA',this)">🔴 Alpha</button>
-          <button class="filter-pill" onclick="setFilterGroup('BRAVO',this)">🟠 Bravo</button>
-          <button class="filter-pill" onclick="setFilterGroup('CHARLIE',this)">🟡 Charlie</button>
-          <button class="filter-pill" onclick="setFilterGroup('DELTA',this)">🟢 Delta</button>
+                    <button class="filter-pill" onclick="setFilterGroup('WS_1',this)">🔴 Patrol Alpha</button>
+          <button class="filter-pill" onclick="setFilterGroup('WS_2',this)">🟣 Patrol Bravo</button>
+          <button class="filter-pill" onclick="setFilterGroup('WS_3',this)">🟡 Help Desk</button>
+          <button class="filter-pill" onclick="setFilterGroup('WS_4',this)">🟢 Crisis</button>
           <input class="filter-search" id="searchInput" oninput="applyFilter()"
             placeholder="🔍  Search by ID or location…">
         </div>
@@ -823,19 +823,19 @@
   <!-- ── ASSIGN MODAL ──────────────────────────────────────────── -->
   <div class="modal-backdrop" id="assignModal">
     <div class="modal">
-      <div class="modal-icon">🚓</div>
+      <div class="modal-icon">🚺</div>
       <h3>Assign to Police Group</h3>
       <p id="assignModalMsg">This case will be dispatched to the appropriate squad based on urgency level.</p>
       <div class="assignment-preview" id="assignPreview">
         <div class="ap-icon" id="apIcon">🚨</div>
         <div class="ap-text">
-          <div class="ap-squad" id="apSquad">Alpha Squad</div>
+          <div class="ap-squad" id="apSquad">Ambulance 1</div>
           <div class="ap-desc" id="apDesc">Rapid Response — Critical Priority</div>
         </div>
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeAssignModal()">Cancel</button>
-        <button class="btn btn-danger" id="assignConfirmBtn" onclick="confirmAssign()">🚓 Dispatch Now</button>
+        <button class="btn btn-danger" id="assignConfirmBtn" onclick="confirmAssign()">🚺 Dispatch Now</button>
       </div>
     </div>
   </div>
@@ -862,24 +862,24 @@
   <script>
     // ── Police Group Mapping ─────────────────────────────────────────────────────
     const URGENCY_GROUP = {
-      CRITICAL: { squad: 'Alpha Squad', cls: 'alpha', badge: 'gb-alpha', btnCls: 'btn-tbl-alpha', icon: '🚨', color: '#f87171', desc: 'Rapid Response — Critical Priority', key: 'ALPHA' },
-      HIGH: { squad: 'Bravo Squad', cls: 'bravo', badge: 'gb-bravo', btnCls: 'btn-tbl-bravo', icon: '🚔', color: '#fb923c', desc: 'Priority Unit — High Urgency Cases', key: 'BRAVO' },
-      MEDIUM: { squad: 'Charlie Squad', cls: 'charlie', badge: 'gb-charlie', btnCls: 'btn-tbl-charlie', icon: '🚗', color: '#facc15', desc: 'General Unit — Medium Priority Cases', key: 'CHARLIE' },
-      LOW: { squad: 'Delta Squad', cls: 'delta', badge: 'gb-delta', btnCls: 'btn-tbl-delta', icon: '🚶', color: '#4ade80', desc: 'Standard Patrol — Routine Low Cases', key: 'DELTA' },
-    };
+  CRITICAL: { squad: 'Pink Patrol Alpha', cls: 'grp-critical', icon: '👩‍✈️', key: 'WS_1' },
+  HIGH: { squad: 'Pink Patrol Bravo', cls: 'grp-high', icon: '👩‍✈️', key: 'WS_2' },
+  MEDIUM: { squad: 'Women Help Desk', cls: 'grp-medium', icon: '🏥', key: 'WS_3' },
+  LOW: { squad: 'Crisis Response', cls: 'grp-low', icon: '🛡️', key: 'WS_4' }
+};
 
     // Squad dropdown options
     const ALL_SQUADS = [
-      { key: 'ALPHA',   label: '🚨 Alpha Squad' },
-      { key: 'BRAVO',   label: '🚔 Bravo Squad' },
-      { key: 'CHARLIE', label: '🚗 Charlie Squad' },
-      { key: 'DELTA',   label: '🚶 Delta Squad' },
-    ];
+  { key: 'WS_1',   label: '👩‍✈️ Pink Patrol Alpha' },
+  { key: 'WS_2',   label: '👩‍✈️ Pink Patrol Bravo' },
+  { key: 'WS_3',   label: '🏥 Women Help Desk' },
+  { key: 'WS_4',   label: '🛡️ Crisis Response' }
+];
     function storeSquad(id, key) {
-      try { localStorage.setItem('request_squad_' + id, key); } catch(_) {}
+      try { localStorage.setItem('request_safety_squad_' + id, key); } catch(_) {}
     }
     function getStoredSquad(id) {
-      try { return localStorage.getItem('request_squad_' + id); } catch(_) { return null; }
+      try { return localStorage.getItem('request_safety_squad_' + id); } catch(_) { return null; }
     }
 
     // ── State ────────────────────────────────────────────────────────────────────
@@ -888,7 +888,7 @@
     let currentGroupFilter = null;  // null = no group filter
     let pendingResolveId = null;
     let pendingAssignId = null;
-    let pendingAssignSquadKey = 'ALPHA'; // captured from dropdown at click-time
+    let pendingAssignSquadKey = 'WS_1'; // captured from dropdown at click-time
     const startTimes = {};   // requestId → timestamp when first seen as IN_PROGRESS
 
     // ── Resolution time helpers (localStorage so admin.html can also read)
@@ -926,10 +926,10 @@
 
       // Capture the dropdown value NOW before any auto-refresh re-renders the table
       const selectEl = document.getElementById('squad-select-' + requestId);
-      pendingAssignSquadKey = selectEl ? selectEl.value : 'ALPHA';
+      pendingAssignSquadKey = selectEl ? selectEl.value : 'WS_1';
 
       // Show the CHOSEN squad in the modal preview
-      const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+      const KEY_URG = { WS_1: 'CRITICAL', WS_2: 'HIGH', WS_3: 'MEDIUM', WS_4: 'LOW' };
       const grp = URGENCY_GROUP[KEY_URG[pendingAssignSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
       document.getElementById('assignModalMsg').innerText =
@@ -951,8 +951,7 @@
       try {
         const res = await fetch('http://localhost:8080/api/help/all');
         let rawData = await res.json();
-        const POLICE_TYPES = ['POLICE', 'OTHER'];
-        allData = rawData.filter(r => POLICE_TYPES.includes((r.issueType || '').toUpperCase()));
+        allData = rawData.filter(r => (r.issueType || '').toUpperCase() === 'WOMEN_SAFETY');
 
         allData.forEach(r => {
           if (r.status === 'IN_PROGRESS' && !startTimes[r.requestId]) {
@@ -1035,7 +1034,7 @@
       }
       if (currentGroupFilter) {
         // Map group key back to urgency level
-        const urgencyFor = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+        const urgencyFor = { WS_1: 'CRITICAL', WS_2: 'HIGH', WS_3: 'MEDIUM', WS_4: 'LOW' };
         const targetUrgency = urgencyFor[currentGroupFilter];
         filtered = filtered.filter(r => (r.urgencyLevel || '').toUpperCase() === targetUrgency);
       }
@@ -1074,7 +1073,7 @@
         let grp = URGENCY_GROUP[u] || URGENCY_GROUP['LOW'];
         const storedSq = getStoredSquad(r.requestId);
         if (storedSq) {
-          const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+          const KEY_URG = { WS_1: 'CRITICAL', WS_2: 'HIGH', WS_3: 'MEDIUM', WS_4: 'LOW' };
           if (KEY_URG[storedSq]) grp = URGENCY_GROUP[KEY_URG[storedSq]];
         }
 
@@ -1137,7 +1136,7 @@
               ${squadOptions}
             </select>
             <button class="btn-tbl btn-tbl-alpha" onclick="openAssignModal('${r.requestId}','${u}')" style="font-size:11px;padding:5px 12px;">
-              🚔 Assign Squad
+              🚑 Assign Unit
             </button>
           </div>
         `;
@@ -1169,20 +1168,22 @@
     async function confirmAssign() {
       if (!pendingAssignId) return;
       const id = pendingAssignId;
-      const chosenSquadKey = pendingAssignSquadKey || 'ALPHA'; // pre-captured — immune to DOM re-render
+      const chosenSquadKey = pendingAssignSquadKey || 'WS_1'; // pre-captured — immune to DOM re-render
       closeAssignModal();
 
-      const KEY_URG = { ALPHA: 'CRITICAL', BRAVO: 'HIGH', CHARLIE: 'MEDIUM', DELTA: 'LOW' };
+      const KEY_URG = { WS_1: 'CRITICAL', WS_2: 'HIGH', WS_3: 'MEDIUM', WS_4: 'LOW' };
       const grp = URGENCY_GROUP[KEY_URG[chosenSquadKey] || 'LOW'] || URGENCY_GROUP['LOW'];
 
+      // Store assignment locally FIRST (so unit pages work even if API is slow/fails)
+      storeSquad(id, chosenSquadKey);
+      startTimes[id] = Date.now();
       try {
         await fetch(`http://localhost:8080/api/help/assign/${id}`, { method: 'PUT' });
-        storeSquad(id, chosenSquadKey);
-        startTimes[id] = Date.now();
         showToast(`${grp.icon} Case ${id} assigned to ${grp.squad}`, grp.icon);
         loadRequests();
       } catch {
-        showToast('❌ Failed to assign squad', '❌');
+        showToast(`${grp.icon} ${grp.squad} assigned locally (server offline)`, grp.icon);
+        loadRequests();
       }
     }
 

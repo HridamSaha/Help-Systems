@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>
+    if (localStorage.getItem('auth_admin') !== 'true') {
+      window.location.href = 'login.html?role=admin&redirect=' + encodeURIComponent(window.location.href);
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard – Help Systems</title>
@@ -427,6 +432,7 @@
 
     .fb-clear-btn:hover { background: rgba(248,113,113,0.2); }
   </style>
+  
 </head>
 
 <body>
@@ -437,12 +443,16 @@
       <div class="brand-icon">🛡️</div>
       <h1>Help <span>Systems</span></h1>
     </a>
-    <div class="topbar-nav">
+        <div class="topbar-nav">
       <a href="index.html">Submit</a>
       <a href="track.html">Track</a>
       <a href="admin.html" class="active">Admin</a>
-      <a href="medical-admin.html">Medical Admin</a>
       <a href="police.html">Police</a>
+      <a href="medical-admin.html">Medical</a>
+      <a href="fire-admin.html">Fire</a>
+      <a href="women-safety-admin.html">Women Safety</a>
+      <a href="accident-admin.html">Accident</a>
+          <button onclick="localStorage.removeItem('auth_admin'); window.location.href='index.html'" style="background:rgba(248,113,113,0.15);color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;margin-left:8px;transition:0.2s;">Log Out</button>
     </div>
   </nav>
 
